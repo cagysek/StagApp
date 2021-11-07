@@ -9,9 +9,128 @@ import SwiftUI
 
 struct OverviewScreen: View {
     var body: some View {
-        Text("Overview screen")
+        ZStack {
+            Color.defaultBackground
+                .ignoresSafeArea()
+            
+            ScrollView(.vertical) {
+                VStack {
+                    HStack(alignment:.bottom) {
+                        Text("Přehled")
+                            .font(.system(size: 32, weight: .bold, design: .rounded))
+                        
+                        Spacer()
+                        
+                        Text("01.09.2021")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                        
+                        Text("sudý týden")
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                        
+                    }
+                    .padding()
+                    
+                    
+                    ZStack(alignment: .top) {
+                        
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(.white)
+                            .padding([.leading, .trailing])
+                            
+                        VStack {
+                            HStack(alignment: .bottom) {
+                                Text("Dnešní rozvrh (3)")
+                                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                                
+                                Spacer()
+                                
+                                Button("Zobrazit vše") {
+                                    
+                                }
+                                .buttonStyle(BasicButtonStyle())
+                            }
+                            .padding(.trailing, 30)
+                            .padding(.leading, 30)
+                            .padding(.bottom, 10)
+                        
+                        
+                            OverviewSubjectCell(backgroundColor: .customLightGreen)
+                        
+                            OverviewSubjectCell(backgroundColor: .customLightGray)
+                        
+                        }
+                        .padding(.top, 15)
+                        
+                        
+                    }
+                    .frame(height: 292)
+                    .shadow(color: Color.shadow, radius: 4)
+                    
+                    
+                    
+                    ZStack(alignment: .top) {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(.white)
+                            .padding([.leading, .trailing])
+                            
+                        VStack {
+                            HStack(alignment: .bottom) {
+                                Text("Připomínky (6)")
+                                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                                
+                                Spacer()
+                                
+                                Button("Zobrazit vše") {
+                                    
+                                }
+                                .buttonStyle(BasicButtonStyle())
+                            }
+                            .padding(.trailing, 30)
+                            .padding(.leading, 30)
+                            .padding(.bottom, 10)
+                        
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    OverviewNoteCell(backgroundColor: Color.customLightRed)
+                                    OverviewNoteCell(backgroundColor: Color.customLightGreen)
+                                    OverviewNoteCell(backgroundColor: Color.customLightRed)
+                                    OverviewNoteCell(backgroundColor: Color.customLightGreen)
+                                }
+                            }
+                            .padding(.leading, 30)
+                            .padding(.trailing, 30)
+                            .padding(.bottom, 15)
+                            
+                            
+                            HStack {
+                                Spacer()
+                                Button("+ Přidat novou připomínku") {
+                                    
+                                }
+                                .buttonStyle(BasicButtonStyle())
+                            }
+                            .padding(.trailing, 30)
+                            .padding(.bottom, 15)
+                            
+                        
+                        }
+                        .padding(.top, 15)
+                        
+                        
+                    }
+                    .frame(height: 260)
+                    .shadow(color: Color.shadow, radius: 4)
+                    .padding(.top)
+                    
+                    
+                    Spacer()
+                }
+            }
+        }
+        
     }
 }
+
 
 struct OverviewScreen_Previews: PreviewProvider {
     static var previews: some View {

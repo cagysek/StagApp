@@ -17,38 +17,26 @@ struct YearsScrollView: View {
                 })
                     .foregroundColor(Color.white)
                     .font(.system(size: 16, weight: .medium, design: .rounded))
-                    .buttonStyle(BlueButton())
+                    .buttonStyle(CapsuleButtonStyle())
                 
                 Button("2020/21", action: {
                     
                 })
                     .foregroundColor(Color.white)
                     .font(.system(size: 16, weight: .medium, design: .rounded))
-                    .buttonStyle(BlueButton())
+                    .buttonStyle(CapsuleButtonStyle())
                 
                 Button("2019/20", action: {
                     
                 })
                     .foregroundColor(Color.white)
                     .font(.system(size: 16, weight: .medium, design: .rounded))
-                    .buttonStyle(BlueButton())
+                    .buttonStyle(CapsuleButtonStyle())
             }
         }
         .padding(.trailing, 20)
         .padding(.leading, 20)
         .padding(.bottom, 5)
-    }
-}
-
-fileprivate struct BlueButton: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .background(Color.customBlue)
-            .foregroundColor(.white)
-            .font(.system(size: 16, weight: .semibold, design: .rounded))
-            .frame(height: 30)
-            .clipShape(Capsule())
     }
 }
 

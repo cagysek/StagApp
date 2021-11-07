@@ -13,11 +13,16 @@ struct StudentScreen: View {
             Color.defaultBackground
                 .ignoresSafeArea()
             
-            VStack(alignment: .leading) {
-                Text("Student")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .padding(.leading, 20)
-                    .padding(.bottom, -18)
+            VStack {
+                HStack(alignment: .bottom) {
+                    Text("Student")
+                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                        .padding(.leading, 20)
+                        .padding(.bottom, -18)
+                    
+                    Spacer()
+                }
+                
                 
                 StudentInfoView()
                     
