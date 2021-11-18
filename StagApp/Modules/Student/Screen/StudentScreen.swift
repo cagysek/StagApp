@@ -16,7 +16,7 @@ struct StudentScreen: View {
             VStack {
                 HStack(alignment: .bottom) {
                     Text("Student")
-                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                        .font(.system(size: 32, weight: .semibold, design: .rounded))
                         .padding(.leading, 20)
                         .padding(.bottom, -18)
                     

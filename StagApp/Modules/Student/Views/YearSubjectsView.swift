@@ -13,11 +13,6 @@ struct YearSubjectsView: View {
         ScrollView(.vertical) {
             VStack(alignment: .leading) {
                 
-                Text("Přehled")
-                    .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .padding(.leading, 20)
-                    .padding(.bottom, -18)
-                
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.white)

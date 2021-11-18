@@ -13,7 +13,7 @@ struct OverviewScreen: View {
             Color.defaultBackground
                 .ignoresSafeArea()
             
-            ScrollView(.vertical) {
+            
                 VStack {
                     HStack(alignment:.bottom) {
                         Text("Přehled")
@@ -124,7 +124,7 @@ struct OverviewScreen: View {
                     
                     
                     Spacer()
-                }
+                
             }
         }
         

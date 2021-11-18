@@ -14,7 +14,7 @@ struct SubjectResultView: View {
                 .fill(.white)
                 .padding()
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 (Text("Manažerské techniky").bold() + Text(" KIV/MNT")).font(.system(size: 18, design: .rounded))
                 Text("6 kreditů").font(.system(size: 15, design: .rounded))
                 (Text("Zápočet").bold() + Text("∙ Bohuslav Theimer ∙ 20.01.2021")).font(.system(size: 15, design: .rounded))
@@ -25,7 +25,7 @@ struct SubjectResultView: View {
             
             
         }
-        .frame(height: 145)
+        .frame(height: 165)
         .shadow(color: Color.shadow, radius: 4)
         .padding(.bottom, -26)
     }
