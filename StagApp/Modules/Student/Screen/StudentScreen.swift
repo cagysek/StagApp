@@ -31,6 +31,7 @@ struct StudentScreen: View {
                 YearSubjectsView()
             }
         }
+        .foregroundColor(.defaultFontColor)
     }
 }
 

@@ -78,6 +78,7 @@ struct ExamsScreen: View {
                     
             }
         }
+        .foregroundColor(.defaultFontColor)
     }
         
 }

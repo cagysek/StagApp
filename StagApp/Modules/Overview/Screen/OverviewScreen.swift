@@ -127,6 +127,7 @@ struct OverviewScreen: View {
                 
             }
         }
+        .foregroundColor(.defaultFontColor)
         
     }
 }
