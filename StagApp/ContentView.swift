@@ -20,7 +20,13 @@ struct ContentView: View {
    
     var body: some View {
         TabView(selection: $selection) {
-            LoginScreen()
+//            LoginScreen()
+//                .tabItem {
+//                    TabItem(title: "Rozvrh", iconName: "books.vertical");
+//                }
+//                .tag(0)
+            
+            ScheduleScreen()
                 .tabItem {
                     TabItem(title: "Rozvrh", iconName: "books.vertical");
                 }
