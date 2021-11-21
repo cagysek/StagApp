@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct OverviewScreen: View {
+    
+    @Binding var selectedTabIndex: Int
+    
     var body: some View {
         ZStack {
             Color.defaultBackground
@@ -45,7 +48,7 @@ struct OverviewScreen: View {
                                 Spacer()
                                 
                                 Button("Zobrazit vše") {
-                                    
+                                    self.selectedTabIndex = 0
                                 }
                                 .buttonStyle(BasicButtonStyle())
                             }
@@ -56,7 +59,7 @@ struct OverviewScreen: View {
                         
                             OverviewSubjectCell(backgroundColor: .customLightGreen)
                         
-                            OverviewSubjectCell(backgroundColor: .customLightGray)
+                            OverviewSubjectCell(backgroundColor: .customDarkGray)
                         
                         }
                         .padding(.top, 15)
@@ -104,7 +107,7 @@ struct OverviewScreen: View {
                             
                             HStack {
                                 Spacer()
-                                Button("+ Přidat novou připomínku") {
+                                Button("+ Přidat") {
                                     
                                 }
                                 .buttonStyle(BasicButtonStyle())
@@ -135,6 +138,6 @@ struct OverviewScreen: View {
 
 struct OverviewScreen_Previews: PreviewProvider {
     static var previews: some View {
-        OverviewScreen()
+        OverviewScreen(selectedTabIndex: .constant(0))
     }
 }

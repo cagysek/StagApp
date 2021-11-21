@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct ExamTermView: View {
+    
+    var isAvailable: Bool = false
+    
     var body: some View {
         ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: 8)
                 .padding(.leading)
                 .padding(.trailing)
-                .foregroundColor(.customLightRed)
+                .foregroundColor(self.isAvailable ? .customLightBlue : .customLightRed)
             
             
             VStack(alignment: .leading, spacing: 5) {
@@ -50,7 +53,7 @@ struct ExamTermView: View {
                     
                     Spacer()
                     
-                    Button("Přihlásit se", action: {
+                    Button(self.isAvailable ? "Přihlásit se" : "Nelze se zapsat", action: {
                         print("přihlasit")
                     })
                         .font(.system(size: 15, weight: .medium, design: .rounded))

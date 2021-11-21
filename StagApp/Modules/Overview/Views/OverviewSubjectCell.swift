@@ -20,6 +20,12 @@ struct OverviewSubjectCell: View {
                 VStack(alignment: .center) {
                     Text("07:20")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
+                    
+                    Text("-")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                    
+                    Text("10:20")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
                 }
                 .frame(width: 65)
                 

@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ExamsScreen: View {
     var body: some View {
-        
-            
         ZStack {
             Color.defaultBackground
                 .ignoresSafeArea()
@@ -28,22 +26,22 @@ struct ExamsScreen: View {
                     VStack(spacing: 10) {
                         
                         ExamSubjectCollapse(
-                            label: { Text("KIV/FJP") },
+                            label: { Text("KIV/FJP (3)") },
                             content: {
                                 ZStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 12)
                                         .fill()
                                             .foregroundColor(.white)
                                     VStack {
+                                        ExamTermView(isAvailable: true)
                                         ExamTermView()
-                                        ExamTermView()
-                                        ExamTermView()
+                                        ExamTermView(isAvailable: true)
                                         
                                     }
                                     .padding(.top, 40)
                                 }
                                 .frame(maxWidth: .infinity)
-                                .shadow(color: .gray.opacity(0.1), radius: 10)
+                                
                                 
                             },
                             sections: 3
@@ -51,21 +49,21 @@ struct ExamsScreen: View {
                             
                         
                         ExamSubjectCollapse(
-                            label: { Text("KIV/UPS") },
+                            label: { Text("KIV/UPS (2)") },
                             content: {
                                 ZStack(alignment: .top) {
                                     RoundedRectangle(cornerRadius: 12)
                                         .fill()
                                             .foregroundColor(.white)
                                     VStack {
-                                        ExamTermView()
+                                        ExamTermView(isAvailable: true)
                                         ExamTermView()
                                         
                                     }
                                     .padding(.top, 40)
                                 }
                                 .frame(maxWidth: .infinity)
-                                .shadow(color: .gray.opacity(0.1), radius: 10)
+                                
                                 
                             },
                             sections: 2

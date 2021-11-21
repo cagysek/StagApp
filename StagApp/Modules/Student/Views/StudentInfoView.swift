@@ -13,6 +13,7 @@ struct StudentInfoView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.white)
                 .padding()
+                .padding(.top, -15)
             
             VStack {
                 Text("Bc. Jan Čarnogurský")

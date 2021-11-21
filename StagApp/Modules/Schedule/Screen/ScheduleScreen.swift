@@ -13,10 +13,16 @@ struct ScheduleScreen: View {
             Color.defaultBackground
                 .ignoresSafeArea()
             
-                VStack(alignment: .leading) {
+            VStack {
+                HStack(alignment:.bottom) {
                     Text("Rozvrh")
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                     
+                    Spacer()
+                }
+                .padding()
+                
+                VStack {
                     ScheduleDateTimeFilterView()
                     
                     ScrollView(.vertical, showsIndicators: false) {
@@ -38,6 +44,7 @@ struct ScheduleScreen: View {
                 }
                 .padding(.leading)
                 .padding(.trailing)
+            }
         }
         
         .foregroundColor(.defaultFontColor)

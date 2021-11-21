@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ScheduleDateTimeFilterView: View {
+    
+    @State var selectedIndex = 17;
+    
     var body: some View {
         ScrollViewReader { proxy in
             HStack {
@@ -17,7 +20,10 @@ struct ScheduleDateTimeFilterView: View {
                 Spacer()
                 
                 Button("Dnes") {
-                    withAnimation { proxy.scrollTo(17, anchor: .center) }
+                    withAnimation {
+                        selectedIndex = 17
+                        proxy.scrollTo(17, anchor: .center)
+                    }
                 }
                 .buttonStyle(WhiteCapsuleButtonStyle())
                 
@@ -30,27 +36,50 @@ struct ScheduleDateTimeFilterView: View {
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 30) {
-                    ForEach((1...30), id: \.self) {index in
+                LazyHStack() {
+                    ForEach((1...30), id: \.self) { index in
                         Button {
-                            
+                            self.selectedIndex = index
                         } label: {
-                            VStack(alignment: .center, spacing: 5) {
-                                Text("Po")
-                                    .font(.system(size: 14, weight: .medium, design: .rounded))
-                                    .foregroundColor(.gray)
-                                Text("\(index)")
-                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                    .foregroundColor(.defaultFontColor)
+                            if (self.selectedIndex == index)
+                            {
+                                VStack(alignment: .center, spacing: 5) {
+                                    Text("Po")
+                                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                        .foregroundColor(.white)
+                                    Text("\(index)")
+                                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                                        .foregroundColor(.white)
+                                }
+                                .padding(EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15))
+                                .background(Color.customBlue)
+                                
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                             }
+                            else
+                            {
+                                VStack(alignment: .center, spacing: 5) {
+                                    Text("Po")
+                                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                                        .foregroundColor(.gray)
+                                    Text("\(index)")
+                                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                        .foregroundColor(.defaultFontColor)
+                                }
+                                .padding(15)
+                            }
+                            
                         }
-                        .padding(0)
+                        
                         .id(index)
                     }
                 }
                 .padding()
                 
             }
+            .onAppear(perform: {
+                proxy.scrollTo(self.selectedIndex, anchor: .center)
+            })
             .frame(height: 60)
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 15))

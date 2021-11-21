@@ -18,7 +18,7 @@ struct OverviewNoteCell: View {
             
             VStack(alignment: .leading, spacing: 5) {
                 Text("Deadline")
-                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .font(.system(size: 15, weight: .light, design: .rounded))
                     .foregroundColor(Color.gray)
                 
                 Label {

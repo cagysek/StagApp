@@ -36,7 +36,7 @@ struct ContentView: View {
                     }
                     .tag(1)
              
-                OverviewScreen()
+                OverviewScreen(selectedTabIndex: self.$selection)
                     .tabItem {
                         TabItem(title: "Přehled", iconName: "house");
                     }

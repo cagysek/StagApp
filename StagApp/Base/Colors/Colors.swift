@@ -15,6 +15,7 @@ extension Color {
     static let customLightGreen = Color(red: 222/255, green: 255/255, blue: 232/255, opacity: 1.0)
     static let customLightRed = Color(red: 255/255, green: 233/255, blue: 233/255, opacity: 1.0)
     static let customDarkGray = Color(red: 213/255, green: 213/255, blue: 213/255, opacity: 1.0)
+    static let customLightBlue = Color(red: 214/255, green: 240/255, blue: 248/255, opacity: 1.0)
     
     // MARK: Background color definition
     static let defaultBackground = Color(red: 242/255, green: 244/255, blue: 245/255, opacity: 1.0)

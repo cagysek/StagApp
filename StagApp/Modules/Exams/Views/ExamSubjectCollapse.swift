@@ -15,10 +15,10 @@ struct ExamSubjectCollapse<Content: View>: View {
     @State private var isCollapsed: Bool = true
     
     var body: some View {
-        VStack {
+        LazyVStack {
             Button(
                 action: {
-                    withAnimation(.easeIn(duration: 0.3)) {
+                    withAnimation(.easeIn(duration: 0.2)) {
                         self.isCollapsed.toggle()
                     }
                 },
@@ -32,6 +32,7 @@ struct ExamSubjectCollapse<Content: View>: View {
                 }
             )
             .buttonStyle(CollapseButtonStyle())
+            .shadow(color: self.isCollapsed ? .shadow : .white, radius: self.isCollapsed ? 8 : 0)
             .zIndex(2)
             
             
@@ -44,6 +45,7 @@ struct ExamSubjectCollapse<Content: View>: View {
             .offset(y: -50)
             .padding(.bottom, -50)
             .allowsHitTesting(!self.isCollapsed)
+            .shadow(color: .shadow, radius: 8)
             
         }
         

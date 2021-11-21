@@ -5,9 +5,10 @@
 //  Created by Jan Čarnogurský on 07.11.2021.
 //
 
+import Foundation
 import SwiftUI
 
-struct CapsuleButtonStyle: ButtonStyle {
+struct BlueCapsuleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
