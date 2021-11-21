@@ -12,6 +12,8 @@ import UIKit
 struct ContentView: View {
     
     @State private var selection = 0
+    
+    @State var isLogged : Bool = false
 
     init() {
         // init tabBar top shaddow
@@ -19,44 +21,44 @@ struct ContentView: View {
     }
    
     var body: some View {
-        TabView(selection: $selection) {
-//            LoginScreen()
-//                .tabItem {
-//                    TabItem(title: "Rozvrh", iconName: "books.vertical");
-//                }
-//                .tag(0)
-            
-            ScheduleScreen()
-                .tabItem {
-                    TabItem(title: "Rozvrh", iconName: "books.vertical");
-                }
-                .tag(0)
-         
-            ExamsScreen()
-                .tabItem {
-                    TabItem(title: "Zkoušky", iconName: "pencil");
-                }
-                .tag(1)
-         
-            OverviewScreen()
-                .tabItem {
-                    TabItem(title: "Přehled", iconName: "house");
-                }
-                .tag(2)
-         
-            StudentScreen()
-                .tabItem {
-                    TabItem(title: "Student", iconName: "graduationcap");
-                }
-                .tag(3)
-            
-            MoreScreen()
-                .tabItem {
-                    TabItem(title: "Další", iconName: "line.3.horizontal");
-                }
-                .tag(4)
+        if (isLogged) {
+            TabView(selection: $selection) {
+                
+                ScheduleScreen()
+                    .tabItem {
+                        TabItem(title: "Rozvrh", iconName: "books.vertical");
+                    }
+                    .tag(0)
+             
+                ExamsScreen()
+                    .tabItem {
+                        TabItem(title: "Zkoušky", iconName: "pencil");
+                    }
+                    .tag(1)
+             
+                OverviewScreen()
+                    .tabItem {
+                        TabItem(title: "Přehled", iconName: "house");
+                    }
+                    .tag(2)
+             
+                StudentScreen()
+                    .tabItem {
+                        TabItem(title: "Student", iconName: "graduationcap");
+                    }
+                    .tag(3)
+                
+                MoreScreen()
+                    .tabItem {
+                        TabItem(title: "Další", iconName: "line.3.horizontal");
+                    }
+                    .tag(4)
+            }
+            .accentColor(Color.customBlue)
         }
-        .accentColor(Color.customBlue)
+        else {
+            LoginScreen(isLogged: $isLogged)
+        }
     }
 }
 

@@ -38,8 +38,6 @@ struct ScheduleScreen: View {
                 }
                 .padding(.leading)
                 .padding(.trailing)
-            
-            
         }
         
         .foregroundColor(.defaultFontColor)

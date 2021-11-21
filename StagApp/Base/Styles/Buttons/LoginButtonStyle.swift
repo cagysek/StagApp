@@ -1,5 +1,5 @@
 //
-//  WhiteCapsuleButtonStyle.swift
+//  LoginButtonStyle.swift
 //  StagApp
 //
 //  Created by Jan Čarnogurský on 21.11.2021.
@@ -8,22 +8,15 @@
 import Foundation
 import SwiftUI
 
-
-struct WhiteCapsuleButtonStyle: ButtonStyle {
-    
-    let fontSize: CGFloat
-
-    public init(fontSize: CGFloat = 16) {
-        self.fontSize = fontSize
-    }
+struct LoginButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
+            .frame(maxWidth: UIScreen.main.bounds.width)
             .background(.white)
             .foregroundColor(.defaultFontColor)
-            .font(.system(size: self.fontSize, weight: .semibold, design: .rounded))
-            .frame(height: self.fontSize * 2)
+            .font(.system(size: 24, weight: .semibold, design: .rounded))
             .clipShape(Capsule())
             .shadow(color: .shadow, radius: 8)
     }
