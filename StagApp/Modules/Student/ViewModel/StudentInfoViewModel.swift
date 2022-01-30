@@ -8,25 +8,39 @@
 import Foundation
 
 protocol StudentInfoViewModel: ObservableObject {
-    func getUserData() async
+    func getUserData()
 }
 
-@MainActor
+
 final class StudentInfoViewModelImpl: StudentInfoViewModel {
-    @Published private(set) var studentInfoData: StudentInfo? = nil
+    @Published var studentInfoData: StudentInfo? = nil
+    @Published var examResults: [SubjectResult] = []
+    @Published var studentInfo: Student? = nil
+    
+    let dataService: DataManageer
     
     let stagService: StagService
     
     init(stagService: StagService) {
         self.stagService = stagService
+        
+        self.dataService = DataManageer(stagApiService: stagService as! StagServiceImpl)
+        
+        
     }
     
-    public func getUserData() async {
-        do {
-            self.studentInfoData = try await stagService.fetchStudentInfo()
-        } catch {
-            print(error)
-        }
+    public func getUserData() {
+        
+    
+        self.dataService.syncData()
+        
+        self.studentInfo = CoreDataManager.getStudentInfo()
+//        do {
+//            self.studentInfoData = try await stagService.fetchStudentInfo()
+//            self.examResults = try await stagService.fetchExamResults()
+//        } catch {
+//            print(error)
+//        }
         
     }
     

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SubjectResultView: View {
+    
+    @Binding var subjectResult: SubjectResult
+    
     var body: some View {
         ZStack(alignment: .leading){
             RoundedRectangle(cornerRadius: 12)
@@ -15,11 +18,25 @@ struct SubjectResultView: View {
                 .padding()
             
             VStack(alignment: .leading, spacing: 5) {
-                (Text("Manažerské techniky").bold() + Text(" KIV/MNT")).font(.system(size: 18, design: .rounded))
+                Text(self.subjectResult.subjectShort).font(.system(size: 18, design: .rounded))
                 Text("6 kreditů").font(.system(size: 15, design: .rounded))
-                (Text("Zápočet").bold() + Text("∙ Bohuslav Theimer ∙ 20.01.2021")).font(.system(size: 15, design: .rounded))
-                (Text("Zkouška").bold() + Text("∙ Bohuslav Theimer ∙ 20.01.2021")).font(.system(size: 15, design: .rounded))
-                (Text("Hodnocení").bold() + Text("∙ 2")).font(.system(size: 15, design: .rounded))
+                
+                (Text("Zápočet").bold() + Text(StringHelper.concatStringsToOne(strings:
+                                                        subjectResult.creditBeforeExamTeacherName ?? "",
+                                                        subjectResult.creditBeforeExamDate ?? "",
+                                                        separatorOnFirstPosition: true
+                                           )).font(.system(size: 15, design: .rounded)))
+                
+                (Text("Zkouška").bold() + Text(StringHelper.concatStringsToOne(strings:
+                                                        subjectResult.examTeacherName ?? "",
+                                                        subjectResult.examDate ?? "",
+                                                        separatorOnFirstPosition: true
+                                           )).font(.system(size: 15, design: .rounded)))
+                
+                (Text("Hodnocení").bold() + Text(StringHelper.concatStringsToOne(strings:
+                                                        subjectResult.examGrade ?? "?",
+                                                        separatorOnFirstPosition: true
+                                            )).font(.system(size: 15, design: .rounded)))
             }
             .padding(.leading, 30)
             
@@ -31,8 +48,8 @@ struct SubjectResultView: View {
     }
 }
 
-struct SubjectResultView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubjectResultView()
-    }
-}
+//struct SubjectResultView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SubjectResultView()
+//    }
+//}

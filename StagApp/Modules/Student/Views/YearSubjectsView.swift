@@ -9,6 +9,9 @@ import SwiftUI
 
 
 struct YearSubjectsView: View {
+    
+    @Binding var subjectResults: [SubjectResult]
+    
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading) {
@@ -40,10 +43,13 @@ struct YearSubjectsView: View {
                     .padding(.leading, 20)
                     .padding(.bottom, -18)
                 
-                SubjectResultView()
-                SubjectResultView()
-                SubjectResultView()
-                SubjectResultView()
+                ForEach(self.$subjectResults, id: \.self) { subjectResult in
+                    SubjectResultView(subjectResult: subjectResult)
+                }
+                
+//                SubjectResultView()
+//                SubjectResultView()
+//                SubjectResultView()
                 
                 Text("Letní semestr")
                     .font(.system(size: 24, weight: .bold, design: .rounded))
@@ -51,8 +57,8 @@ struct YearSubjectsView: View {
                     .padding(.bottom, -18)
                     .padding(.top, 25)
                 
-                SubjectResultView()
-                SubjectResultView()
+//                SubjectResultView()
+//                SubjectResultView()
             }
             .padding(.bottom, 20)
         }
@@ -60,8 +66,8 @@ struct YearSubjectsView: View {
 }
 
 
-struct YearSubjectView_Previews: PreviewProvider {
-    static var previews: some View {
-        YearSubjectsView()
-    }
-}
+//struct YearSubjectView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        YearSubjectsView()
+//    }
+//}

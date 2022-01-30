@@ -18,8 +18,7 @@ struct StudentScreen: View {
             
             VStack {
                 HStack(alignment: .bottom) {
-//                    Text("Student")
-                    Text(vm.studentInfoData?.firstname ?? "")
+                    Text("Student")
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                     
                     Spacer()
@@ -27,17 +26,20 @@ struct StudentScreen: View {
                 .padding()
                 
                 
-                StudentInfoView()
+                StudentInfoView(studentInfoData: self.$vm.studentInfo)
                     
                 YearsScrollView()
                 
-                YearSubjectsView()
+                YearSubjectsView(subjectResults: self.$vm.examResults)
             }
         }
         .foregroundColor(.defaultFontColor)
+        .onAppear {
+            vm.getUserData()
+        }
         .task {
             do {
-                try await vm.getUserData()
+//                try await vm.getUserData()
             } catch {
                 print(error)
             }

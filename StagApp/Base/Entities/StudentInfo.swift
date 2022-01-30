@@ -34,4 +34,26 @@ struct StudentInfo: Codable {
     let studyYear: String
     let email: String
     
+    /**
+        Returns student full name with titles
+     */
+    public func getStudentFullNameWithTitles() -> String {
+        var fullname = ""
+        
+        if (self.titleBefore != nil && !self.titleBefore!.isEmpty)
+        {
+            fullname += self.titleBefore! + " "
+        }
+        
+        fullname += "\(self.firstname) \(self.lastname.capitalized)"
+        
+        
+        if (self.titleAfter != nil && !self.titleAfter!.isEmpty)
+        {
+            fullname += self.titleAfter!
+        }
+        
+        return fullname;
+    }
+    
 }

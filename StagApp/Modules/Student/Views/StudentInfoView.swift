@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct StudentInfoView: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
+    @FetchRequest(
+        entity: Student.entity(), sortDescriptors: []
+    ) var student: FetchedResults<Student>
+    
+    @Binding var studentInfoData: Student?
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
@@ -16,7 +24,8 @@ struct StudentInfoView: View {
                 .padding(.top, -15)
             
             VStack {
-                Text("Bc. Jan Čarnogurský")
+//                Text(self.studentInfoData?.getStudentFullNameWithTitles() ?? "")
+                Text(self.student.first?.getStudentFullNameWithTitles() ?? "")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .padding(.bottom, 5)
                 
@@ -36,9 +45,9 @@ struct StudentInfoView: View {
         .shadow(color: Color.shadow, radius: 4)
     }
 }
-
-struct StudentInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        StudentInfoView()
-    }
-}
+//
+//struct StudentInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StudentInfoView(new ())
+//    }
+//}
