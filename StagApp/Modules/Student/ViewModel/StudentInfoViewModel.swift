@@ -17,14 +17,14 @@ final class StudentInfoViewModelImpl: StudentInfoViewModel {
     @Published var examResults: [SubjectResult] = []
     @Published var studentInfo: Student? = nil
     
-    let dataService: DataManageer
+    let dataService: DataManager
     
     let stagService: StagService
     
     init(stagService: StagService) {
         self.stagService = stagService
         
-        self.dataService = DataManageer(stagApiService: stagService as! StagServiceImpl)
+        self.dataService = DataManagerImpl(stagApiService: stagService as! StagServiceImpl)
         
         
     }

@@ -12,7 +12,9 @@ enum APIConstants {
     
     static let schedule = "rozvrhy/getRozvrhByStudent"
     
-    static let examResults = "znamky/getZnamkyByStudent"
+    static let subjectResults = "znamky/getZnamkyByStudent"
     
     static let studentInfo = "student/getStudentInfo"
+    
+    static let subjects = "predmety/getPredmetyByStudent"
 }

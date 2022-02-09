@@ -22,13 +22,13 @@ struct SubjectResultView: View {
                 Text("6 kreditů").font(.system(size: 15, design: .rounded))
                 
                 (Text("Zápočet").bold() + Text(StringHelper.concatStringsToOne(strings:
-                                                        subjectResult.creditBeforeExamTeacherName ?? "",
+                                                        subjectResult.creditBeforeExamTeacher ?? "",
                                                         subjectResult.creditBeforeExamDate ?? "",
                                                         separatorOnFirstPosition: true
                                            )).font(.system(size: 15, design: .rounded)))
                 
                 (Text("Zkouška").bold() + Text(StringHelper.concatStringsToOne(strings:
-                                                        subjectResult.examTeacherName ?? "",
+                                                        subjectResult.examTeacher ?? "",
                                                         subjectResult.examDate ?? "",
                                                         separatorOnFirstPosition: true
                                            )).font(.system(size: 15, design: .rounded)))

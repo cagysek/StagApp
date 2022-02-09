@@ -17,11 +17,13 @@ struct SubjectResult: Codable, Hashable {
         case semester = "semestr"
         case examDate = "zk_datum"
         case examGrade = "zk_hodnoceni"
-        case examTeacherName = "zk_ucit_jmeno"
-        case creditBeforeExamDate = "zppzk_datum"
+        case examTeacher = "zk_ucit_jmeno"
+        case examAttempt = "zk_pokus"
+        case examPoints = "zk_body"
         case creditBeforeExamGrade = "zppzk_hodnoceni"
-        case creditBeforeExamTeacherName = "zppzk_ucit_jmeno"
-        
+        case creditBeforeExamDate = "zppzk_datum"
+        case creditBeforeExamTeacher = "zppzk_ucit_jmeno"
+        case creditBeforeExamAttempt = "zppzk_pokus"
     }
     
     
@@ -31,10 +33,13 @@ struct SubjectResult: Codable, Hashable {
     let semester: String
     let examDate: String?
     let examGrade: String?
-    let examTeacherName: String?
+    let examTeacher: String?
+    let examAttempt: String?
+    let examPoints: String?
     let creditBeforeExamDate: String?
     let creditBeforeExamGrade: String?
-    let creditBeforeExamTeacherName: String?
+    let creditBeforeExamTeacher: String?
+    let creditBeforeExamAttempt: String?
     
     public func getSubjctShort() -> String {
         return "\(self.department)/\(self.subjectShort)"

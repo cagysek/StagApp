@@ -9,7 +9,8 @@ import Foundation
 import CoreData
 
 enum DecoderConfigurationError: Error {
-  case missingManagedObjectContext
+    case missingManagedObjectContext
+    case invalidMapper
 }
 
 @objc(Student)

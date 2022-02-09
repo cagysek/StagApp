@@ -11,6 +11,7 @@ import CoreData
 
 extension CodingUserInfoKey {
     static let context = CodingUserInfoKey(rawValue: "managedObjectContext")!
+    static let mapper = CodingUserInfoKey(rawValue: "mapper")!
 }
 
 extension JSONDecoder {

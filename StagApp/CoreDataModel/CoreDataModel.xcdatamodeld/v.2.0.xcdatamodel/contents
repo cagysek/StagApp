@@ -14,18 +14,24 @@
     </entity>
     <entity name="Subject" representedClassName="Subject" syncable="YES" codeGenerationType="category">
         <attribute name="acknowledged" optional="YES" attributeType="String"/>
+        <attribute name="creditBeforeExamAttempt" optional="YES" attributeType="String"/>
+        <attribute name="creditBeforeExamDate" optional="YES" attributeType="String"/>
+        <attribute name="creditBeforeExamGrade" optional="YES" attributeType="String"/>
+        <attribute name="creditBeforeExamTeacher" optional="YES" attributeType="String"/>
         <attribute name="credits" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="department" optional="YES" attributeType="String"/>
-        <attribute name="examDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="examAttempt" optional="YES" attributeType="String"/>
+        <attribute name="examDate" optional="YES" attributeType="String"/>
         <attribute name="examGrade" optional="YES" attributeType="String"/>
+        <attribute name="examPoints" optional="YES" attributeType="String"/>
+        <attribute name="examTeacher" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="semester" optional="YES" attributeType="String"/>
         <attribute name="short" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
-        <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="year" optional="YES" attributeType="String"/>
         <uniquenessConstraints>
-            <uniquenessConstraint/>
             <uniquenessConstraint>
                 <constraint value="short"/>
                 <constraint value="department"/>
@@ -35,7 +41,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Student" positionX="-54" positionY="-9" width="128" height="179"/>
-        <element name="Subject" positionX="-63" positionY="-18" width="128" height="14"/>
+        <element name="Student" positionX="176.5559692382812" positionY="76.86398315429688" width="128" height="193"/>
+        <element name="Subject" positionX="-94.350830078125" positionY="64.1005859375" width="128" height="299"/>
     </elements>
 </model>

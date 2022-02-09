@@ -64,6 +64,72 @@ final class StagServiceImpl: StagService {
         }.resume()
     }
     
+    
+    public func fetchSubjects(year: String, semester: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void) {
+        var url = self.createUrl(endpoint: APIConstants.subjects)
+        
+        url = url.appending("semestr", value: semester).appending("rok", value: year)
+        
+        var request = URLRequest(url: url)
+        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
+        
+        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if let error = error {
+                completion(.failure(error.localizedDescription as! Error))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder(context: CoreDataManager.getContext())
+
+                let subjects = try decoder.decode(RootSubject.self, from: data!)
+                
+                completion(.success(subjects.subjectResult))
+            } catch let jsonError {
+                print(jsonError)
+                
+                fatalError("JSON Parse error")
+//                completion(.failure(jsonError.localizedDescription as! NSError))
+            }
+            
+        }.resume()
+    }
+    
+    public func fetchSubjectResults(completion: @escaping (Result<[SubjectResult], Error>) -> Void) {
+        var url = self.createUrl(endpoint: APIConstants.subjectResults)
+//        url = url.appending("semestr", value: "ZS").appending("rok", value: "2020")
+        
+        var request = URLRequest(url: url)
+        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
+        
+        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if let error = error {
+                completion(.failure(error.localizedDescription as! Error))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                
+                let subjects = try decoder.decode(SubjectResultDisctionary.self, from: data!)
+                
+                completion(.success(subjects.subjectResult))
+            } catch let jsonError {
+                print(jsonError)
+                
+                fatalError("JSON Parse error")
+//                completion(.failure(jsonError.localizedDescription as! NSError))
+            }
+            
+        }.resume()
+    }
+    
     /**
         Fetch user's data from API
      */
@@ -85,7 +151,7 @@ final class StagServiceImpl: StagService {
      */
     public func fetchExamResults() async throws -> [SubjectResult] {
         
-        let url = self.createUrl(endpoint: APIConstants.examResults)
+        let url = self.createUrl(endpoint: APIConstants.subjectResults)
         
         var request = URLRequest(url: url)
         
