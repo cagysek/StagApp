@@ -15,7 +15,7 @@ struct LoginScreen: View {
     @State private var password: String = ""
     
     @StateObject private var vm = LoginViewModelImpl(
-        stagService: StagServiceImpl()
+        stagService: StagService()
     )
     
     var body: some View {

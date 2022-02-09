@@ -94,47 +94,4 @@ class CoreDataManager: ObservableObject {
         }
     }
     
-    public static func getSubject(department: String, short: String, year: String, semester: String) -> Subject? {
-        let request = NSFetchRequest<Subject>(entityName: "Subject")
-        request.predicate = NSPredicate(
-            format: "department = %@ AND short = %@ AND year = %@ AND semester = %@", department, short, year, semester
-        )
-        
-        do {
-            let data = try self.getContext().fetch(request)
-            
-            return data.first
-            
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-        
-        return nil;
-    }
-    
-    public static func getStudentYearsAndSemesters() -> [[String : String]]?
-    {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Subject")
-        request.returnsObjectsAsFaults = false
-        request.propertiesToGroupBy = ["year", "semester"]
-        request.propertiesToFetch = ["year", "semester"]
-        request.resultType = .dictionaryResultType
-        
-        do {
-            let data = try self.getContext().fetch(request)
-            
-            let dataDict = data as! [[String: String]]
-            
-            return dataDict
-            
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-        
-        return nil;
-    }
-
-    
 }

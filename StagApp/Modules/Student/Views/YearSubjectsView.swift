@@ -10,7 +10,8 @@ import SwiftUI
 
 struct YearSubjectsView: View {
     
-    @Binding var subjectResults: [SubjectResult]
+    @Binding var winterSubjects: [Subject]
+    @Binding var summerSubjects: [Subject]
     
     var body: some View {
         ScrollView(.vertical) {
@@ -43,13 +44,9 @@ struct YearSubjectsView: View {
                     .padding(.leading, 20)
                     .padding(.bottom, -18)
                 
-                ForEach(self.$subjectResults, id: \.self) { subjectResult in
-                    SubjectResultView(subjectResult: subjectResult)
+                ForEach(self.$winterSubjects, id: \.self) { subject in
+                    SubjectResultView(subject: subject)
                 }
-                
-//                SubjectResultView()
-//                SubjectResultView()
-//                SubjectResultView()
                 
                 Text("Letní semestr")
                     .font(.system(size: 24, weight: .bold, design: .rounded))
@@ -57,8 +54,10 @@ struct YearSubjectsView: View {
                     .padding(.bottom, -18)
                     .padding(.top, 25)
                 
-//                SubjectResultView()
-//                SubjectResultView()
+                ForEach(self.$summerSubjects, id: \.self) { subject in
+                    SubjectResultView(subject: subject)
+                }
+
             }
             .padding(.bottom, 20)
         }

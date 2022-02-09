@@ -1,19 +1,20 @@
 import Foundation
 
 
-protocol DataManager {
+protocol IDataManager {
     func syncData()
     func syncUserData()
-    func syncSubjectsResult()
     func syncSubjects()
+    func syncAdditionalSubjectInfo()
 }
 
 
 /// This class pro
 ///
-struct DataManagerImpl: DataManager {
+struct DataManager: IDataManager {
     
-    let stagApiService: StagServiceImpl
+    let stagApiService: IStagService
+    let subjectRepository: ISubjectRepository
     
         
     public func syncData() {
@@ -21,12 +22,8 @@ struct DataManagerImpl: DataManager {
         // saves basic student info
         self.syncUserData()
 
-        // first load all results. Request returns all study data
-        self.syncSubjectsResult()
-
-        // loads subject's full names + credits
+        // first load all subjects results. Request returns all study data
         self.syncSubjects()
-
     }
     
     /// Saves studens data into database
@@ -40,6 +37,7 @@ struct DataManagerImpl: DataManager {
                     
                     CoreDataManager.persistentContainer.viewContext.insert(student)
                     
+                    
                     CoreDataManager.saveContext()
                     
                     
@@ -51,9 +49,9 @@ struct DataManagerImpl: DataManager {
     }
     
     /// Saves additional subject informations into database
-    public func syncSubjects() {
+    public func syncAdditionalSubjectInfo() {
         
-        guard let yearsAndSemesters = CoreDataManager.getStudentYearsAndSemesters() else {
+        guard let yearsAndSemesters = self.subjectRepository.getStudentYearsAndSemesters() else {
             return;
         }
         
@@ -65,20 +63,18 @@ struct DataManagerImpl: DataManager {
             self.stagApiService.fetchSubjects(year: year, semester: semester) { result in
                 switch result {
                 case .success(let subjects):
-                    
                     for subject in subjects {
                         
                         //N+1 problem... IDK how to solve this problem better..
-                        guard let subjectDb = CoreDataManager.getSubject(department: subject.department, short: subject.short, year: year, semester: semester) else {
+                        guard let subjectDb = self.subjectRepository.getSubject(department: subject.department, short: subject.short, year: year, semester: semester) else {
                             continue
                         }
-                        
-                        
-                        CoreDataManager.getContext().insert(self.mapNewPropertiesToSubject(subjectDb: subjectDb, subjectApi: subject))
+
+                        self.subjectRepository.insert(self.mapNewPropertiesToSubject(subjectDb: subjectDb, subjectApi: subject))
                         
                     }
                     
-                    CoreDataManager.saveContext()
+                    self.subjectRepository.saveContext()
                 
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -91,7 +87,7 @@ struct DataManagerImpl: DataManager {
     }
   
     /// Saves student results into database
-    public func syncSubjectsResult() {
+    public func syncSubjects() {
         self.stagApiService.fetchSubjectResults { result in
             switch result {
             case .success(let subjectResults):
@@ -100,13 +96,20 @@ struct DataManagerImpl: DataManager {
                 
                 for subjectResult in subjectResults {
                     
-                    let dbSubject = subjectMapper.mapNewSubjectFromSubjectResult(subjectResult: subjectResult, context: CoreDataManager.getContext())
+                    guard let dbSubject = self.subjectRepository.createNew() else {
+                        continue;
+                    }
                     
-                    CoreDataManager.getContext().insert(dbSubject)
+                    let dbSubjectUpdated = subjectMapper.mapNewSubjectFromSubjectResult(subjectResult: subjectResult, subject: dbSubject)
+                    
+                    self.subjectRepository.insert(dbSubjectUpdated)
                 }
                 
-                CoreDataManager.saveContext()
+                self.subjectRepository.saveContext()
             
+                
+                // loads subject's full names + credits
+                self.syncAdditionalSubjectInfo()
             
             case .failure(let error):
                 print(error.localizedDescription)
@@ -121,6 +124,7 @@ struct DataManagerImpl: DataManager {
         subjectDb.credits = Int16(subjectApi.credits)
         subjectDb.acknowledged = subjectApi.acknowledged
         subjectDb.type = subjectApi.type
+        subjectDb.name = subjectApi.name
        
         return subjectDb
     }

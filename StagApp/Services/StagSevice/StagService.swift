@@ -7,13 +7,17 @@
 
 import Foundation
 
-protocol StagService {
+protocol IStagService {
     func fetch() async throws -> [Credentials]
 //    func fetchStudentInfo() async throws -> StudentInfo
     func fetchExamResults() async throws -> [SubjectResult]
+    
+    func fetchStudentInfo(completion: @escaping (Result<Student, Error>) -> Void)
+    func fetchSubjects(year: String, semester: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void)
+    func fetchSubjectResults(completion: @escaping (Result<[SubjectResult], Error>) -> Void)
 }
 
-final class StagServiceImpl: StagService {
+final class StagService: IStagService {
     
 //    let coreData = CoreDataService()
  
@@ -134,6 +138,7 @@ final class StagServiceImpl: StagService {
         Fetch user's data from API
      */
     public func fetchStudentInfoAsync() async throws -> StudentInfo {
+        print("in")
         let url = self.createUrl(endpoint: APIConstants.studentInfo)
         
         var request = URLRequest(url: url)
@@ -141,7 +146,6 @@ final class StagServiceImpl: StagService {
         let (data, response) = try await self.performRequest(request: &request)
         
         try self.errorHandling(response: response)
-        
         
         return try JSONDecoder().decode(StudentInfo.self, from: data)
     }
@@ -162,8 +166,6 @@ final class StagServiceImpl: StagService {
         let jsonString = String(data: data, encoding: .utf8)
         
         var subjectResultData = try JSONDecoder().decode(SubjectResultDisctionary.self, from: data)
-        
-        
         
         return subjectResultData.subjectResult
     }

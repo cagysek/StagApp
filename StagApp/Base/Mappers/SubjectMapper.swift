@@ -11,10 +11,7 @@ import CoreData
 struct SubjectMapper {
     
     
-    public func mapNewSubjectFromSubjectResult(subjectResult: SubjectResult, context: NSManagedObjectContext) -> Subject {
-        
-        let subject = Subject(context: context)
-        
+    public func mapNewSubjectFromSubjectResult(subjectResult: SubjectResult, subject: Subject) -> Subject {
         
         subject.department = subjectResult.department
         subject.short = subjectResult.subjectShort

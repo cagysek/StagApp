@@ -9,36 +9,31 @@ import SwiftUI
 
 struct YearsScrollView: View {
     
-    @State var selectedYear: Int = 1;
+    @Binding var selectedYear: Int
+    
+    
+    var studyYears: Array<Int>
+    
+    var vm: StudentInfoViewModelImpl
     
     var body: some View {
         ScrollView(.horizontal) {
             
             HStack {
-                Button("2021/22", action: {
-                    self.selectedYear = 1;
-                })
-                .foregroundColor(Color.white)
-                .font(.system(size: 16, weight: .medium, design: .rounded))
-                .if(self.selectedYear == 1) { $0.buttonStyle(BlueCapsuleButtonStyle()) }
-                .if(self.selectedYear != 1) { $0.buttonStyle(WhiteCapsuleButtonStyle()) }
                 
-                
-                Button("2020/21", action: {
-                    self.selectedYear = 2;
-                })
-                .foregroundColor(Color.white)
-                .font(.system(size: 16, weight: .medium, design: .rounded))
-                .if(self.selectedYear == 2) { $0.buttonStyle(BlueCapsuleButtonStyle()) }
-                .if(self.selectedYear != 2) { $0.buttonStyle(WhiteCapsuleButtonStyle()) }
-                
-                Button("2019/20", action: {
-                    self.selectedYear = 3;
-                })
-                .foregroundColor(Color.white)
-                .font(.system(size: 16, weight: .medium, design: .rounded))
-                .if(self.selectedYear == 3) { $0.buttonStyle(BlueCapsuleButtonStyle()) }
-                .if(self.selectedYear != 3) { $0.buttonStyle(WhiteCapsuleButtonStyle()) }
+                ForEach(studyYears, id: \.self) { studyYear in
+                    Button(self.getDisplayYear(year: studyYear), action: {
+                        self.selectedYear = studyYear;
+                        
+                        DispatchQueue.main.async {
+                            vm.updateSubjectData(year: studyYear)
+                        }
+                    })
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                    .if(self.selectedYear == studyYear) { $0.buttonStyle(BlueCapsuleButtonStyle()) }
+                    .if(self.selectedYear != studyYear) { $0.buttonStyle(WhiteCapsuleButtonStyle()) }
+                }
             }
             .padding()
         }
@@ -46,15 +41,14 @@ struct YearsScrollView: View {
         .padding(.bottom, -15)
         .padding(.top, -15)
     }
+    
+    
+    private func getDisplayYear(year: Int) -> String {
+        let nextYearString = String(year + 1)
+        let nextYearSuffix = nextYearString.suffix(2)
+        
+        return "\(year)/\(nextYearSuffix)"
+    }
 
     
-}
-
-
-
-
-struct YearsScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        YearsScrollView()
-    }
 }

@@ -9,7 +9,11 @@ import SwiftUI
 
 struct StudentScreen: View {
     
-    @StateObject var vm = StudentInfoViewModelImpl(stagService: StagServiceImpl())
+    @StateObject var vm = StudentInfoViewModelImpl(stagService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()))
+    
+    @State var studyYears: Array<Int> = []
+    
+    @State var selectedYear: Int = 0
     
     var body: some View {
         ZStack {
@@ -28,14 +32,26 @@ struct StudentScreen: View {
                 
                 StudentInfoView(studentInfoData: self.$vm.studentInfo)
                     
-                YearsScrollView()
+                YearsScrollView(selectedYear: self.$selectedYear, studyYears: self.studyYears, vm: vm)
                 
-                YearSubjectsView(subjectResults: self.$vm.examResults)
+                YearSubjectsView(winterSubjects: self.$vm.winterSubjects, summerSubjects: self.$vm.summerSubjects)
             }
         }
         .foregroundColor(.defaultFontColor)
         .onAppear {
+            
+            
+            self.studyYears = vm.getStudyYears()
+            
+            if self.selectedYear == 0 {
+                if !studyYears.isEmpty {
+                    self.selectedYear = studyYears.first!
+                }
+                
+            }
+            
             vm.getUserData()
+            vm.updateSubjectData(year: selectedYear)
         }
         .task {
             do {
@@ -49,7 +65,7 @@ struct StudentScreen: View {
 
 struct StudentScreen_Previews: PreviewProvider {
     static var previews: some View {
-        StudentScreen()
+        StudentScreen(studyYears: [], selectedYear: 1)
     }
 }
 
