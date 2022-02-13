@@ -8,7 +8,9 @@
 import Foundation
 
 enum APIConstants {
-    static let baseUrl = "https://stag-ws.zcu.cz/ws/services/rest2/"
+    static let baseUrl = "https://stag-demo.zcu.cz/ws/services/rest2/"
+//    static let baseUrl = "https://stag-ws.zcu.cz/ws/services/rest2/"
+
     
     static let schedule = "rozvrhy/getRozvrhByStudent"
     
@@ -17,4 +19,6 @@ enum APIConstants {
     static let studentInfo = "student/getStudentInfo"
     
     static let subjects = "predmety/getPredmetyByStudent"
+    
+    static let scheduleActions = "rozvrhy/getRozvrhByStudent"
 }

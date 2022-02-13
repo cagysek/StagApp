@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol StudentInfoViewModel: ObservableObject {
+protocol IStudentInfoViewModel: ObservableObject {
     func getUserData()
 }
 
 
-final class StudentInfoViewModelImpl: StudentInfoViewModel {
+final class StudentInfoViewModel: IStudentInfoViewModel {
     @Published var studentInfoData: StudentInfo? = nil
     
     @Published var winterSubjects: [Subject] = []

@@ -7,35 +7,38 @@
 
 import SwiftUI
 
-struct ScheduleSubjectView: View {
+struct ScheduleActionView: View {
+    
+    var scheduleAction: ScheduleAction
+    
     var isExercise : Bool = false
     
     var body: some View {
         VStack {
             HStack {
-                Text("08:25 - 10:00")
+                Text(scheduleAction.getTimeOfAction())
                 Spacer()
-                Text("1 h 45 min")
+                Text(scheduleAction.getDuration())
             }
             .font(.system(size: 14, weight: .bold, design: .rounded))
             
             ZStack(alignment: .topLeading) {
                 
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(self.isExercise ? .customLightGreen : .customDarkGray)
+                    .foregroundColor(scheduleAction.getBackgroundColor())
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(self.isExercise ? "Cvičení" : "Přednáška")
+                    Text(scheduleAction.label)
                         .font(.system(size: 14, weight: .regular, design: .rounded))
-                    Text("Architektury softwarových systémů")
+                    Text(scheduleAction.title)
                         .font(.system(size: 16, weight: .bold, design: .rounded))
-                    Text("KIV/SAR")
+                    Text("\(scheduleAction.department)/\(scheduleAction.titleShort)")
                         .font(.system(size: 15, weight: .medium, design: .rounded))
-                    Label("Doc. Ing. Přemysl Brada", systemImage: "person")
+                    Label(scheduleAction.getTeacherNameFormatted(), systemImage: "person")
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                     
                     Label {
-                        Text("UP-120")
+                        Text("\(scheduleAction.building ?? "")-\(scheduleAction.room ?? "")")
                             .font(.system(size: 15, weight: .medium, design: .rounded))
                     } icon: {
                         Image("symbol-pin-2")
@@ -55,8 +58,8 @@ struct ScheduleSubjectView: View {
         
     }
 }
-struct ScheduleSubjectView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScheduleSubjectView()
-    }
-}
+//struct ScheduleSubjectView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ScheduleActionView(scheduleAction: ScheduleAction())
+//    }
+//}

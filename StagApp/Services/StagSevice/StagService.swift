@@ -8,13 +8,24 @@
 import Foundation
 
 protocol IStagService {
+    ///
     func fetch() async throws -> [Credentials]
 //    func fetchStudentInfo() async throws -> StudentInfo
+    
+    /// Fetchs student's exam results async
     func fetchExamResults() async throws -> [SubjectResult]
     
+    /// Fetchs student's basic info
     func fetchStudentInfo(completion: @escaping (Result<Student, Error>) -> Void)
+    
+    /// Fetchs student's subjects
     func fetchSubjects(year: String, semester: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void)
+    
+    /// Fetchs student's exam results
     func fetchSubjectResults(completion: @escaping (Result<[SubjectResult], Error>) -> Void)
+    
+    /// Fetchs student's schedule actions
+    func fetchScheduleActions() async throws -> [ScheduleAction]
 }
 
 final class StagService: IStagService {
@@ -170,6 +181,28 @@ final class StagService: IStagService {
         return subjectResultData.subjectResult
     }
     
+    
+    
+    /**
+        Fetch schedule actions for user
+     */
+    public func fetchScheduleActions() async throws -> [ScheduleAction] {
+        
+        let url = self.createUrl(endpoint: APIConstants.scheduleActions)
+        
+        var request = URLRequest(url: url)
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+        let jsonString = String(data: data, encoding: .utf8)
+        
+        var scheduleActionsData = try JSONDecoder().decode(ScheduleActionsRoot.self, from: data)
+        
+        return scheduleActionsData.scheduleActions
+    }
+    
     /**
         Perform request. Adds general modifications to request
      */
@@ -202,7 +235,7 @@ final class StagService: IStagService {
      */
     private func createUrl(endpoint: String, lang: String = "cs", outputFormat: String = "JSON") -> URL {
         
-        var url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=A19N0025P")
+        var url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=D19B6531P")
         
         return URL(string: url)!
     }

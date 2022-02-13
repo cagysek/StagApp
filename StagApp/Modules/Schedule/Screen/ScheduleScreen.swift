@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ScheduleScreen: View {
+    
+    @StateObject var vm = ScheduleViewModel(stagService: StagService())
+    
     var body: some View {
         ZStack {
             Color.defaultBackground
@@ -27,12 +30,10 @@ struct ScheduleScreen: View {
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-                            ScheduleSubjectView()
-                            ScheduleSubjectView(isExercise: true)
-                            ScheduleSubjectView()
-                            ScheduleSubjectView()
-                            ScheduleSubjectView()
-                            ScheduleSubjectView()
+                            ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
+                                
+                                ScheduleActionView(scheduleAction: scheduleAction)
+                            }
                         }
                         .padding(.bottom, 30)
                         
@@ -46,8 +47,12 @@ struct ScheduleScreen: View {
                 .padding(.trailing)
             }
         }
-        
         .foregroundColor(.defaultFontColor)
+        .task {
+        
+            await vm.loadScheduleActions()
+            
+        }
     }
 }
 

@@ -14,7 +14,7 @@ struct YearsScrollView: View {
     
     var studyYears: Array<Int>
     
-    var vm: StudentInfoViewModelImpl
+    var vm: StudentInfoViewModel
     
     var body: some View {
         ScrollView(.horizontal) {

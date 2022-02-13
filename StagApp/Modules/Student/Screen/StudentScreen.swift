@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StudentScreen: View {
     
-    @StateObject var vm = StudentInfoViewModelImpl(stagService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()))
+    @StateObject var vm = StudentInfoViewModel(stagService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()))
     
     @State var studyYears: Array<Int> = []
     

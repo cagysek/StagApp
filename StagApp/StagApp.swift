@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct StagApp: App {
+
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, CoreDataManager.getContext())
+                .environment(\.managedObjectContext, CoreDataManager.getContext())                
         }
     }
 }
