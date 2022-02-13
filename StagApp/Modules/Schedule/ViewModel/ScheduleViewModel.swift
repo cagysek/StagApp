@@ -25,6 +25,8 @@ class ScheduleViewModel: IScheduleViewModel {
     
     
     public func loadScheduleActions() async -> Void {
+        
+        
         do {
             
             self.scheduleActions = try await stagService.fetchScheduleActions()

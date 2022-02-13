@@ -15,33 +15,34 @@ struct ScheduleScreen: View {
         ZStack {
             Color.defaultBackground
                 .ignoresSafeArea()
-            
+
             VStack {
                 HStack(alignment:.bottom) {
                     Text("Rozvrh")
                         .font(.system(size: 32, weight: .bold, design: .rounded))
-                    
+
                     Spacer()
                 }
                 .padding()
-                
+
                 VStack {
-                    ScheduleDateTimeFilterView()
-                    
+                    CalendarRootView()
+//                    ScheduleDateTimeFilterView()
+
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
                             ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
-                                
+
                                 ScheduleActionView(scheduleAction: scheduleAction)
                             }
                         }
                         .padding(.bottom, 30)
-                        
+
                     }
                     .padding(.leading, -15)
                     .padding(.trailing, -15)
                     .padding(.bottom, -15)
-                    
+
                 }
                 .padding(.leading)
                 .padding(.trailing)
@@ -49,9 +50,9 @@ struct ScheduleScreen: View {
         }
         .foregroundColor(.defaultFontColor)
         .task {
-        
+
             await vm.loadScheduleActions()
-            
+
         }
     }
 }
