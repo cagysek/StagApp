@@ -26,3 +26,7 @@ extension String {
         return titledName
     }
 }
+
+extension StringProtocol {
+    var firstCapitalized: String { return prefix(1).capitalized + dropFirst() }
+}

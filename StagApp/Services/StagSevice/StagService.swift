@@ -24,8 +24,8 @@ protocol IStagService {
     /// Fetchs student's exam results
     func fetchSubjectResults(completion: @escaping (Result<[SubjectResult], Error>) -> Void)
     
-    /// Fetchs student's schedule actions
-    func fetchScheduleActions() async throws -> [ScheduleAction]
+    /// Fetchs student's schedule actions for specific date
+    func fetchScheduleActions(for date: Date) async throws -> [ScheduleAction]
 }
 
 final class StagService: IStagService {
@@ -149,7 +149,6 @@ final class StagService: IStagService {
         Fetch user's data from API
      */
     public func fetchStudentInfoAsync() async throws -> StudentInfo {
-        print("in")
         let url = self.createUrl(endpoint: APIConstants.studentInfo)
         
         var request = URLRequest(url: url)
@@ -186,17 +185,21 @@ final class StagService: IStagService {
     /**
         Fetch schedule actions for user
      */
-    public func fetchScheduleActions() async throws -> [ScheduleAction] {
+    public func fetchScheduleActions(for date: Date) async throws -> [ScheduleAction] {
         
-        let url = self.createUrl(endpoint: APIConstants.scheduleActions)
+        var url = self.createUrl(endpoint: APIConstants.scheduleActions)
+        url = url.appending("datumOd", value: DateFormatter.basic.string(from: date))
+                 .appending("datumDo", value: DateFormatter.basic.string(from: date))
         
         var request = URLRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
+        let jsonString = String(data: data, encoding: .utf8)
+        
         try self.errorHandling(response: response)
         
-        let jsonString = String(data: data, encoding: .utf8)
+        
         
         var scheduleActionsData = try JSONDecoder().decode(ScheduleActionsRoot.self, from: data)
         

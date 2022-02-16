@@ -8,7 +8,7 @@
 import Foundation
 
 protocol IScheduleViewModel: ObservableObject {
-    func loadScheduleActions() async -> Void
+    func loadScheduleActions(for date: Date) async -> Void
 }
 
 
@@ -24,12 +24,10 @@ class ScheduleViewModel: IScheduleViewModel {
     }
     
     
-    public func loadScheduleActions() async -> Void {
-        
-        
+    public func loadScheduleActions(for date: Date) async -> Void {
         do {
             
-            self.scheduleActions = try await stagService.fetchScheduleActions()
+            self.scheduleActions = try await stagService.fetchScheduleActions(for: date)
             
         } catch {
             print(error)
