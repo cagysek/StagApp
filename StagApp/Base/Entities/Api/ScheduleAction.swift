@@ -45,8 +45,8 @@ public struct ScheduleAction: Decodable {
     let type: String
     let howOften: String
     let howOftenShort: String
-    let timeFrom: Time?
-    let timeTo: Time?
+    let timeFrom: ValueProperty?
+    let timeTo: ValueProperty?
     
     
     public func getTimeOfAction() -> String {
@@ -119,33 +119,6 @@ public struct ScheduleAction: Decodable {
     }
 }
 
-
-
-public struct Teacher: Decodable {
- 
-    enum CodingKeys: String, CodingKey {
-        case id = "ucitIdno"
-        case firstname = "jmeno"
-        case lastname = "prijmeni"
-        case titleBefore = "titulPred"
-        case titleAfter = "titulZa"
-    }
-    
-    let id: Int
-    let firstname: String
-    let lastname: String
-    let titleBefore: String?
-    let titleAfter: String?
-}
-
-public struct Time: Decodable {
-    
-    enum CodingKeys: String, CodingKey {
-        case value = "value"
-    }
-    
-    let value: String
-}
 
 public struct ScheduleActionsRoot: Decodable {
     

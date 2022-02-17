@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ExamsScreen: View {
+    
+    @StateObject var vm = ExamsViewModel(stagService: StagService())
+    
     var body: some View {
         ZStack {
             Color.defaultBackground
@@ -73,6 +76,9 @@ struct ExamsScreen: View {
                 
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
+                .task {
+                    await vm.loadExams()
+                }
                     
             }
         }

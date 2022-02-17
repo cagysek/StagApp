@@ -26,6 +26,9 @@ protocol IStagService {
     
     /// Fetchs student's schedule actions for specific date
     func fetchScheduleActions(for date: Date) async throws -> [ScheduleAction]
+    
+    /// Fetchs student's exam dates
+    func fetchExamDates() async throws -> [Exam]
 }
 
 final class StagService: IStagService {
@@ -36,6 +39,8 @@ final class StagService: IStagService {
         case failed
         case failedToDecode
         case invalidStatusCode
+        case notAuthorized
+        case unknowError
     }
     
     func fetch() async throws -> [Credentials] {
@@ -206,6 +211,23 @@ final class StagService: IStagService {
         return scheduleActionsData.scheduleActions
     }
     
+    public func fetchExamDates() async throws -> [Exam] {
+        
+        let url = self.createUrl(endpoint: APIConstants.exams)
+        
+        var request = URLRequest(url: url)
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        let jsonString = String(data: data, encoding: .utf8)
+        
+        try self.errorHandling(response: response)
+        
+        let examsData = try JSONDecoder().decode(ExamRoot.self, from: data)
+        
+        return examsData.exams
+    }
+    
     /**
         Perform request. Adds general modifications to request
      */
@@ -224,10 +246,17 @@ final class StagService: IStagService {
         Validate status code of response. If code is not 200, throws error according to status code
      */
     private func errorHandling(response: URLResponse) throws {
-        guard let response = response as? HTTPURLResponse,
-              response.statusCode == 200 else {
-                  throw StagServiceError.invalidStatusCode
-              }
+        guard let response = response as? HTTPURLResponse else {
+            throw StagServiceError.unknowError
+        }
+        
+        if (response.statusCode == 200) {
+            return
+        } else if (response.statusCode == 403) {
+            throw StagServiceError.notAuthorized
+        }
+               
+        throw StagServiceError.invalidStatusCode
     }
     
     /**
@@ -238,7 +267,7 @@ final class StagService: IStagService {
      */
     private func createUrl(endpoint: String, lang: String = "cs", outputFormat: String = "JSON") -> URL {
         
-        let url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=D19B6531P")
+        let url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=Z20B6809K")
         
         return URL(string: url)!
     }
