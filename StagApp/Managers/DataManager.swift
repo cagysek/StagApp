@@ -70,11 +70,11 @@ struct DataManager: IDataManager {
                             continue
                         }
 
-                        self.subjectRepository.insert(self.mapNewPropertiesToSubject(subjectDb: subjectDb, subjectApi: subject))
+                        _ = self.subjectRepository.insert(self.mapNewPropertiesToSubject(subjectDb: subjectDb, subjectApi: subject))
                         
                     }
                     
-                    self.subjectRepository.saveContext()
+                    _ = self.subjectRepository.saveContext()
                 
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -102,10 +102,10 @@ struct DataManager: IDataManager {
                     
                     let dbSubjectUpdated = subjectMapper.mapNewSubjectFromSubjectResult(subjectResult: subjectResult, subject: dbSubject)
                     
-                    self.subjectRepository.insert(dbSubjectUpdated)
+                    _ = self.subjectRepository.insert(dbSubjectUpdated)
                 }
                 
-                self.subjectRepository.saveContext()
+                _ = self.subjectRepository.saveContext()
             
                 
                 // loads subject's full names + credits

@@ -114,7 +114,7 @@ final class StagService: IStagService {
     }
     
     public func fetchSubjectResults(completion: @escaping (Result<[SubjectResult], Error>) -> Void) {
-        var url = self.createUrl(endpoint: APIConstants.subjectResults)
+        let url = self.createUrl(endpoint: APIConstants.subjectResults)
 //        url = url.appending("semestr", value: "ZS").appending("rok", value: "2020")
         
         var request = URLRequest(url: url)
@@ -173,9 +173,9 @@ final class StagService: IStagService {
         
         try self.errorHandling(response: response)
         
-        let jsonString = String(data: data, encoding: .utf8)
+//        let jsonString = String(data: data, encoding: .utf8)
         
-        var subjectResultData = try JSONDecoder().decode(SubjectResultDisctionary.self, from: data)
+        let subjectResultData = try JSONDecoder().decode(SubjectResultDisctionary.self, from: data)
         
         return subjectResultData.subjectResult
     }
@@ -195,13 +195,13 @@ final class StagService: IStagService {
         
         let (data, response) = try await self.performRequest(request: &request)
         
-        let jsonString = String(data: data, encoding: .utf8)
+//        let jsonString = String(data: data, encoding: .utf8)
         
         try self.errorHandling(response: response)
         
         
         
-        var scheduleActionsData = try JSONDecoder().decode(ScheduleActionsRoot.self, from: data)
+        let scheduleActionsData = try JSONDecoder().decode(ScheduleActionsRoot.self, from: data)
         
         return scheduleActionsData.scheduleActions
     }
@@ -238,7 +238,7 @@ final class StagService: IStagService {
      */
     private func createUrl(endpoint: String, lang: String = "cs", outputFormat: String = "JSON") -> URL {
         
-        var url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=D19B6531P")
+        let url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=D19B6531P")
         
         return URL(string: url)!
     }

@@ -34,7 +34,8 @@ class CoreDataManager: ObservableObject {
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
             
-            print(container.persistentStoreCoordinator.persistentStores.first?.url)
+            
+            print(container.persistentStoreCoordinator.persistentStores.first!.url ?? "Container not found")
             
             if let error = error as NSError? {
 
@@ -74,8 +75,10 @@ class CoreDataManager: ObservableObject {
             
             return data.first
         } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            let nserror = error as NSError
+//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            
+            print(error)
         }
         
         return nil

@@ -53,13 +53,6 @@ struct StudentScreen: View {
             vm.getUserData()
             vm.updateSubjectData(year: selectedYear)
         }
-        .task {
-            do {
-//                try await vm.getUserData()
-            } catch {
-                print(error)
-            }
-        }
     }
 }
 

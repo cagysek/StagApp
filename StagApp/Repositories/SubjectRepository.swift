@@ -63,8 +63,9 @@ class SubjectRepository: ISubjectRepository {
             return try self.context.fetch(request)
             
         } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            let nserror = error as NSError
+//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            print(error)
         }
         
         return []
@@ -87,8 +88,9 @@ class SubjectRepository: ISubjectRepository {
             return dataDict
             
         } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            let nserror = error as NSError
+            print(error)
+            
         }
         
         return nil;
@@ -112,8 +114,9 @@ class SubjectRepository: ISubjectRepository {
             return dataDict
             
         } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            let nserror = error as NSError
+//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            print(error)
         }
         
         return nil;
