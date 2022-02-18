@@ -15,7 +15,7 @@ protocol IExamsViewModel: ObservableObject {
 @MainActor
 class ExamsViewModel: IExamsViewModel {
     
-    @Published var exams: [Exam] = []
+    @Published var exams: [String: [Exam]] = [:]
     
     let stagService: IStagService
     
@@ -25,11 +25,25 @@ class ExamsViewModel: IExamsViewModel {
     
     public func loadExams() async -> Void {
         do {
-            self.exams = try await self.stagService.fetchExamDates()
-            
+            self.exams = try await self.prepareDataForView(data: self.stagService.fetchExamDates())
         } catch {
             print(error)
         }
+    }
+    
+    private func prepareDataForView(data: [Exam]) -> [String: [Exam]] {
+        
+        return Dictionary(grouping: data, by: { $0.subject })
+        
+//        return data.reduce(into: [String: [Exam]]()) { (dictionary, exam) -> [String: [Exam]] in
+//
+//            if (dictionary[exam.subject] != nil) {
+//                dictionary[exam.subject] = dictionary[exam.subject].append(contentsOf: exam)
+//            }
+//            else {
+//                dictionary[exam.subject] = [exam]
+//            }
+//        }
     }
     
 }

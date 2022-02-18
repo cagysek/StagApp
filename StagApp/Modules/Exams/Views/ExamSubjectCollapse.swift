@@ -10,7 +10,7 @@ import SwiftUI
 struct ExamSubjectCollapse<Content: View>: View {
     @State var label: () -> Text
     @State var content: () -> Content
-    @State var sections: CGFloat
+    @State var sections: Int
     
     @State private var isCollapsed: Bool = true
     
@@ -40,10 +40,10 @@ struct ExamSubjectCollapse<Content: View>: View {
                 self.content()
                     
             }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: self.isCollapsed ? 0 : (222 * self.sections))
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: self.isCollapsed ? 0 : (400 * CGFloat(self.sections)))
             .clipped()
-            .offset(y: -50)
-            .padding(.bottom, -50)
+            .offset(y: -35) // moving collapse content up (button + VStack looks like one element)
+            .padding(.bottom, -20) // moving next collapse up
             .allowsHitTesting(!self.isCollapsed)
             .shadow(color: .shadow, radius: 8)
             

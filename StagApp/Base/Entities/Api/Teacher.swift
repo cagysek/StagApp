@@ -22,4 +22,9 @@ public struct Teacher: Decodable {
     let lastname: String
     let titleBefore: String?
     let titleAfter: String?
+    
+    
+    public func getFormattedName() -> String {
+        return ("\(self.firstname) \(self.lastname)").addTitles(titleBefore: self.titleBefore, titleAfter: self.titleAfter)
+    }
 }

@@ -28,49 +28,54 @@ struct ExamsScreen: View {
                 
                     VStack(spacing: 10) {
                         
-                        ExamSubjectCollapse(
-                            label: { Text("KIV/FJP (3)") },
-                            content: {
-                                ZStack(alignment: .top) {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill()
-                                            .foregroundColor(.white)
-                                    VStack {
-                                        ExamTermView(isAvailable: true)
-                                        ExamTermView()
-                                        ExamTermView(isAvailable: true)
-                                        
+                        ForEach(Array(self.vm.exams), id: \.key) { subject, exams in
+                            ExamSubjectCollapse(
+                                label: { Text("\(exams.first!.department)/\(exams.first!.subject) (\(exams.count))") },
+                                content: {
+                                    ZStack(alignment: .top) {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill()
+                                                .foregroundColor(.white)
+                                        VStack {
+                                            ForEach(exams, id: \.id) { exam in
+                                                ExamTermView(exam: exam)
+                                            }
+
+
+                                        }
+                                        .padding(.top, 40)
                                     }
-                                    .padding(.top, 40)
-                                }
-                                .frame(maxWidth: .infinity)
-                                
-                                
-                            },
-                            sections: 3
-                        )
+                                    .frame(maxWidth: .infinity)
+
+
+                                },
+                                sections: exams.count
+                            )
+                        }
+                        
+                        
                             
                         
-                        ExamSubjectCollapse(
-                            label: { Text("KIV/UPS (2)") },
-                            content: {
-                                ZStack(alignment: .top) {
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill()
-                                            .foregroundColor(.white)
-                                    VStack {
-                                        ExamTermView(isAvailable: true)
-                                        ExamTermView()
-                                        
-                                    }
-                                    .padding(.top, 40)
-                                }
-                                .frame(maxWidth: .infinity)
-                                
-                                
-                            },
-                            sections: 2
-                        )
+//                        ExamSubjectCollapse(
+//                            label: { Text("KIV/UPS (2)") },
+//                            content: {
+//                                ZStack(alignment: .top) {
+//                                    RoundedRectangle(cornerRadius: 12)
+//                                        .fill()
+//                                            .foregroundColor(.white)
+//                                    VStack {
+//                                        ExamTermView(isAvailable: true)
+//                                        ExamTermView()
+//
+//                                    }
+//                                    .padding(.top, 40)
+//                                }
+//                                .frame(maxWidth: .infinity)
+//
+//
+//                            },
+//                            sections: 2
+//                        )
                     }
                 }
                 

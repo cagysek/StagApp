@@ -91,14 +91,6 @@ public struct ScheduleAction: Decodable {
         return "\(Int(hour)) h \(Int(minute)) min"
     }
     
-    public func getTeacherNameFormatted() -> String {
-        if (self.teacher == nil) {
-            return ""
-        }
-        
-        return ("\(teacher!.firstname) \(teacher!.lastname)").addTitles(titleBefore: teacher!.titleBefore, titleAfter: teacher!.titleAfter)
-    }
-    
     public func getBackgroundColor() -> Color {
         if (self.labelShort == "Se") {
             

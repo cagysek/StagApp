@@ -30,12 +30,13 @@ struct Exam: Decodable {
         case enrolled = "zapsan"
         case isEnrollable = "lzeZapsatOdepsat"
         case limitEnrollableCode = "kodDuvoduProcNelzeZapsatOdepsat"
-        case textDuvoduProcNelzeZapsatOdepsat = "textDuvoduProcNelzeZapsatOdepsat"
+        case limitEnrollableMsg = "textDuvoduProcNelzeZapsatOdepsat"
         case limitEnrollableDescription = "popisDuvoduProcNelzeZapsatOdepsat"
+        case note = "poznamka"
     }
     
     let id: Int
-    let teacher: Teacher
+    let teacher: Teacher?
     let subject: String
     let department: String
     let year: String
@@ -54,8 +55,9 @@ struct Exam: Decodable {
     let enrolled: Bool
     let isEnrollable: Bool
     let limitEnrollableCode: String?
-    let textDuvoduProcNelzeZapsatOdepsat: String?
+    let limitEnrollableMsg: String?
     let limitEnrollableDescription: String?
+    let note: String?
     
 }
 
