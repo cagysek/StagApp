@@ -29,6 +29,12 @@ protocol IStagService {
     
     /// Fetchs student's exam dates
     func fetchExamDates() async throws -> [Exam]
+    
+    /// Log in student to exam
+    func fetchExamLogIn(examId: Int) async throws -> String?
+    
+    /// Logout student from exam
+    func fetchExamLogOut(examId: Int) async throws -> String?
 }
 
 final class StagService: IStagService {
@@ -200,8 +206,6 @@ final class StagService: IStagService {
         
         let (data, response) = try await self.performRequest(request: &request)
         
-//        let jsonString = String(data: data, encoding: .utf8)
-        
         try self.errorHandling(response: response)
         
         
@@ -215,17 +219,43 @@ final class StagService: IStagService {
         
         let url = self.createUrl(endpoint: APIConstants.exams)
         
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 0)
+        
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+        print(String(data: data, encoding: .utf8))
+        let examsData = try JSONDecoder().decode(ExamRoot.self, from: data)
+        
+        return examsData.exams
+    }
+    
+    public func fetchExamLogIn(examId: Int) async throws -> String? {
+        
+        let url = self.createUrl(endpoint: APIConstants.examsLogIn).appending("termIdno", value: String(examId))
+        
         var request = URLRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
-        let jsonString = String(data: data, encoding: .utf8)
+        try self.errorHandling(response: response)
+        
+        return String(data: data, encoding: .utf8)
+    }
+    
+    public func fetchExamLogOut(examId: Int) async throws -> String? {
+        
+        let url = self.createUrl(endpoint: APIConstants.examsLogOut).appending("termIdno", value: String(examId))
+        
+        var request = URLRequest(url: url)
+        
+        let (data, response) = try await self.performRequest(request: &request)
         
         try self.errorHandling(response: response)
         
-        let examsData = try JSONDecoder().decode(ExamRoot.self, from: data)
-        
-        return examsData.exams
+        return String(data: data, encoding: .utf8)
     }
     
     /**
@@ -233,7 +263,10 @@ final class StagService: IStagService {
      */
     private func performRequest(request: inout URLRequest) async throws -> (Data, URLResponse)
     {
-        let urlSession = URLSession.shared
+        let configuration = URLSessionConfiguration.ephemeral
+        
+        
+        let urlSession = URLSession(configuration: configuration)
         
         let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
         
@@ -267,7 +300,7 @@ final class StagService: IStagService {
      */
     private func createUrl(endpoint: String, lang: String = "cs", outputFormat: String = "JSON") -> URL {
         
-        let url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=Z20B6809K")
+        let url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=\(SecretConstants.username)&stagUser=\(SecretConstants.username)")
         
         return URL(string: url)!
     }

@@ -24,26 +24,59 @@ class ExamsViewModel: IExamsViewModel {
     }
     
     public func loadExams() async -> Void {
+        
         do {
+            self.exams = [:]
             self.exams = try await self.prepareDataForView(data: self.stagService.fetchExamDates())
         } catch {
             print(error)
         }
+        
     }
     
     private func prepareDataForView(data: [Exam]) -> [String: [Exam]] {
-        
         return Dictionary(grouping: data, by: { $0.subject })
+    }
+    
+    
+    public func logInToExam(examId: Int) async -> Bool {
         
-//        return data.reduce(into: [String: [Exam]]()) { (dictionary, exam) -> [String: [Exam]] in
-//
-//            if (dictionary[exam.subject] != nil) {
-//                dictionary[exam.subject] = dictionary[exam.subject].append(contentsOf: exam)
-//            }
-//            else {
-//                dictionary[exam.subject] = [exam]
-//            }
-//        }
+      
+        do {
+            let result = try await self.stagService.fetchExamLogIn(examId: examId)
+            
+            if (result == "OK") {
+                return true
+            }
+            
+            print(result)
+            
+        } catch {
+            print(error)
+            
+            return false
+        }
+
+        return false
+    }
+    
+    public func logOutFromExam(examId: Int) async -> Bool {
+        do {
+            let result = try await self.stagService.fetchExamLogOut(examId: examId)
+            
+            if (result == "OK") {
+                return true
+            }
+            
+            print(result)
+            
+        } catch {
+            print(error)
+            
+            return false
+        }
+        
+        return false
     }
     
 }

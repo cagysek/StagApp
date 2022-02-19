@@ -20,7 +20,7 @@ extension String {
         titledName += self
         
         if (!(titleAfter ?? "").isEmpty) {
-            titledName += titleAfter! + " "
+            titledName += " " + titleAfter!
         }
         
         return titledName

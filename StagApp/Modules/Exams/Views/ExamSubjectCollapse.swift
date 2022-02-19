@@ -46,7 +46,6 @@ struct ExamSubjectCollapse<Content: View>: View {
             .padding(.bottom, -20) // moving next collapse up
             .allowsHitTesting(!self.isCollapsed)
             .shadow(color: .shadow, radius: 8)
-            
         }
         
     }

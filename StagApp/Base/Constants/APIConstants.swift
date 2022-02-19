@@ -23,4 +23,8 @@ enum APIConstants {
     static let scheduleActions = "rozvrhy/getRozvrhByStudent"
     
     static let exams = "terminy/getTerminyProStudenta"
+    
+    static let examsLogIn = "terminy/zapisStudentaNaTermin"
+    
+    static let examsLogOut = "terminy/odhlasStudentaZTerminu"
 }

@@ -26,13 +26,10 @@ class ScheduleViewModel: IScheduleViewModel {
     
     public func loadScheduleActions(for date: Date) async -> Void {
         do {
-            
             self.scheduleActions = try await stagService.fetchScheduleActions(for: date)
-            
         } catch {
             print(error)
         }
     }
-    
     
 }

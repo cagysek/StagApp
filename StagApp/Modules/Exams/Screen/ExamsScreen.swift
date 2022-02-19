@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ExamsScreen: View {
     
-    @StateObject var vm = ExamsViewModel(stagService: StagService())
+    @ObservedObject var vm = ExamsViewModel(stagService: StagService())
+    
+//    @ObservedObject var data: [String: [Exam]]
     
     var body: some View {
         ZStack {
@@ -38,10 +40,8 @@ struct ExamsScreen: View {
                                                 .foregroundColor(.white)
                                         VStack {
                                             ForEach(exams, id: \.id) { exam in
-                                                ExamTermView(exam: exam)
+                                                ExamTermView(exam: exam, vm: self.vm)
                                             }
-
-
                                         }
                                         .padding(.top, 40)
                                     }
@@ -52,30 +52,6 @@ struct ExamsScreen: View {
                                 sections: exams.count
                             )
                         }
-                        
-                        
-                            
-                        
-//                        ExamSubjectCollapse(
-//                            label: { Text("KIV/UPS (2)") },
-//                            content: {
-//                                ZStack(alignment: .top) {
-//                                    RoundedRectangle(cornerRadius: 12)
-//                                        .fill()
-//                                            .foregroundColor(.white)
-//                                    VStack {
-//                                        ExamTermView(isAvailable: true)
-//                                        ExamTermView()
-//
-//                                    }
-//                                    .padding(.top, 40)
-//                                }
-//                                .frame(maxWidth: .infinity)
-//
-//
-//                            },
-//                            sections: 2
-//                        )
                     }
                 }
                 
