@@ -17,6 +17,7 @@ protocol ISubjectRepository {
     func createNew() -> Subject?
     func getStudyYears() -> [[String : String]]?
     func getSubjects(year: Int, semester: String) -> [Subject]
+    func deleteAll() -> Void
 }
 
 class SubjectRepository: ISubjectRepository {
@@ -128,6 +129,19 @@ class SubjectRepository: ISubjectRepository {
     
     public func insert(_ subject: Subject) -> Result<Bool, Error> {
         return self.repository.insert(subject)
+    }
+    
+    public func deleteAll() -> Void {
+        do {
+            let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Subject")
+            let deleteAll = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+            
+            try self.context.execute(deleteAll)
+            
+            _ = self.saveContext()
+        } catch {
+            
+        }
     }
     
     public func createNew() -> Subject? {

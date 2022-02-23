@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var selection = 0
     
     @State var isLogged : Bool = false
+    
+    @State var university: University? = nil
 
     init() {
         // init tabBar top shaddow
@@ -57,7 +59,7 @@ struct ContentView: View {
             .accentColor(Color.customBlue)
         }
         else {
-            LoginScreen(isLogged: $isLogged)
+            LoginScreen(isLogged: $isLogged, university: $university)
         }
     }
 }

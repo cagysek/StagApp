@@ -88,6 +88,8 @@ struct DataManager: IDataManager {
   
     /// Saves student results into database
     public func syncSubjects() {
+        self.subjectRepository.deleteAll();
+        
         self.stagApiService.fetchSubjectResults { result in
             switch result {
             case .success(let subjectResults):
