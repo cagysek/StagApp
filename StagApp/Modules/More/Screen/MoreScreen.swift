@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MoreScreen: View {
+    
+    @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = true
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -59,6 +62,9 @@ struct MoreScreen: View {
                         
                         
                         Text("Odhlásit se")
+                            .onTapGesture {
+                                self.isLogged = false
+                            }
                     }
                     .listStyle(.grouped)
                     .listSectionSeparator(.hidden, edges: .all)
