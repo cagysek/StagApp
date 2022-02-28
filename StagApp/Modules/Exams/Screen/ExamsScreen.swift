@@ -30,27 +30,38 @@ struct ExamsScreen: View {
                 
                     VStack(spacing: 10) {
                         
-                        ForEach(Array(self.vm.exams), id: \.key) { subject, exams in
-                            ExamSubjectCollapse(
-                                label: { Text("\(exams.first!.department)/\(exams.first!.subject) (\(exams.count))") },
-                                content: {
-                                    ZStack(alignment: .top) {
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .fill()
-                                                .foregroundColor(.white)
-                                        VStack {
-                                            ForEach(exams, id: \.id) { exam in
-                                                ExamTermView(exam: exam, vm: self.vm)
+                        if (!self.vm.exams.isEmpty) {
+                            ForEach(Array(self.vm.exams), id: \.key) { subject, exams in
+                                ExamSubjectCollapse(
+                                    label: { Text("\(exams.first!.department)/\(exams.first!.subject) (\(exams.count))") },
+                                    content: {
+                                        ZStack(alignment: .top) {
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .fill()
+                                                    .foregroundColor(.white)
+                                            VStack {
+                                                ForEach(exams, id: \.id) { exam in
+                                                    ExamTermView(exam: exam, vm: self.vm)
+                                                }
                                             }
+                                            .padding(.top, 40)
                                         }
-                                        .padding(.top, 40)
-                                    }
-                                    .frame(maxWidth: .infinity)
-
-
-                                },
-                                sections: exams.count
-                            )
+                                        .frame(maxWidth: .infinity)
+                                    },
+                                    sections: exams.count
+                                )
+                            }
+                        }
+                        else {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill()
+                                    .foregroundColor(Color.white)
+                                    .frame(height: 90)
+                                    .shadow(color: Color.shadow, radius: 8)
+                                
+                                Text("Žádné vypsané zkoušky 🏝🏄").font(.system(size: 19, weight: .regular, design: .rounded))
+                            }
                         }
                     }
                 }

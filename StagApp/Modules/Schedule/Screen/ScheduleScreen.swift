@@ -31,10 +31,26 @@ struct ScheduleScreen: View {
 
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-                            ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
-
-                                ScheduleActionView(scheduleAction: scheduleAction)
+                            if (!self.vm.scheduleActions.isEmpty) {
+                                ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
+                                    ScheduleActionView(scheduleAction: scheduleAction)
+                                }
                             }
+                            else {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill()
+                                        .foregroundColor(Color.white)
+                                        .frame(height: 90)
+                                        .shadow(color: Color.shadow, radius: 8)
+                                    
+                                    Text("Dnes nemáš žádnou výuku! ☀️").font(.system(size: 16, weight: .regular, design: .rounded))
+                                }
+                                .padding()
+                            }
+                            
+                            
+                            
                         }
                         .padding(.bottom, 30)
 
