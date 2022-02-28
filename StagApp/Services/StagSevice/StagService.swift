@@ -66,10 +66,7 @@ final class StagService: IStagService {
     public func fetchStudentInfo(completion: @escaping (Result<Student, Error>) -> Void) {
         let url = self.createUrl(endpoint: APIConstants.studentInfo)
         
-        var request = URLRequest(url: url)
-        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
-        
-        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+        let request = self.getBaseRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -96,10 +93,7 @@ final class StagService: IStagService {
         
         url = url.appending("semestr", value: semester).appending("rok", value: year)
         
-        var request = URLRequest(url: url)
-        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
-        
-        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+        let request = self.getBaseRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
@@ -117,6 +111,8 @@ final class StagService: IStagService {
             } catch let jsonError {
                 print(jsonError)
                 
+                print(String(data: data!, encoding: .utf8))
+                
                 fatalError("JSON Parse error")
 //                completion(.failure(jsonError.localizedDescription as! NSError))
             }
@@ -128,10 +124,9 @@ final class StagService: IStagService {
         let url = self.createUrl(endpoint: APIConstants.subjectResults)
 //        url = url.appending("semestr", value: "ZS").appending("rok", value: "2020")
         
-        var request = URLRequest(url: url)
-        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
+        var request = self.getBaseRequest(url: url)
         
-        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+    
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
@@ -149,6 +144,8 @@ final class StagService: IStagService {
             } catch let jsonError {
                 print(jsonError)
                 
+                print(String(data: data!, encoding: .utf8))
+                
                 fatalError("JSON Parse error")
 //                completion(.failure(jsonError.localizedDescription as! NSError))
             }
@@ -162,7 +159,7 @@ final class StagService: IStagService {
     public func fetchStudentInfoAsync() async throws -> StudentInfo {
         let url = self.createUrl(endpoint: APIConstants.studentInfo)
         
-        var request = URLRequest(url: url)
+        var request = getBaseRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -178,7 +175,7 @@ final class StagService: IStagService {
         
         let url = self.createUrl(endpoint: APIConstants.subjectResults)
         
-        var request = URLRequest(url: url)
+        var request = self.getBaseRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -202,7 +199,7 @@ final class StagService: IStagService {
         url = url.appending("datumOd", value: DateFormatter.basic.string(from: date))
                  .appending("datumDo", value: DateFormatter.basic.string(from: date))
         
-        var request = URLRequest(url: url)
+        var request = self.getBaseRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -219,14 +216,16 @@ final class StagService: IStagService {
         
         let url = self.createUrl(endpoint: APIConstants.exams)
         
-        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 0)
+        var request = self.getBaseRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        request.timeoutInterval = 0
         
         
         let (data, response) = try await self.performRequest(request: &request)
         
         try self.errorHandling(response: response)
         
-        print(String(data: data, encoding: .utf8))
+//        print(String(data: data, encoding: .utf8))
         let examsData = try JSONDecoder().decode(ExamRoot.self, from: data)
         
         return examsData.exams
@@ -236,7 +235,7 @@ final class StagService: IStagService {
         
         let url = self.createUrl(endpoint: APIConstants.examsLogIn).appending("termIdno", value: String(examId))
         
-        var request = URLRequest(url: url)
+        var request = getBaseRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -249,7 +248,7 @@ final class StagService: IStagService {
         
         let url = self.createUrl(endpoint: APIConstants.examsLogOut).appending("termIdno", value: String(examId))
         
-        var request = URLRequest(url: url)
+        var request = self.getBaseRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -265,12 +264,7 @@ final class StagService: IStagService {
     {
         let configuration = URLSessionConfiguration.ephemeral
         
-        
         let urlSession = URLSession(configuration: configuration)
-        
-        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
-        
-        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
         
         return try await urlSession.data(for: request)
     }
@@ -303,5 +297,15 @@ final class StagService: IStagService {
         let url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=\(SecretConstants.username)&stagUser=\(SecretConstants.username)")
         
         return URL(string: url)!
+    }
+    
+    private func getBaseRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        
+        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
+        
+        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+        
+        return request
     }
 }

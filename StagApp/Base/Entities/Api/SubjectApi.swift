@@ -20,7 +20,7 @@ struct SubjectApi: Codable {
         case acknowledged = "uznano"
     }
     
-    let department: String
+    let department: String?
     let short: String
     let year: String
     let credits: Int

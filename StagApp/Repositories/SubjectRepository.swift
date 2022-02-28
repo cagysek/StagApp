@@ -10,7 +10,7 @@ import CoreData
 
 
 protocol ISubjectRepository {
-    func getSubject(department: String, short: String, year: String, semester: String) -> Subject?
+    func getSubject(department: String?, short: String, year: String, semester: String) -> Subject?
     func saveContext() -> Result<Bool, Error>
     func insert(_ subject: Subject) -> Result<Bool, Error>
     func getStudentYearsAndSemesters() -> [[String : String]]?
@@ -35,11 +35,21 @@ class SubjectRepository: ISubjectRepository {
     }
     
     
-    public func getSubject(department: String, short: String, year: String, semester: String) -> Subject? {
+    public func getSubject(department: String?, short: String, year: String, semester: String) -> Subject? {
         
-        let predicate = NSPredicate(
-            format: "department = %@ AND short = %@ AND year = %@ AND semester = %@", department, short, year, semester
-        )
+        var predicate: NSPredicate
+        
+        if (department != nil) {
+            predicate = NSPredicate(
+                format: "department = %@ AND short = %@ AND year = %@ AND semester = %@", department!, short, year, semester
+            )
+        }
+        else
+        {
+            predicate = NSPredicate(
+                format: "short = %@ AND year = %@ AND semester = %@", short, year, semester
+            )
+        }
         
         
         let result = self.repository.get(predicate: predicate, sortDescriptors: [])
