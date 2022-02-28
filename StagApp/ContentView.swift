@@ -11,9 +11,9 @@ import UIKit
 
 struct ContentView: View {
     
-    @State private var selection = 0
+    @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = false
     
-    @State var isLogged : Bool = false
+    @State private var selection = 0
     
     @State var university: University? = nil
 
@@ -59,7 +59,7 @@ struct ContentView: View {
             .accentColor(Color.customBlue)
         }
         else {
-            LoginScreen(isLogged: $isLogged, university: $university)
+            LoginScreen()
         }
     }
 }

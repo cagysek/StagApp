@@ -9,13 +9,14 @@ import SwiftUI
 
 struct LoginScreen: View {
     
-    @Binding var isLogged : Bool
-    @Binding var university: University?
+    @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = false
+    @AppStorage(UserDefaultKeys.SELECTED_UNIVERSITY) private var selectedUniversity = 0
     
     @State private var username: String = ""
     @State private var password: String = ""
     
     @State var showUniversity: Bool = false
+    @State var university: University? = nil
     
     @StateObject private var vm = LoginViewModelImpl(
         stagService: StagService()
@@ -33,7 +34,7 @@ struct LoginScreen: View {
                     HStack {
                         Spacer()
                         
-                        NavigationLink(destination: UniversityScreen(showUniversity: self.$showUniversity, selectedUniversity: self.$university), isActive: $showUniversity) {
+                        NavigationLink(destination: UniversityScreen(showUniversity: $showUniversity), isActive: $showUniversity) {
                             Button("Změnit univerzitu", action: {
                                 withAnimation {
                                     self.showUniversity = true
@@ -48,12 +49,14 @@ struct LoginScreen: View {
                         
                     }
                     
-                    Image(self.university?.bigLogoImagePath ?? "")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: UIScreen.main.bounds.size.width * 0.80 , height: UIScreen.main.bounds.size.height * 1/6)
-                        .padding(.bottom, 20)
-                        .padding(.top, 20)
+                    if (self.university != nil) {
+                        Image(self.university!.bigLogoImagePath)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: UIScreen.main.bounds.size.width * 0.80 , height: UIScreen.main.bounds.size.height * 1/6)
+                            .padding(.bottom, 20)
+                            .padding(.top, 20)
+                    }
                         
                     
                     
@@ -92,16 +95,14 @@ struct LoginScreen: View {
                     .padding(.leading)
                     .padding(.trailing)
                     
-                    
-                    
                     Spacer()
-                    
                 }
             }
             .foregroundColor(.defaultFontColor)
             .navigationBarHidden(true)
             .onAppear {
-                self.showUniversity = self.university === nil
+                self.showUniversity = self.selectedUniversity == 0
+                self.university = self.vm.getSelectedUniversity()
             }
         }
     }
@@ -112,6 +113,6 @@ struct LoginScreen_Previews: PreviewProvider {
     @State static var university: University?
     
     static var previews: some View {
-        LoginScreen(isLogged: .constant(false), university: $university)
+        LoginScreen()
     }
 }

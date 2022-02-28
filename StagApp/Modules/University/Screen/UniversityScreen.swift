@@ -11,10 +11,7 @@ struct UniversityScreen: View {
     
     @Binding var showUniversity: Bool
     
-    @Binding var selectedUniversity: University?
-    
     @ObservedObject var vm = UniversityViewModel()
-    
     
     var body: some View {
         
@@ -35,7 +32,7 @@ struct UniversityScreen: View {
                             
                             UniversityCellView(university: university)
                                 .onTapGesture {
-                                    self.selectedUniversity = university
+                                    self.vm.selectUniversity(id: university.id)
                                     
                                     withAnimation {
                                         self.showUniversity = false
@@ -61,7 +58,7 @@ struct UniversityScreen_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-        UniversityScreen(showUniversity: .constant(false), selectedUniversity: $university)
+        UniversityScreen(showUniversity: .constant(false))
         }
     }
 }

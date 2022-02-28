@@ -7,11 +7,15 @@
 
 import Foundation
 
+@MainActor
 protocol LoginViewModel: ObservableObject {
     func getLogin() async
+    
+    /// Returns selected university
+    func getSelectedUniversity() -> University?
 }
 
-@MainActor
+
 final class LoginViewModelImpl: LoginViewModel {
 
     @Published private(set) var data: [Credentials] = []
@@ -28,6 +32,18 @@ final class LoginViewModelImpl: LoginViewModel {
         } catch {
             print(error)
         }
+    }
+    
+    public func getSelectedUniversity() -> University? {
+        
+        let selectedUniversity = UserDefaults.standard.integer(forKey: UserDefaultKeys.SELECTED_UNIVERSITY)
+        
+        if (selectedUniversity == 0)
+        {
+            return nil
+        }
+        
+        return Universities.getUniversityById(id: selectedUniversity)
     }
 }
 
