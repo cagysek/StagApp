@@ -9,22 +9,22 @@ import SwiftUI
 
 struct OverviewSubjectCell: View {
     
-    let backgroundColor: Color
+    var scheduleAction: ScheduleAction
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(self.backgroundColor)
+                .fill(scheduleAction.getBackgroundColor())
             
             HStack(spacing: 0) {
                 VStack(alignment: .center) {
-                    Text("07:20")
+                    Text(scheduleAction.timeFrom?.value ?? "")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
                     
                     Text("-")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
                     
-                    Text("10:20")
+                    Text(scheduleAction.timeTo?.value ?? "")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
                 }
                 .frame(width: 65)
@@ -32,14 +32,14 @@ struct OverviewSubjectCell: View {
                 Divider()
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Architektury softwarových systémů")
+                    Text(scheduleAction.title)
                         .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .scaledToFit()
-                    Label("Doc. Ing. Přemysl Brada", systemImage: "person")
+                        .truncationMode(.tail)
+                    Label(scheduleAction.teacher?.getFormattedName() ?? "", systemImage: "person")
                         .font(.system(size: 15, weight: .medium, design: .rounded))
-                        .scaledToFit()
+                        .truncationMode(.tail)
                     Label {
-                        Text("UP-120")
+                        Text("\(scheduleAction.building ?? "")-\(scheduleAction.room ?? "")")
                             .font(.system(size: 15, weight: .medium, design: .rounded))
                     } icon: {
                         Image("symbol-pin-2")
@@ -48,6 +48,8 @@ struct OverviewSubjectCell: View {
                     }
                 }
                 .padding()
+                
+                Spacer()
             }
             
         }
@@ -58,8 +60,8 @@ struct OverviewSubjectCell: View {
     }
 }
 
-struct OverviewSibjectCell_Previews: PreviewProvider {
-    static var previews: some View {
-        OverviewSubjectCell(backgroundColor: .customLightGreen)
-    }
-}
+//struct OverviewSibjectCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OverviewSubjectCell(backgroundColor: .customLightGreen)
+//    }
+//}

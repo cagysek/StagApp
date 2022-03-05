@@ -19,9 +19,9 @@ struct SubjectResultView: View {
             
             VStack(alignment: .leading, spacing: 5) {
                 Text(self.subject.name ?? "").bold().font(.system(size: 18, design: .rounded))
-                    .scaledToFit()
+                    .truncationMode(.tail)
                 Text((self.subject.department ?? "") + "/" + (self.subject.short ?? "")).font(.system(size: 18, design: .rounded))
-                    .scaledToFit()
+                    .truncationMode(.tail)
                 Text("6 kreditů").font(.system(size: 15, design: .rounded))
                 
                 (Text("Zápočet").bold() + Text(StringHelper.concatStringsToOne(strings:

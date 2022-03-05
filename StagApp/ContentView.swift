@@ -13,7 +13,7 @@ struct ContentView: View {
     
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = false
     
-    @State private var selection = 0
+    @State private var selection = 2
     
     @State var university: University? = nil
 

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="descriptionText" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="category">
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="faculty" optional="YES" attributeType="String"/>
@@ -43,5 +48,6 @@
     <elements>
         <element name="Student" positionX="176.5559692382812" positionY="76.86398315429688" width="128" height="193"/>
         <element name="Subject" positionX="-94.350830078125" positionY="64.1005859375" width="128" height="299"/>
+        <element name="Note" positionX="45" positionY="198" width="128" height="74"/>
     </elements>
 </model>

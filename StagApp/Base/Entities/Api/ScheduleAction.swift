@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-public struct ScheduleAction: Decodable {
+public struct ScheduleAction: Decodable, Identifiable {
     
     enum CodingKeys: String, CodingKey {
         case id = "roakIdno"
@@ -27,7 +27,7 @@ public struct ScheduleAction: Decodable {
         case type = "druhAkce"
     }
     
-    let id: Int?
+    public let id: Int
     let title: String
     let department: String
     let titleShort: String

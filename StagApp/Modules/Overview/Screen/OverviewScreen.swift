@@ -9,7 +9,12 @@ import SwiftUI
 
 struct OverviewScreen: View {
     
+    @Environment(\.calendar) var calendar
+    
     @Binding var selectedTabIndex: Int
+    @State private var showNotesAddSheet = false
+    
+    @StateObject var vm = OverviewViewModel(stagService: StagService(), noteRepository: NoteRepository(context: CoreDataManager.getContext()))
     
     var body: some View {
         ZStack {
@@ -21,15 +26,15 @@ struct OverviewScreen: View {
                     HStack(alignment:.bottom) {
                         Text("Přehled")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
+                            .padding(.bottom, -3)
                         
                         Spacer()
                         
-                        Text("01.09.2021")
+                        Text(self.getCurrentDate())
                             .font(.system(size: 18, weight: .bold, design: .rounded))
                         
-                        Text("sudý týden")
+                        Text(self.getWeekStatus())
                             .font(.system(size: 14, weight: .bold, design: .rounded))
-                        
                     }
                     .padding()
                     
@@ -42,7 +47,7 @@ struct OverviewScreen: View {
                             
                         VStack {
                             HStack(alignment: .bottom) {
-                                Text("Dnešní rozvrh (3)")
+                                Text("Dnešní rozvrh (\(self.vm.scheduleActionsCount))")
                                     .font(.system(size: 18, weight: .bold, design: .rounded))
                                 
                                 Spacer()
@@ -56,17 +61,30 @@ struct OverviewScreen: View {
                             .padding(.leading, 30)
                             .padding(.bottom, 10)
                         
-                        
-                            OverviewSubjectCell(backgroundColor: .customLightGreen)
-                        
-                            OverviewSubjectCell(backgroundColor: .customDarkGray)
-                        
+                            if (self.vm.scheduleActions.isEmpty) {
+                                if (self.vm.scheduleActionsCount == 0) {
+                                    Spacer()
+                                    Text("Dnes nemáš žádnou výuku! ☀️")
+                                        .font(.system(size: 16, weight: .medium, design: .rounded))
+                                    Spacer()
+                                }
+                                else {
+                                    Spacer()
+                                    Text("Dneska už máš padla! 😬")
+                                        .font(.system(size: 16, weight: .medium, design: .rounded))
+                                    Spacer()
+                                }
+                            } else {
+                                ForEach(self.vm.scheduleActions) { scheduleAction in
+                                    OverviewSubjectCell(scheduleAction: scheduleAction)
+                                }
+                            }
                         }
                         .padding(.top, 15)
                         
                         
                     }
-                    .frame(height: 292)
+                    .frame(height: self.vm.scheduleActions.isEmpty ? 150 : 292)
                     .shadow(color: Color.shadow, radius: 4)
                     
                     
@@ -78,7 +96,7 @@ struct OverviewScreen: View {
                             
                         VStack {
                             HStack(alignment: .bottom) {
-                                Text("Připomínky (6)")
+                                Text("Připomínky (\(self.vm.notes.count))")
                                     .font(.system(size: 18, weight: .bold, design: .rounded))
                                 
                                 Spacer()
@@ -92,23 +110,30 @@ struct OverviewScreen: View {
                             .padding(.leading, 30)
                             .padding(.bottom, 10)
                         
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    OverviewNoteCell(backgroundColor: Color.customLightRed)
-                                    OverviewNoteCell(backgroundColor: Color.customLightGreen)
-                                    OverviewNoteCell(backgroundColor: Color.customLightRed)
-                                    OverviewNoteCell(backgroundColor: Color.customLightGreen)
+                            if (self.vm.notes.isEmpty) {
+                                Spacer()
+                                Text("Žádné připomínky 📝")
+                                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                                Spacer()
+                            } else {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack {
+                                        ForEach(self.vm.notes) { note in
+                                            OverviewNoteCell(note: note)
+                                        }
+                                    }
                                 }
+                                .padding(.leading, 30)
+                                .padding(.trailing, 30)
+                                .padding(.bottom, 15)
                             }
-                            .padding(.leading, 30)
-                            .padding(.trailing, 30)
-                            .padding(.bottom, 15)
+                            
                             
                             
                             HStack {
                                 Spacer()
                                 Button("+ Přidat") {
-                                    
+                                    self.showNotesAddSheet.toggle()
                                 }
                                 .buttonStyle(BasicButtonStyle())
                             }
@@ -131,7 +156,30 @@ struct OverviewScreen: View {
             }
         }
         .foregroundColor(.defaultFontColor)
+        .sheet(isPresented: $showNotesAddSheet, onDismiss: {
+            self.vm.updateNotes()
+        }) {
+            AddNoteView()
+        }
+        .onAppear {
+            self.vm.updateSchedule()
+        }
         
+    }
+    
+    fileprivate func getCurrentDate() -> String {
+        return DateFormatter.basic.string(from: Date())
+    }
+    
+    fileprivate func getWeekStatus() -> String {
+        let weekOfYear = self.calendar.component(.weekOfYear, from: Date())
+        
+        if (weekOfYear % 2 == 0)
+        {
+            return "sudý týden"
+        }
+        
+        return "lichý týden"
     }
 }
 
