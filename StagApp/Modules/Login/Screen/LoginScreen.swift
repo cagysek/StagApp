@@ -19,7 +19,8 @@ struct LoginScreen: View {
     @State var university: University? = nil
     
     @StateObject private var vm = LoginViewModelImpl(
-        stagService: StagService()
+        stagService: StagService(),
+        dataManager: DataManager(stagApiService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()))
     )
     
     var body: some View {
@@ -87,6 +88,8 @@ struct LoginScreen: View {
                     
                     Button("Přihlásit se", action: {
                         withAnimation(.easeOut(duration: 0.4)) {
+                            self.vm.dataManager.deleteCachedData()
+                            self.vm.dataManager.syncData()
                             self.isLogged.toggle()
                         }
                         

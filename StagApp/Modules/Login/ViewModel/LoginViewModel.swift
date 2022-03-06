@@ -20,10 +20,12 @@ final class LoginViewModelImpl: LoginViewModel {
 
     @Published private(set) var data: [Credentials] = []
     
-    private let stagService: StagService
+    private let stagService: IStagService
+    public let dataManager: IDataManager
     
-    init(stagService: StagService) {
+    init(stagService: StagService, dataManager: IDataManager) {
         self.stagService = stagService
+        self.dataManager = dataManager
     }
     
     func getLogin() async {

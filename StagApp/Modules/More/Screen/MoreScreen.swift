@@ -28,7 +28,7 @@ struct MoreScreen: View {
                     
                     
                     List {
-                        Section(header: Text("ZČU").font(.system(size: 14, weight: .medium, design: .rounded))) {
+                        Section(header: Text("ZČU").font(.system(size: 14, weight: .regular, design: .rounded))) {
                             NavigationLink {
                                 DietScreen()
                             } label: {
@@ -44,7 +44,7 @@ struct MoreScreen: View {
                             
                         }
 
-                        Section() {
+                        Section(header: Text("Další funkce").font(.system(size: 14, weight: .regular, design: .rounded))) {
                             NavigationLink {
                                 DietScreen()
                             } label: {
@@ -54,10 +54,24 @@ struct MoreScreen: View {
                             NavigationLink {
                                 DietScreen()
                             } label: {
+                                Text("Studenti")
+                            }
+                        }
+                        
+                        
+                        Section(header: Text("Obecné").font(.system(size: 14, weight: .regular, design: .rounded))) {
+                            
+                            NavigationLink {
+                                DietScreen()
+                            } label: {
                                 Text("Nastavení")
                             }
                             
-                            
+                            NavigationLink {
+                                DietScreen()
+                            } label: {
+                                Text("O aplikaci")
+                            }
                         }
                         
                         
@@ -65,17 +79,17 @@ struct MoreScreen: View {
                             .onTapGesture {
                                 self.isLogged = false
                             }
+                        
                     }
-                    .listStyle(.grouped)
-                    .listSectionSeparator(.hidden, edges: .all)
+                    
+//                    .listSectionSeparator(.hidden, edges: .all)
                     .padding(.top, -20)
-                    
-                    
                     
                     Spacer()
                 }
             }
             .navigationBarHidden(true)
+            .listStyle(InsetGroupedListStyle())
         }
         
     }

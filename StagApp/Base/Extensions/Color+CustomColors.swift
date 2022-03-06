@@ -19,6 +19,7 @@ extension Color {
     static let customLightGreen2 = Color(red: 164/255, green: 239/255, blue: 151/255, opacity: 1.0)
     static let customYellow = Color(red: 238/255, green: 239/255, blue: 151/255, opacity: 1.0)
     static let placeholderColor = Color(red: 212/255, green: 212/255, blue: 214/255, opacity: 1.0)
+    static let logoutButtonColor = Color(red: 207/255, green: 70/255, blue: 72/255, opacity: 0.3)
     
     // MARK: Background color definition
     static let defaultBackground = Color(red: 242/255, green: 244/255, blue: 245/255, opacity: 1.0)

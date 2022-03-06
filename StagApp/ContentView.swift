@@ -8,6 +8,10 @@
 import SwiftUI
 import UIKit
 
+//enum Tabs {
+//     case Calendar, Exams, Student
+//}
+
 
 struct ContentView: View {
     
@@ -16,6 +20,8 @@ struct ContentView: View {
     @State private var selection = 2
     
     @State var university: University? = nil
+    
+    @State var selectedDate: Date? = nil
 
     init() {
         // init tabBar top shaddow
@@ -25,8 +31,7 @@ struct ContentView: View {
     var body: some View {
         if (isLogged) {
             TabView(selection: $selection) {
-                
-                ScheduleScreen()
+                ScheduleScreen(selectedDate: self.$selectedDate)
                     .tabItem {
                         TabItem(title: "Rozvrh", iconName: "books.vertical");
                     }
@@ -38,7 +43,7 @@ struct ContentView: View {
                     }
                     .tag(1)
              
-                OverviewScreen(selectedTabIndex: self.$selection)
+                OverviewScreen(selectedTabIndex: self.$selection, selectedDate: self.$selectedDate)
                     .tabItem {
                         TabItem(title: "Přehled", iconName: "house");
                     }

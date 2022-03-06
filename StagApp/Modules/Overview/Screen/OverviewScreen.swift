@@ -16,6 +16,8 @@ struct OverviewScreen: View {
     
     @StateObject var vm = OverviewViewModel(stagService: StagService(), noteRepository: NoteRepository(context: CoreDataManager.getContext()))
     
+    @Binding var selectedDate: Date?
+    
     var body: some View {
         ZStack {
             Color.defaultBackground
@@ -54,6 +56,7 @@ struct OverviewScreen: View {
                                 
                                 Button("Zobrazit vše") {
                                     self.selectedTabIndex = 0
+                                    self.selectedDate = Date()
                                 }
                                 .buttonStyle(BasicButtonStyle())
                             }
@@ -185,7 +188,10 @@ struct OverviewScreen: View {
 
 
 struct OverviewScreen_Previews: PreviewProvider {
+    
+    @State static var date: Date? = Date()
+    
     static var previews: some View {
-        OverviewScreen(selectedTabIndex: .constant(0))
+        OverviewScreen(selectedTabIndex: .constant(0), selectedDate: $date)
     }
 }

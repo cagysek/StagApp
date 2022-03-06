@@ -15,9 +15,9 @@ struct CalendarView: View {
     
     @State var monthTitle: String = ""
     
-    @State var selectedDate: Date = Date()
-    
     var vm: ScheduleViewModel
+    
+    @Binding var selectedDate: Date?
     
     private var myInterval: [Date] {
         let pastdate = Date.now.addingTimeInterval(86400 * -60)
@@ -50,8 +50,8 @@ struct CalendarView: View {
                         
                         proxy.scrollTo(index, anchor: .center)
                         
-                        self.selectedIndex = index
                         self.selectedDate = date
+                        self.selectedIndex = index
                     }
                 }
                 .buttonStyle(WhiteCapsuleButtonStyle())
@@ -69,7 +69,9 @@ struct CalendarView: View {
                 LazyHStack {
                     ForEach(myInterval, id: \.self) { date in
                         Button {
+                            self.selectedDate = date
                             self.selectedIndex = getDateIndex(date)
+                            
                             Task.init {
                                 await self.vm.loadScheduleActions(for: date)
                             }
@@ -113,14 +115,16 @@ struct CalendarView: View {
             }
             .onAppear(perform: {
                 
+                if (selectedDate == nil || self.selectedDate! < Date()) {
+                    self.selectedDate = Date()
+                }
+                
                 Task.init {
-                    await self.vm.loadScheduleActions(for: self.selectedDate)
+                    await self.vm.loadScheduleActions(for: self.selectedDate!)
                 }
                 
                 
-                if (selectedIndex == 0) {
-                    self.selectedIndex = getDateIndex(self.selectedDate)
-                }
+                self.selectedIndex = getDateIndex(self.selectedDate!)    
                 
                 proxy.scrollTo(self.selectedIndex, anchor: .center)
             })

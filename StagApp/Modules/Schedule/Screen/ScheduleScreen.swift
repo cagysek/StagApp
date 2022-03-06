@@ -10,6 +10,8 @@ import SwiftUI
 struct ScheduleScreen: View {
     
     @StateObject var vm = ScheduleViewModel(stagService: StagService())
+    
+    @Binding var selectedDate: Date?
         
     var body: some View {
         ZStack {
@@ -26,8 +28,7 @@ struct ScheduleScreen: View {
                 .padding()
 
                 VStack {
-                    CalendarView(vm: self.vm)
-//                    ScheduleDateTimeFilterView()
+                    CalendarView(vm: self.vm, selectedDate: self.$selectedDate)
 
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
@@ -65,17 +66,12 @@ struct ScheduleScreen: View {
             }
         }
         .foregroundColor(.defaultFontColor)
-//        .task {
-//
-//            await vm.loadScheduleActions(for: <#T##Date#>
-//
-//        }
     }
 }
 
-struct ScheduleScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        ScheduleScreen()
-    }
-}
+//struct ScheduleScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ScheduleScreen()
+//    }
+//}
 
