@@ -12,6 +12,10 @@ struct ScheduleScreen: View {
     @StateObject var vm = ScheduleViewModel(stagService: StagService())
     
     @Binding var selectedDate: Date?
+    
+    @State private var showSheetActionDetail = false
+    
+    @State private var lastSelectedSchedule: ScheduleAction? = nil
         
     var body: some View {
         ZStack {
@@ -35,6 +39,11 @@ struct ScheduleScreen: View {
                             if (!self.vm.scheduleActions.isEmpty) {
                                 ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
                                     ScheduleActionView(scheduleAction: scheduleAction)
+                                        .onTapGesture {
+                                            self.lastSelectedSchedule = scheduleAction
+                                            self.showSheetActionDetail.toggle()
+                                            
+                                        }
                                 }
                             }
                             else {
@@ -63,9 +72,17 @@ struct ScheduleScreen: View {
                 }
                 .padding(.leading)
                 .padding(.trailing)
+                .sheet(isPresented: $showSheetActionDetail) {
+                    
+                    
+                        SubjectDetailScreen(scheduleAction: self.$lastSelectedSchedule)
+                    
+                    
+                }
             }
         }
         .foregroundColor(.defaultFontColor)
+        
     }
 }
 

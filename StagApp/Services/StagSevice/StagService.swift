@@ -35,6 +35,12 @@ protocol IStagService {
     
     /// Logout student from exam
     func fetchExamLogOut(examId: Int) async throws -> String?
+    
+    /// Fetchs subject detail
+    func fetchSubjectDetailInfo(department: String, short: String) async throws -> SubjectDetail
+    
+    /// Fetchs subject students
+    func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent]
 }
 
 final class StagService: IStagService {
@@ -255,6 +261,41 @@ final class StagService: IStagService {
         try self.errorHandling(response: response)
         
         return String(data: data, encoding: .utf8)
+    }
+    
+    
+    public func fetchSubjectDetailInfo(department: String, short: String) async throws -> SubjectDetail {
+        
+        let url = self.createUrl(endpoint: APIConstants.subjectDetailInfo)
+            .appending("katedra", value: department)
+            .appending("zkratka", value: short)
+        
+        
+        var request = self.getBaseRequest(url: url)
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+        return try JSONDecoder().decode(SubjectDetail.self, from: data)
+    }
+    
+    
+    public func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent] {
+        
+        let url = self.createUrl(endpoint: APIConstants.subjectDetailInfo)
+            .appending("roakIdno", value: String(subjectId))
+        
+        var request = self.getBaseRequest(url: url)
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+//        print(String(data: data, encoding: .utf8))
+        let subjectStudentsRoot = try JSONDecoder().decode(SubjectStudentRoot.self, from: data)
+        
+        return subjectStudentsRoot.subjectStudents
     }
     
     /**
