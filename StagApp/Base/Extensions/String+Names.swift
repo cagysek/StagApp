@@ -25,6 +25,16 @@ extension String {
         
         return titledName
     }
+    
+    func matchingStrings(regex: String) -> [String] {
+        guard let regex = try? NSRegularExpression(pattern: regex, options: []) else { return [] }
+        let results = regex.matches(in: self,
+                                   range: NSRange(self.startIndex..., in: self))
+       return results.map {
+           String(self[Range($0.range, in: self)!])
+       }
+        
+    }
 }
 
 extension StringProtocol {

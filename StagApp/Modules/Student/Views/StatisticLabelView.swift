@@ -15,6 +15,7 @@ struct StatisticLabelView: View {
         VStack(alignment: .leading) {
             Text(self.value)
                 .font(.system(size: 20, weight: .bold, design: .rounded))
+                .truncationMode(.tail)
             Text(self.label)
                 .font(.system(size: 15, weight: .regular, design: .rounded))
                 .foregroundColor(Color.gray)

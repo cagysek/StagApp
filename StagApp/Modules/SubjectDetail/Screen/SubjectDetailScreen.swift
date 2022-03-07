@@ -16,9 +16,11 @@ struct SubjectDetailScreen: View {
     
     @Binding var scheduleAction: ScheduleAction?
     
-    @State private var selectedSection: PickerSection = .STUDENTS
+    @State private var selectedSection: PickerSection = .INFO
     
     @StateObject var vm = SubjectDetailViewModel(stagService: StagService())
+    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         
@@ -33,11 +35,11 @@ struct SubjectDetailScreen: View {
                     InformationBubble(title: nil) {
                         HStack {
                             Spacer()
-                            StatisticLabelView(label: "Místnost", value: "UP-108")
+                            StatisticLabelView(label: "Místnost", value: "\(self.scheduleAction?.building ?? "")-\(self.scheduleAction?.room ?? "")")
                             Spacer()
-                            StatisticLabelView(label: "Čas", value: "08:40 - 12:10")
+                            StatisticLabelView(label: "Čas", value: self.scheduleAction?.getTimeOfAction() ?? "")
                             Spacer()
-                            StatisticLabelView(label: "Typ", value: "Cvičení")
+                            StatisticLabelView(label: "Typ", value: self.scheduleAction?.labelShort ?? "")
                             Spacer()
                         }
                     }
@@ -57,7 +59,7 @@ struct SubjectDetailScreen: View {
                     
                     
                     if (self.selectedSection == .INFO) {
-                        SubjectInfoView()
+                        SubjectInfoView(subjectDetail: self.vm.subjectDetail)
                     } else if (self.selectedSection == .STUDENTS) {
                         SubjectStudentsView()
                     }
@@ -66,9 +68,30 @@ struct SubjectDetailScreen: View {
                     Spacer()
                     
                 }
+                .padding()
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle(self.vm.subjectDetail?.title ?? "")
-                .padding()
+                .navigationBarItems(
+                    leading:
+                        Button {
+                            self.dismiss()
+                        } label: {
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 18, weight: .bold))
+                                .scaledToFit()
+                        },
+                    trailing:
+                        Group {
+                            if (self.vm.subjectDetail != nil && self.vm.subjectDetail!.subjectUrl != nil) {
+                                Link(destination: URL(string: self.vm.subjectDetail!.subjectUrl!)!) {
+                                    Image(systemName: "w.circle")
+                                        .font(.system(size: 18, weight: .bold))
+                                        .scaledToFit()
+                                }
+                            }
+                        }
+                )
+                
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .task {
@@ -77,34 +100,40 @@ struct SubjectDetailScreen: View {
                     await self.vm.loadSubjectDetail(department: self.scheduleAction!.department, short: self.scheduleAction!.titleShort)
                     
                 }
-                else {
-                    print("nil")
-                }
             }
-            
         }
-        
-        
     }
 }
 
 
 struct SubjectInfoView: View {
     
+    var subjectDetail: SubjectDetail?
+    
     var body: some View {
         VStack(alignment: .leading) {
             
             ScrollView {
                 
+                InformationBubble(title: "Název") {
+                    HStack {
+                        Text(self.subjectDetail?.title ?? "")
+                            .font(.system(size: 16, weight: .medium, design: .rounded))
+                            .lineLimit(5)
+                        Spacer()
+                    }
+                    .padding(.leading)
+                    .padding(.trailing)
+                }
                 
                 InformationBubble(title: "Obecné") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Pracoviště", value: "KIV")
+                        StatisticLabelView(label: "Pracoviště", value: subjectDetail?.department ?? "")
                         Spacer()
-                        StatisticLabelView(label: "Zkratka", value: "FJP")
+                        StatisticLabelView(label: "Zkratka", value: subjectDetail?.short ?? "")
                         Spacer()
-                        StatisticLabelView(label: "Kredity", value: "6")
+                        StatisticLabelView(label: "Kredity", value: subjectDetail == nil ? "" : String(subjectDetail!.credits))
                         Spacer()
                     }
                 }
@@ -112,11 +141,11 @@ struct SubjectInfoView: View {
                 InformationBubble(title: "Rozsah hodin týdně") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Přednáška", value: "1")
+                        StatisticLabelView(label: "Přednáška", value: subjectDetail == nil ? "" : String(subjectDetail!.lectureCount))
                         Spacer()
-                        StatisticLabelView(label: "Cvičení", value: "2")
+                        StatisticLabelView(label: "Cvičení", value: subjectDetail == nil ? "" : String(subjectDetail!.practiseCount))
                         Spacer()
-                        StatisticLabelView(label: "Seminář", value: "2")
+                        StatisticLabelView(label: "Seminář", value: subjectDetail == nil ? "" : String(subjectDetail!.seminarCount))
                         Spacer()
                     }
                 }
@@ -124,37 +153,37 @@ struct SubjectInfoView: View {
                 InformationBubble(title: "Zakončení") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Způsob", value: "Zkouška")
+                        StatisticLabelView(label: "Způsob", value: subjectDetail?.examType ?? "")
                         Spacer()
-                        StatisticLabelView(label: "Forma", value: "Kombinovaná")
+                        StatisticLabelView(label: "Forma", value: subjectDetail?.examForm ?? "")
                         Spacer()
-                        StatisticLabelView(label: "Záp. před zk.", value: "Ano")
+                        StatisticLabelView(label: "Záp. před zk.", value: subjectDetail?.creaditBeforeExam ?? "")
                         Spacer()
                     }
                 }
                 
                 InformationBubble(title: "Garant") {
-                    HStack {
-                        Text("Ing. Richard Lipka, Ph.D.")
-                            .font(.system(size: 18, weight: .medium, design: .rounded))
-                            .padding(.leading)
-                        Spacer()
+                    VStack(spacing:10) {
+                        ForEach(self.explodeTeachers(teacherString: subjectDetail?.garants ?? ""), id: \.self) { teacherName in
+                            HStack {
+                                Text(teacherName.replacingOccurrences(of: "\'", with: ""))
+                                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                                    .padding(.leading)
+                                Spacer()
+                            }
+                        }
                     }
                 }
                 
                 InformationBubble(title: "Přednáčející") {
                     VStack(spacing:10) {
-                        HStack {
-                            Text("Prof. Ing. Karel Ježek, CSc.")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .padding(.leading)
-                            Spacer()
-                        }
-                        HStack {
-                            Text("Ing. Richard Lipka, Ph.D.")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .padding(.leading)
-                            Spacer()
+                        ForEach(self.explodeTeachers(teacherString: subjectDetail?.speakers ?? ""), id: \.self) { teacherName in
+                            HStack {
+                                Text(teacherName.replacingOccurrences(of: "\'", with: ""))
+                                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                                    .padding(.leading)
+                                Spacer()
+                            }
                         }
                     }
                 }
@@ -162,56 +191,66 @@ struct SubjectInfoView: View {
                 
                 InformationBubble(title: "Cvičící") {
                     VStack(spacing:10) {
-                        HStack {
-                            Text("Prof. Ing. Karel Ježek, CSc.")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .padding(.leading)
-                            Spacer()
-                        }
-                        HStack {
-                            Text("Ing. Richard Lipka, Ph.D.")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .padding(.leading)
-                            Spacer()
+                        ForEach(self.explodeTeachers(teacherString: subjectDetail?.practitioners ?? ""), id: \.self) { teacherName in
+                            HStack {
+                                Text(teacherName.replacingOccurrences(of: "\'", with: ""))
+                                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                                    .padding(.leading)
+                                Spacer()
+                            }
                         }
                     }
                 }
             
                 
-                InformationBubble(title: "Seminář") {
-                    VStack(spacing:10) {
-                        HStack {
-                            Text("Prof. Ing. Karel Ježek, CSc.")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .padding(.leading)
-                            Spacer()
-                        }
-                        HStack {
-                            Text("Ing. Richard Lipka, Ph.D.")
-                                .font(.system(size: 18, weight: .medium, design: .rounded))
-                                .padding(.leading)
-                            Spacer()
+                if (!(subjectDetail?.seminarTeachers ?? "").isEmpty) {
+                    InformationBubble(title: "Seminář") {
+                        VStack(spacing:10) {
+                            ForEach(self.explodeTeachers(teacherString: subjectDetail?.seminarTeachers ?? ""), id: \.self) { teacherName in
+                                HStack {
+                                    Text(teacherName.replacingOccurrences(of: "\'", with: ""))
+                                        .font(.system(size: 16, weight: .medium, design: .rounded))
+                                        .padding(.leading)
+                                    Spacer()
+                                }
+                            }
                         }
                     }
                 }
                 
+                
                 // To much elements for one body.. another in next view
-                AnotherSubjectInfo()
+                AnotherSubjectInfo(subjectDetail: subjectDetail)
                 
             }
         }
     }
+    
+    fileprivate func explodeTeachers(teacherString: String) -> [String] {
+    
+        if (teacherString.isEmpty) {
+            return []
+        }
         
+        let regex = "([\"'])(?:(?=(\\\\?))\\2.)*?\\1"
+    
+        
+        return teacherString.matchingStrings(regex: regex)
+    }
 }
 
 
+
+
 struct AnotherSubjectInfo: View {
+    
+    var subjectDetail: SubjectDetail?
     
     var body: some View {
         
         InformationBubble(title: "Podmiňující předměty") {
             HStack {
-                Text("KIV/SAR, KIV/SAR-E, KIV/PIA, KIV/VSP, KIV/VSS, KIV/VSS-E")
+                Text(subjectDetail?.requiredSubjects ?? "")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -222,7 +261,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "Cíl předmětu") {
             HStack {
-                Text("Dát studentům důkladné znalosti o prostředcích a metodách zpracování formálních jazyků a jejich využití při implrmentaci programovacích jazyků, editorů, příkazových interpretů apod. Seznámit studenty s formálními metodami konstruování software.")
+                Text(subjectDetail?.goal ?? "")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -232,7 +271,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "Požadavky na studenta") {
             HStack {
-                Text("Vypracování a obhájení semestrálního softwarového projektu. Získání alespoň 50% z možných bodů hodnocení projektu a alespoň 50% z možných bodů hodnocení zkoušky.\r\n\r\nZ důvodu průběžné aktualizace předmětu je pro získání zápočtu při opakovaném zapsání předmětu (viz SZŘ čl. 24 odst. 3) nutné souhlasné vyjádření garanta předmětu.\r\n\r\nUpozornění:\r\nTermíny a forma ověřování splnění požadavků mohou být upraveny s ohledem na opatření vyhlášená v souvislosti s vývojem epidemiologické situace v ČR.")
+                Text(subjectDetail?.requirements ?? "")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -242,7 +281,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "Obsah") {
             HStack {
-                Text("1-Typy překladačů, základní struktura překladače.\r\n2-Regulární gramatiky a konečné automaty v lexikální analýze. FLEX.\r\n3-Úvod do syntaktické analýzy, metoda rekurzivního sestupu.\r\n4-Překlad příkazů.\r\n5-Zpracování deklarací.\r\n6-Přidělování paměti.\r\n7-Interpretační zpracování. Průběžný test.\r\n8-Generování cílového kódu.\r\n9-Vlastnosti bezkontextových gramatik.\r\n10-Deterministická analýza shora dolů.\r\n11-LL(1) transformace.\r\n12-Deterministická analýza zdola nahoru, LR gramatiky.\r\n13-Formální metody konstrukce software, generátory překladačů. \r\n")
+                Text(subjectDetail?.content ?? "")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -252,7 +291,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "Literatura") {
             HStack {
-                Text("'Thain, Douglas. Introduction to Compilers and Language Design. 2020. ISBN 979-8-655-18026-0.',\n'Reinhard Wilhelm Helmut Seidl Sebastian Hack. Compiler Design. Berlin, 2013. ISBN 978-3-642-17539-8.',\n'Aho, Alfred V.; Sethi, Ravi; Ullman, Jeffrey D. Compilers : principles, techniques, and tools. Reading : Addison-Wesley, 1988. ISBN 0-201-10088-6.',\n'Aho, Alfred V. Compilers : principles, techniques, and tools. 2nd ed. Boston : Pearson Education, 2007. ISBN 0-321-49169-6.',\n'Molnár, Ludovít; Melichar, Bořivoj; Češka, Milan. Gramatiky a jazyky. Bratislava : Alfa, 1987. ',\n'Melichar, Bořivoj. Jazyky a překlady. Vyd. 2., přeprac. Praha : Vydavatelství ČVUT, 2003. ISBN 80-01-02776-7.',\n'Melichar, Bořivoj. Konstrukce překladačů. I. část. Vyd. 1. Praha : Vydavatelství ČVUT, 1999. ISBN 80-01-02028-2.'")
+                Text(subjectDetail?.literature ?? "")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
