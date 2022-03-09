@@ -43,7 +43,8 @@ struct SubjectDetailScreen: View {
                             Spacer()
                         }
                     }
-                    .frame(height: 110)
+                    .frame(height: 80)
+                    .padding([.leading, .trailing])
                     
                     
                     Picker("Selected section:", selection: $selectedSection) {
@@ -51,24 +52,29 @@ struct SubjectDetailScreen: View {
                             Text("Info")
                                 .tag(PickerSection.INFO)
                             
-                            Text("Studenti")
+                            Text("Studenti (\(self.vm.subjectstudents.count))")
                                 .tag(PickerSection.STUDENTS)
                         }
                     }
                     .pickerStyle(.segmented)
+                    .padding([.leading, .trailing])
+                    .padding(.top, 5)
                     
                     
                     if (self.selectedSection == .INFO) {
-                        SubjectInfoView(subjectDetail: self.vm.subjectDetail)
+                        if (self.vm.subjectDetail != nil) {
+                            SubjectInfoView(subjectDetail: self.vm.subjectDetail!)
+                                .padding([.leading, .trailing])
+                        }
+                        
                     } else if (self.selectedSection == .STUDENTS) {
-                        SubjectStudentsView()
+                        SubjectStudentsView(subjectStudents: self.vm.subjectstudents)
                     }
                     
                     
                     Spacer()
                     
                 }
-                .padding()
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle(self.vm.subjectDetail?.title ?? "")
                 .navigationBarItems(
@@ -96,9 +102,8 @@ struct SubjectDetailScreen: View {
             .ignoresSafeArea(.all, edges: .bottom)
             .task {
                 if (self.scheduleAction != nil) {
-                    
                     await self.vm.loadSubjectDetail(department: self.scheduleAction!.department, short: self.scheduleAction!.titleShort)
-                    
+                    await self.vm.loadSubjectStudents(subjectId: self.scheduleAction!.id)
                 }
             }
         }
@@ -108,7 +113,7 @@ struct SubjectDetailScreen: View {
 
 struct SubjectInfoView: View {
     
-    var subjectDetail: SubjectDetail?
+    var subjectDetail: SubjectDetail
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -117,7 +122,7 @@ struct SubjectInfoView: View {
                 
                 InformationBubble(title: "Název") {
                     HStack {
-                        Text(self.subjectDetail?.title ?? "")
+                        Text(self.subjectDetail.title)
                             .font(.system(size: 16, weight: .medium, design: .rounded))
                             .lineLimit(5)
                         Spacer()
@@ -129,11 +134,11 @@ struct SubjectInfoView: View {
                 InformationBubble(title: "Obecné") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Pracoviště", value: subjectDetail?.department ?? "")
+                        StatisticLabelView(label: "Pracoviště", value: subjectDetail.department)
                         Spacer()
-                        StatisticLabelView(label: "Zkratka", value: subjectDetail?.short ?? "")
+                        StatisticLabelView(label: "Zkratka", value: subjectDetail.short)
                         Spacer()
-                        StatisticLabelView(label: "Kredity", value: subjectDetail == nil ? "" : String(subjectDetail!.credits))
+                        StatisticLabelView(label: "Kredity", value: String(subjectDetail.credits))
                         Spacer()
                     }
                 }
@@ -141,11 +146,11 @@ struct SubjectInfoView: View {
                 InformationBubble(title: "Rozsah hodin týdně") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Přednáška", value: subjectDetail == nil ? "" : String(subjectDetail!.lectureCount))
+                        StatisticLabelView(label: "Přednáška", value: String(subjectDetail.lectureCount))
                         Spacer()
-                        StatisticLabelView(label: "Cvičení", value: subjectDetail == nil ? "" : String(subjectDetail!.practiseCount))
+                        StatisticLabelView(label: "Cvičení", value: String(subjectDetail.practiseCount))
                         Spacer()
-                        StatisticLabelView(label: "Seminář", value: subjectDetail == nil ? "" : String(subjectDetail!.seminarCount))
+                        StatisticLabelView(label: "Seminář", value: String(subjectDetail.seminarCount))
                         Spacer()
                     }
                 }
@@ -153,18 +158,18 @@ struct SubjectInfoView: View {
                 InformationBubble(title: "Zakončení") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Způsob", value: subjectDetail?.examType ?? "")
+                        StatisticLabelView(label: "Způsob", value: subjectDetail.examType)
                         Spacer()
-                        StatisticLabelView(label: "Forma", value: subjectDetail?.examForm ?? "")
+                        StatisticLabelView(label: "Forma", value: subjectDetail.examForm)
                         Spacer()
-                        StatisticLabelView(label: "Záp. před zk.", value: subjectDetail?.creaditBeforeExam ?? "")
+                        StatisticLabelView(label: "Záp. před zk.", value: subjectDetail.creaditBeforeExam)
                         Spacer()
                     }
                 }
                 
                 InformationBubble(title: "Garant") {
                     VStack(spacing:10) {
-                        ForEach(self.explodeTeachers(teacherString: subjectDetail?.garants ?? ""), id: \.self) { teacherName in
+                        ForEach(self.explodeTeachers(teacherString: subjectDetail.garants), id: \.self) { teacherName in
                             HStack {
                                 Text(teacherName.replacingOccurrences(of: "\'", with: ""))
                                     .font(.system(size: 16, weight: .medium, design: .rounded))
@@ -177,7 +182,7 @@ struct SubjectInfoView: View {
                 
                 InformationBubble(title: "Přednáčející") {
                     VStack(spacing:10) {
-                        ForEach(self.explodeTeachers(teacherString: subjectDetail?.speakers ?? ""), id: \.self) { teacherName in
+                        ForEach(self.explodeTeachers(teacherString: subjectDetail.speakers), id: \.self) { teacherName in
                             HStack {
                                 Text(teacherName.replacingOccurrences(of: "\'", with: ""))
                                     .font(.system(size: 16, weight: .medium, design: .rounded))
@@ -191,7 +196,7 @@ struct SubjectInfoView: View {
                 
                 InformationBubble(title: "Cvičící") {
                     VStack(spacing:10) {
-                        ForEach(self.explodeTeachers(teacherString: subjectDetail?.practitioners ?? ""), id: \.self) { teacherName in
+                        ForEach(self.explodeTeachers(teacherString: subjectDetail.practitioners), id: \.self) { teacherName in
                             HStack {
                                 Text(teacherName.replacingOccurrences(of: "\'", with: ""))
                                     .font(.system(size: 16, weight: .medium, design: .rounded))
@@ -203,10 +208,10 @@ struct SubjectInfoView: View {
                 }
             
                 
-                if (!(subjectDetail?.seminarTeachers ?? "").isEmpty) {
+                if (!subjectDetail.seminarTeachers.isEmpty) {
                     InformationBubble(title: "Seminář") {
                         VStack(spacing:10) {
-                            ForEach(self.explodeTeachers(teacherString: subjectDetail?.seminarTeachers ?? ""), id: \.self) { teacherName in
+                            ForEach(self.explodeTeachers(teacherString: subjectDetail.seminarTeachers), id: \.self) { teacherName in
                                 HStack {
                                     Text(teacherName.replacingOccurrences(of: "\'", with: ""))
                                         .font(.system(size: 16, weight: .medium, design: .rounded))
@@ -244,24 +249,22 @@ struct SubjectInfoView: View {
 
 struct AnotherSubjectInfo: View {
     
-    var subjectDetail: SubjectDetail?
+    var subjectDetail: SubjectDetail
     
     var body: some View {
         
         InformationBubble(title: "Podmiňující předměty") {
             HStack {
-                Text(subjectDetail?.requiredSubjects ?? "")
+                Text(subjectDetail.requiredSubjects)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
             }
         }
         
-        
-        
         InformationBubble(title: "Cíl předmětu") {
             HStack {
-                Text(subjectDetail?.goal ?? "")
+                Text(subjectDetail.goal)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -271,7 +274,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "Požadavky na studenta") {
             HStack {
-                Text(subjectDetail?.requirements ?? "")
+                Text(subjectDetail.requirements)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -281,7 +284,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "Obsah") {
             HStack {
-                Text(subjectDetail?.content ?? "")
+                Text(subjectDetail.content)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -291,7 +294,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "Literatura") {
             HStack {
-                Text(subjectDetail?.literature ?? "")
+                Text(subjectDetail.literature)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -340,18 +343,36 @@ struct InformationBubble<Content: View>: View {
 
 struct SubjectStudentsView: View {
     
+    var subjectStudents: [SubjectStudent]
+    
     var body: some View {
         VStack {
             List {
-                
+                ForEach(self.subjectStudents, id: \.id) { student in
+                    VStack(alignment: .leading) {
+                        Text(student.getFormattedName())
+                            .font(.system(size: 18, weight: .medium, design: .rounded))
+                        
+                        Text(StringHelper.concatStringsToOne(
+                            strings: "\(student.studyYear). ročník", student.id
+                        ))
+                            .font(.system(size: 14, weight: .light, design: .rounded))
+                        
+                        Text(StringHelper.concatStringsToOne(
+                            strings: student.faculty, student.fieldOfStudy
+                        ))
+                            .truncationMode(.tail)
+                            .font(.system(size: 14, weight: .light, design: .rounded))
+                    }
+                }
             }
         }
         
     }
 }
 
-//struct SubjectDetailScreen_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SubjectDetailScreen()
-//    }
-//}
+struct SubjectDetailScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        SubjectStudentsView(subjectStudents: [SubjectStudent(id: "1111", firstname: "test", lastname: "prijmeni", faculty: "Fav", fieldOfStudy: "Informační systémy", studyYear: "3", titleBefore: "Bc.", titleAfter: nil)])
+    }
+}

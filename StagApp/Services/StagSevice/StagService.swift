@@ -283,16 +283,16 @@ final class StagService: IStagService {
     
     public func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent] {
         
-        let url = self.createUrl(endpoint: APIConstants.subjectDetailInfo)
+        let url = self.createUrl(endpoint: APIConstants.subjectStudents)
             .appending("roakIdno", value: String(subjectId))
         
         var request = self.getBaseRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
-        
+        print(String(data: data, encoding: .utf8))
         try self.errorHandling(response: response)
         
-//        print(String(data: data, encoding: .utf8))
+        
         let subjectStudentsRoot = try JSONDecoder().decode(SubjectStudentRoot.self, from: data)
         
         return subjectStudentsRoot.subjectStudents
