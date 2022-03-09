@@ -13,10 +13,11 @@ struct StatisticLabelView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(self.value)
+            
+            Text(LocalizedStringKey(self.value))
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .truncationMode(.tail)
-            Text(self.label)
+            Text(LocalizedStringKey(self.label))
                 .font(.system(size: 15, weight: .regular, design: .rounded))
                 .foregroundColor(Color.gray)
         }

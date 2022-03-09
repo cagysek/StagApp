@@ -1,0 +1,114 @@
+/*
+  Localizable.strings
+  StagApp
+
+  Created by Jan Čarnogurský on 09.03.2022.
+  
+*/
+
+
+/// MARK: SCHEDULE DETAIL
+"scheduleDetail.title" = "Název";
+"scheduleDetail.info" = "Info";
+"scheduleDetail.students %lld" = "Studenti (%lld)";
+"scheduleDetail.select-section" = "Vyberte sekci:";
+"scheduleDetail.room" = "Místnost";
+"scheduleDetail.time" = "Čas";
+"scheduleDetail.type" = "Typ";
+"scheduleDetail.general" = "Obecné";
+"scheduleDetail.department" = "Pracoviště";
+"scheduleDetail.shortcut" = "Zkratka";
+"scheduleDetail.credits" = "Kredity";
+"scheduleDetail.range-of-hours-per-week" = "Rozsah hodin týdně";
+"scheduleDetail.lecture" = "Přednášky";
+"scheduleDetail.exercise" = "Cvičení";
+"scheduleDetail.seminar" = "Seminář";
+"scheduleDetail.course-completion" = "Zakončení";
+"scheduleDetail.course-completion-type" = "Způsob";
+"scheduleDetail.course-completion-form" = "Forma";
+"scheduleDetail.course-completion-credit-before" = "Záp. před zk.";
+"scheduleDetail.guarantors" = "Garanti";
+"scheduleDetail.lecturers" = "Přednášející";
+"scheduleDetail.seminarians" = "Seminárníci";
+"scheduleDetail.practitioners" = "Cvičící";
+"scheduleDetail.prerequisite-courses" = "Podmiňující předměty";
+"scheduleDetail.course-objectives" = "Cíl předmětu";
+"scheduleDetail.requirements-on-student" = "Požadavky na studenta";
+"scheduleDetail.content" = "Obsah";
+"scheduleDetail.literature" = "Literatura";
+"scheduleDetail.year %@" = "%@. ročník";
+
+
+/// MARK: NOTE
+"note.placeholder" = "Poznámka";
+"note.title" = "Název";
+"note.date" = "Datum";
+"note.deadline" = "Deadline";
+"note.cancel" = "Zrušit";
+"note.add" = "Přidat";
+"note.new-note" = "Nová poznámka";
+
+
+/// MARK: UNIVERSITY
+"university.pick-text" = "Vyber si svojí univerzitu";
+
+/// MARK: DIET
+"diet.title" = "Diet";
+
+
+/// MARK: LOGIN
+"login.change-university" = "Změnit univerzitu";
+"login.log-in-text" = "Pro pokračování se prosím přihlašte";
+"login.login" = "Přihlášení";
+"login.password" = "Heslo";
+"login.username" = "Uživatelské jméno";
+"login.action" = "Přihlásit se";
+
+
+/// MARK: SCHEDULE
+"schedule.no-class-today" = "Dnes nemáš žádnou výuku! ☀️";
+"schedule.headline" = "Rozvrh";
+
+
+/// MARK: EXAM
+"exam.capacity %lld %@" = "Obsazenost %lld/%@";
+"exam.unenroll-to %@" = "Odzápis do ∙ %@";
+"exam.enroll-to %@" = "zápis do ∙ %@";
+"exam.unenroll" = "Odepsat";
+"exam.enroll" = "Zapsat";
+"exam.unenroll-error" = "Nelze se odepsat";
+"exam.enroll-error" = "Nelze se zapsat";
+"exam.no-exams" = "Žádné vypsané zkoušky 🏝🏄";
+"exam.headline" = "Zkoušky";
+
+
+/// MARK: OVERVIEW
+"overview.note-cell-reaming %@" = "Zbývá %@ dní";
+"overview.schedule" = "Rozvrh";
+"overview.headline" = "Přehled";
+"overview.notes %lld" = "Poznámky (%lld)";
+"overview.show-all" = "Zobrazit vše";
+"overview.no-notes" = "Nemáš žádné poznámky 📝";
+"overview.even-week" = "sudý týden";
+"overview.odd-week" = "lichý týden";
+"overview.add" = "+ Přidat";
+"overview.no-class-today" = "Dnes nemáš žádnou výuku! ☀️";
+"overview.class-end" = "Dneska už máš padla! 😬";
+"overview.today-schedule %lld" = "Dnešní rozvrh (%lld)";
+
+
+/// MARK: STUDENT
+"student.credits %@" = "%@ kreditů";
+"student.before-exam" = "Zápočet";
+"student.exam" = "Zkouška";
+"student.evaluation" = "Hodnocení";
+"student.stat-credits" = "Kredity";
+"student.stat-avg" = "Průměr";
+"student.stat-done" = "Splněno";
+"student.stat-year" = "Rok";
+"student.headline" = "Student";
+"student.winter-semester" = "Zimní semestr";
+"student.summer-semester" = "Letní semestr";
+
+/// MARK: MORE
+"more.headline" = "Další";

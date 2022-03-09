@@ -35,11 +35,11 @@ struct SubjectDetailScreen: View {
                     InformationBubble(title: nil) {
                         HStack {
                             Spacer()
-                            StatisticLabelView(label: "Místnost", value: "\(self.scheduleAction?.building ?? "")-\(self.scheduleAction?.room ?? "")")
+                            StatisticLabelView(label: "scheduleDetail.room", value: "\(self.scheduleAction?.building ?? "")-\(self.scheduleAction?.room ?? "")")
                             Spacer()
-                            StatisticLabelView(label: "Čas", value: self.scheduleAction?.getTimeOfAction() ?? "")
+                            StatisticLabelView(label: "scheduleDetail.time", value: self.scheduleAction?.getTimeOfAction() ?? "")
                             Spacer()
-                            StatisticLabelView(label: "Typ", value: self.scheduleAction?.labelShort ?? "")
+                            StatisticLabelView(label: "scheduleDetail.type", value: self.scheduleAction?.labelShort ?? "")
                             Spacer()
                         }
                     }
@@ -47,12 +47,12 @@ struct SubjectDetailScreen: View {
                     .padding([.leading, .trailing])
                     
                     
-                    Picker("Selected section:", selection: $selectedSection) {
+                    Picker("scheduleDetail.select-section", selection: $selectedSection) {
                         Group {
-                            Text("Info")
+                            Text("scheduleDetail.info")
                                 .tag(PickerSection.INFO)
                             
-                            Text("Studenti (\(self.vm.subjectstudents.count))")
+                            Text("scheduleDetail.students \(self.vm.subjectstudents.count)")
                                 .tag(PickerSection.STUDENTS)
                         }
                     }
@@ -120,7 +120,7 @@ struct SubjectInfoView: View {
             
             ScrollView {
                 
-                InformationBubble(title: "Název") {
+                InformationBubble(title: "scheduleDetail.title") {
                     HStack {
                         Text(self.subjectDetail.title)
                             .font(.system(size: 16, weight: .medium, design: .rounded))
@@ -131,43 +131,43 @@ struct SubjectInfoView: View {
                     .padding(.trailing)
                 }
                 
-                InformationBubble(title: "Obecné") {
+                InformationBubble(title: "scheduleDetail.general") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Pracoviště", value: subjectDetail.department)
+                        StatisticLabelView(label: "scheduleDetail.department", value: subjectDetail.department)
                         Spacer()
-                        StatisticLabelView(label: "Zkratka", value: subjectDetail.short)
+                        StatisticLabelView(label: "scheduleDetail.shortcut", value: subjectDetail.short)
                         Spacer()
-                        StatisticLabelView(label: "Kredity", value: String(subjectDetail.credits))
+                        StatisticLabelView(label: "scheduleDetail.credits", value: String(subjectDetail.credits))
                         Spacer()
                     }
                 }
                 
-                InformationBubble(title: "Rozsah hodin týdně") {
+                InformationBubble(title: "scheduleDetail.range-of-hours-per-week") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Přednáška", value: String(subjectDetail.lectureCount))
+                        StatisticLabelView(label: "scheduleDetail.lecture", value: String(subjectDetail.lectureCount))
                         Spacer()
-                        StatisticLabelView(label: "Cvičení", value: String(subjectDetail.practiseCount))
+                        StatisticLabelView(label: "scheduleDetail.exercise", value: String(subjectDetail.practiseCount))
                         Spacer()
-                        StatisticLabelView(label: "Seminář", value: String(subjectDetail.seminarCount))
+                        StatisticLabelView(label: "scheduleDetail.seminar", value: String(subjectDetail.seminarCount))
                         Spacer()
                     }
                 }
                 
-                InformationBubble(title: "Zakončení") {
+                InformationBubble(title: "scheduleDetail.course-completion") {
                     HStack {
                         Spacer()
-                        StatisticLabelView(label: "Způsob", value: subjectDetail.examType)
+                        StatisticLabelView(label: "scheduleDetail.course-completion-type", value: subjectDetail.examType)
                         Spacer()
-                        StatisticLabelView(label: "Forma", value: subjectDetail.examForm)
+                        StatisticLabelView(label: "scheduleDetail.course-completion-form", value: subjectDetail.examForm)
                         Spacer()
-                        StatisticLabelView(label: "Záp. před zk.", value: subjectDetail.creaditBeforeExam)
+                        StatisticLabelView(label: "scheduleDetail.course-completion-credit-before", value: subjectDetail.creaditBeforeExam)
                         Spacer()
                     }
                 }
                 
-                InformationBubble(title: "Garant") {
+                InformationBubble(title: "scheduleDetail.guarantors") {
                     VStack(spacing:10) {
                         ForEach(self.explodeTeachers(teacherString: subjectDetail.garants), id: \.self) { teacherName in
                             HStack {
@@ -180,7 +180,7 @@ struct SubjectInfoView: View {
                     }
                 }
                 
-                InformationBubble(title: "Přednáčející") {
+                InformationBubble(title: "scheduleDetail.lecturers") {
                     VStack(spacing:10) {
                         ForEach(self.explodeTeachers(teacherString: subjectDetail.speakers), id: \.self) { teacherName in
                             HStack {
@@ -194,7 +194,7 @@ struct SubjectInfoView: View {
                 }
                 
                 
-                InformationBubble(title: "Cvičící") {
+                InformationBubble(title: "scheduleDetail.practitioners") {
                     VStack(spacing:10) {
                         ForEach(self.explodeTeachers(teacherString: subjectDetail.practitioners), id: \.self) { teacherName in
                             HStack {
@@ -209,7 +209,7 @@ struct SubjectInfoView: View {
             
                 
                 if (!subjectDetail.seminarTeachers.isEmpty) {
-                    InformationBubble(title: "Seminář") {
+                    InformationBubble(title: "scheduleDetail.seminarians") {
                         VStack(spacing:10) {
                             ForEach(self.explodeTeachers(teacherString: subjectDetail.seminarTeachers), id: \.self) { teacherName in
                                 HStack {
@@ -253,7 +253,7 @@ struct AnotherSubjectInfo: View {
     
     var body: some View {
         
-        InformationBubble(title: "Podmiňující předměty") {
+        InformationBubble(title: "scheduleDetail.prerequisite-courses") {
             HStack {
                 Text(subjectDetail.requiredSubjects)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
@@ -262,7 +262,7 @@ struct AnotherSubjectInfo: View {
             }
         }
         
-        InformationBubble(title: "Cíl předmětu") {
+        InformationBubble(title: "scheduleDetail.course-objectives") {
             HStack {
                 Text(subjectDetail.goal)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
@@ -272,7 +272,7 @@ struct AnotherSubjectInfo: View {
         }
         
         
-        InformationBubble(title: "Požadavky na studenta") {
+        InformationBubble(title: "scheduleDetail.requirements-on-student") {
             HStack {
                 Text(subjectDetail.requirements)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
@@ -282,7 +282,7 @@ struct AnotherSubjectInfo: View {
         }
         
         
-        InformationBubble(title: "Obsah") {
+        InformationBubble(title: "scheduleDetail.content") {
             HStack {
                 Text(subjectDetail.content)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
@@ -292,7 +292,7 @@ struct AnotherSubjectInfo: View {
         }
         
         
-        InformationBubble(title: "Literatura") {
+        InformationBubble(title: "scheduleDetail.literature") {
             HStack {
                 Text(subjectDetail.literature)
                     .font(.system(size: 16, weight: .regular, design: .rounded))
@@ -313,7 +313,7 @@ struct InformationBubble<Content: View>: View {
             
             if (self.title != nil) {
                 HStack {
-                    Text(self.title!)
+                    Text(LocalizedStringKey(self.title!))
                         .font(.system(size: 16, weight: .medium, design: .rounded))
                         .foregroundColor(.gray)
                     Spacer()
@@ -353,9 +353,12 @@ struct SubjectStudentsView: View {
                         Text(student.getFormattedName())
                             .font(.system(size: 18, weight: .medium, design: .rounded))
                         
-                        Text(StringHelper.concatStringsToOne(
-                            strings: "\(student.studyYear). ročník", student.id
+                        (
+                            Text(String(format: NSLocalizedString("scheduleDetail.year %@", comment: "year"), student.studyYear)) + Text(StringHelper.concatStringsToOne(
+                            strings: student.id,
+                            separatorOnFirstPosition: true
                         ))
+                        )
                             .font(.system(size: 14, weight: .light, design: .rounded))
                         
                         Text(StringHelper.concatStringsToOne(

@@ -21,7 +21,7 @@ struct ExamsScreen: View {
             
             VStack {
                     HStack(alignment:.bottom) {
-                        Text("Zkoušky")
+                        Text("exam.headline")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
                             
                         Spacer()
@@ -60,7 +60,7 @@ struct ExamsScreen: View {
                                     .frame(height: 90)
                                     .shadow(color: Color.shadow, radius: 8)
                                 
-                                Text("Žádné vypsané zkoušky 🏝🏄").font(.system(size: 19, weight: .regular, design: .rounded))
+                                Text("exam.no-exams").font(.system(size: 16, weight: .regular, design: .rounded))
                             }
                         }
                     }

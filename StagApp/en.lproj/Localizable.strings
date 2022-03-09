@@ -1,0 +1,117 @@
+/* 
+  Localizable.strings
+  StagApp
+
+  Created by Jan Čarnogurský on 09.03.2022.
+  
+*/
+
+
+/// MARK: SCHEDULE DETAIL
+"scheduleDetail.title" = "Title";
+"scheduleDetail.info" = "Info";
+"scheduleDetail.students %lld" = "Students (%lld)";
+"scheduleDetail.select-section" = "Selected section:";
+"scheduleDetail.room" = "Room";
+"scheduleDetail.time" = "Time";
+"scheduleDetail.type" = "Type";
+"scheduleDetail.general" = "General";
+"scheduleDetail.department" = "Department";
+"scheduleDetail.shortcut" = "Shortcut";
+"scheduleDetail.credits" = "Credits";
+"scheduleDetail.range-of-hours-per-week" = "Range of hours per week";
+"scheduleDetail.lecture" = "Lecture";
+"scheduleDetail.exercise" = "Exercise";
+"scheduleDetail.seminar" = "Seminar";
+"scheduleDetail.course-completion" = "Form of completion";
+"scheduleDetail.course-completion-type" = "Type";
+"scheduleDetail.course-completion-form" = "Form";
+"scheduleDetail.course-completion-credit-before" = "Credit prior to exam";
+"scheduleDetail.guarantors" = "Guarantors";
+"scheduleDetail.lecturers" = "Lecturers";
+"scheduleDetail.seminarians" = "Seminarians";
+"scheduleDetail.practitioners" = "Practitioners";
+"scheduleDetail.prerequisite-courses" = "Prerequisite courses";
+"scheduleDetail.course-objectives" = "Course objectives";
+"scheduleDetail.requirements-on-student" = "Requirements on student";
+"scheduleDetail.content" = "Content";
+"scheduleDetail.literature" = "Literature";
+"scheduleDetail.year %@" = "%@ Year of study";
+
+
+
+/// MARK: NOTE
+"note.placeholder" = "Note";
+"note.title" = "Title";
+"note.date" = "Date";
+"note.deadline" = "Deadline";
+"note.cancel" = "Cancel";
+"note.add" = "Add";
+"note.new-note" = "New note";
+
+
+
+/// MARK: UNIVERSITY
+"university.pick-text" = "Select your university";
+
+/// MARK: DIET
+"diet.title" = "Diet";
+
+
+/// MARK: LOGIN
+"login.change-university" = "Change university";
+"login.log-in-text" = "Please log in to continue";
+"login.login" = "Login";
+"login.password" = "Password";
+"login.username" = "Username";
+"login.action" = "Log in";
+
+
+/// MARK: SCHEDULE
+"schedule.no-class-today" = "You don't have any classes today! ☀️";
+"schedule.headline" = "Schedule";
+
+
+/// MARK: EXAM
+"exam.capacity %lld %@" = "Capacity %lld/%@";
+"exam.unenroll-to %@" = "Unenroll to ∙ %@";
+"exam.enroll-to %@" = "Enroll to ∙ %@";
+"exam.unenroll" = "Unenroll";
+"exam.enroll" = "Enroll";
+"exam.unenroll-error" = "You can't sign off";
+"exam.enroll-error" = "Cannot be enrolled";
+"exam.no-exams" = "No announced exams 🏝🏄";
+"exam.headline" = "Exams";
+
+
+/// MARK: OVERVIEW
+"overview.note-cell-reaming %@" = "%@ days left";
+"overview.schedule" = "Schedule";
+"overview.headline" = "Overview";
+"overview.notes %lld" = "Notes (%lld)";
+"overview.show-all" = "Show all";
+"overview.no-notes" = "You don't have any notes 📝";
+"overview.even-week" = "even week";
+"overview.odd-week" = "odd week";
+"overview.add" = "+ Add";
+"overview.no-class-today" = "You don't have any classes today! ☀️";
+"overview.class-end" = "You're done for the day! 😬";
+"overview.today-schedule %lld" = "Today's schedule (%lld)";
+
+
+/// MARK: STUDENT
+"student.credits %@" = "%@ credits";
+"student.before-exam" = "Cr. prior exam";
+"student.exam" = "Exam";
+"student.evaluation" = "Evaluation";
+"student.stat-credits" = "Credits";
+"student.stat-avg" = "Avg";
+"student.stat-done" = "Done";
+"student.stat-year" = "Year";
+"student.headline" = "Student";
+"student.winter-semester" = "Winter semester";
+"student.summer-semester" = "Summer semester";
+
+
+/// MARK: MORE
+"more.headline" = "More";

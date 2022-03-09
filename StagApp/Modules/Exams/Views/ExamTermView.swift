@@ -42,17 +42,17 @@ struct ExamTermView: View {
                         .frame(width: 17, height: 17)
                 }
                 
-                Label("Zápis do ∙ \(self.exam.deadlineLogInDate?.value ?? "")", systemImage: "clock.badge.checkmark")
+                Label("exam.enroll-to \(self.exam.deadlineLogInDate?.value ?? "")", systemImage: "clock.badge.checkmark")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                 
                 
-                Label("Odepsání do ∙ \(self.exam.deadlineLogOutDate?.value ?? "")", systemImage: "clock.badge.exclamationmark")
+                Label("exam.unenroll-to \(self.exam.deadlineLogOutDate?.value ?? "")", systemImage: "clock.badge.exclamationmark")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                 
                 
                 
 
-                Label("Obsazenost \(self.currentStudentCount)/\(self.exam.limit)", systemImage: "person.2.circle")
+                Label("exam.capacity \(self.currentStudentCount) \(self.exam.limit)", systemImage: "person.2.circle")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                 
                 
@@ -61,7 +61,7 @@ struct ExamTermView: View {
                     
                     if (self.exam.isEnrollable) {
                         if (self.isEnrolled) {
-                            Button("Odepsat", action: {
+                            Button("exam.unenroll", action: {
                                 Task.init {
                                     let result = await vm.logOutFromExam(examId: self.exam.id)
                                     print(result)
@@ -73,7 +73,7 @@ struct ExamTermView: View {
                             })
                             .font(.system(size: 15, weight: .medium, design: .rounded))
                         } else {
-                            Button("Zapsat", action: {
+                            Button("exam.enroll", action: {
                                 Task.init {
                                     let result = await vm.logInToExam(examId: self.exam.id)
                                     print(result)
@@ -87,9 +87,9 @@ struct ExamTermView: View {
                         }
                     } else {
                         if (self.exam.enrolled) {
-                            Text(self.exam.limitEnrollableMsg ?? "Nelze se odepsat")
+                            Text(self.exam.limitEnrollableMsg ?? "exam.unenroll-error")
                         } else {
-                            Text(self.exam.limitEnrollableMsg ?? "Nelze se zapsat")
+                            Text(self.exam.limitEnrollableMsg ?? "exam.unenroll-error")
                         }
                     }
                     

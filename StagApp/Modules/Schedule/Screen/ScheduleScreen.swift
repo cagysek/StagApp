@@ -54,7 +54,7 @@ struct ScheduleScreen: View {
                                         .frame(height: 90)
                                         .shadow(color: Color.shadow, radius: 8)
                                     
-                                    Text("Dnes nemáš žádnou výuku! ☀️").font(.system(size: 16, weight: .regular, design: .rounded))
+                                    Text("schedule.no-class-today").font(.system(size: 16, weight: .regular, design: .rounded))
                                 }
                                 .padding()
                             }
@@ -73,11 +73,7 @@ struct ScheduleScreen: View {
                 .padding(.leading)
                 .padding(.trailing)
                 .sheet(isPresented: $showSheetActionDetail) {
-                    
-                    
-                        SubjectDetailScreen(scheduleAction: self.$lastSelectedSchedule)
-                    
-                    
+                    SubjectDetailScreen(scheduleAction: self.$lastSelectedSchedule)
                 }
             }
         }

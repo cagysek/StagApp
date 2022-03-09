@@ -22,7 +22,7 @@ struct StudentScreen: View {
             
             VStack {
                 HStack(alignment: .bottom) {
-                    Text("Student")
+                    Text("student.headline")
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                     
                     Spacer()

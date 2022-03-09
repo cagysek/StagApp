@@ -31,11 +31,11 @@ struct StudentInfoView: View {
                 
                 HStack {
                     Spacer()
-                    StatisticLabelView(label: "Kredity", value: "55/120")
+                    StatisticLabelView(label: "student.stat-credits", value: "55/120")
                     Spacer()
-                    StatisticLabelView(label: "Průměr", value: "2.12")
+                    StatisticLabelView(label: "student.stat-avg", value: "2.12")
                     Spacer()
-                    StatisticLabelView(label: "Ročník", value: "3.")
+                    StatisticLabelView(label: "student.stat-year", value: "3.")
                     Spacer()
                 }
                 

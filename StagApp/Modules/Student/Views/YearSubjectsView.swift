@@ -25,11 +25,11 @@ struct YearSubjectsView: View {
                     VStack {
                         HStack {
                             Spacer()
-                            StatisticLabelView(label: "Kredity", value: "55/120")
+                            StatisticLabelView(label: "student.stat-credits", value: "55/120")
                             Spacer()
-                            StatisticLabelView(label: "Průměr", value: "2.12")
+                            StatisticLabelView(label: "student.stat-avg", value: "2.12")
                             Spacer()
-                            StatisticLabelView(label: "Splněno", value: "2/10")
+                            StatisticLabelView(label: "student.stat-done", value: "2/10")
                             Spacer()
                         }
                         
@@ -39,7 +39,7 @@ struct YearSubjectsView: View {
                 .shadow(color: Color.shadow, radius: 4)
                 
                 
-                Text("Zimní semestr")
+                Text("student.winter-semester")
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .padding(.leading, 20)
                     .padding(.bottom, -18)
@@ -48,7 +48,7 @@ struct YearSubjectsView: View {
                     SubjectResultView(subject: subject)
                 }
                 
-                Text("Letní semestr")
+                Text("student.summer-semester")
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .padding(.leading, 20)
                     .padding(.bottom, -18)

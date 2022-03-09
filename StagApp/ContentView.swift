@@ -33,31 +33,31 @@ struct ContentView: View {
             TabView(selection: $selection) {
                 ScheduleScreen(selectedDate: self.$selectedDate)
                     .tabItem {
-                        TabItem(title: "Rozvrh", iconName: "books.vertical");
+                        TabItem(title: "schedule.headline", iconName: "books.vertical");
                     }
                     .tag(0)
              
                 ExamsScreen()
                     .tabItem {
-                        TabItem(title: "Zkoušky", iconName: "pencil");
+                        TabItem(title: "exam.headline", iconName: "pencil");
                     }
                     .tag(1)
              
                 OverviewScreen(selectedTabIndex: self.$selection, selectedDate: self.$selectedDate)
                     .tabItem {
-                        TabItem(title: "Přehled", iconName: "house");
+                        TabItem(title: "overview.headline", iconName: "house");
                     }
                     .tag(2)
              
                 StudentScreen()
                     .tabItem {
-                        TabItem(title: "Student", iconName: "graduationcap");
+                        TabItem(title: "student.headline", iconName: "graduationcap");
                     }
                     .tag(3)
                 
                 MoreScreen()
                     .tabItem {
-                        TabItem(title: "Další", iconName: "line.3.horizontal");
+                        TabItem(title: "more.headline", iconName: "line.3.horizontal");
                     }
                     .tag(4)
             }
@@ -75,7 +75,7 @@ struct TabItem: View {
     public let iconName: String
     
     var body: some View {
-        Text(title)
+        Text(LocalizedStringKey(title))
             .font(.system(size: 30, weight: .bold, design: .rounded))
         Image(systemName: iconName)
     }

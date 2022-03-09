@@ -22,7 +22,7 @@ struct UniversityScreen: View {
                 
                 VStack {
                     HStack(alignment: .center) {
-                        Text("Vyber si svojí univerzitu")
+                        Text("university.pick-text")
                             .font(.system(size: 20, weight: .bold, design: .rounded))
                     }
                     .padding()
@@ -58,7 +58,7 @@ struct UniversityScreen_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-        UniversityScreen(showUniversity: .constant(false))
+            UniversityScreen(showUniversity: .constant(false))
         }
     }
 }

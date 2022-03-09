@@ -36,7 +36,7 @@ struct LoginScreen: View {
                         Spacer()
                         
                         NavigationLink(destination: UniversityScreen(showUniversity: $showUniversity), isActive: $showUniversity) {
-                            Button("Změnit univerzitu", action: {
+                            Button("login.change-university", action: {
                                 withAnimation {
                                     self.showUniversity = true
                                 }
@@ -61,17 +61,17 @@ struct LoginScreen: View {
                         
                     
                     
-                    Text("Přihlášení")
+                    Text("login.login")
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                     
-                    Text("Pro pokračování se prosím přihlašte")
+                    Text("login.log-in-text")
                         .font(.system(size: 14, weight: .regular, design: .rounded))
                         .foregroundColor(.gray)
                         .padding()
                         
                     
                     TextField(
-                            "Email",
+                            "login.username",
                              text: $username
                     )
                     .textFieldStyle(LoginTextFieldStyle())
@@ -79,14 +79,14 @@ struct LoginScreen: View {
                     .padding(.trailing, 20)
                     
                     SecureField(
-                            "Heslo",
+                            "login.password",
                              text: $password
                     )
                     .textFieldStyle(LoginTextFieldStyle())
                     .padding(20)
                     
                     
-                    Button("Přihlásit se", action: {
+                    Button("login.action", action: {
                         withAnimation(.easeOut(duration: 0.4)) {
                             self.vm.dataManager.deleteCachedData()
                             self.vm.dataManager.syncData()

@@ -20,7 +20,7 @@ struct MoreScreen: View {
                 
                 VStack {
                     HStack(alignment:.bottom) {
-                        Text("Další")
+                        Text("more.headline")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
                         Spacer()
                     }

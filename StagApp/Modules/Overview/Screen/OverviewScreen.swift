@@ -26,10 +26,9 @@ struct OverviewScreen: View {
             
                 VStack {
                     HStack(alignment:.bottom) {
-                        Text("Přehled")
+                        Text("overview.headline")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
                             .padding(.bottom, -3)
-                        
                         Spacer()
                         
                         Text(self.getCurrentDate())
@@ -49,12 +48,12 @@ struct OverviewScreen: View {
                             
                         VStack {
                             HStack(alignment: .bottom) {
-                                Text("Dnešní rozvrh (\(self.vm.scheduleActionsCount))")
+                                Text("overview.today-schedule \(self.vm.scheduleActionsCount)")
                                     .font(.system(size: 18, weight: .bold, design: .rounded))
                                 
                                 Spacer()
                                 
-                                Button("Zobrazit vše") {
+                                Button("overview.show-all") {
                                     self.selectedTabIndex = 0
                                     self.selectedDate = Date()
                                 }
@@ -67,13 +66,13 @@ struct OverviewScreen: View {
                             if (self.vm.scheduleActions.isEmpty) {
                                 if (self.vm.scheduleActionsCount == 0) {
                                     Spacer()
-                                    Text("Dnes nemáš žádnou výuku! ☀️")
+                                    Text("overview.no-class-today")
                                         .font(.system(size: 16, weight: .medium, design: .rounded))
                                     Spacer()
                                 }
                                 else {
                                     Spacer()
-                                    Text("Dneska už máš padla! 😬")
+                                    Text("overview.class-end")
                                         .font(.system(size: 16, weight: .medium, design: .rounded))
                                     Spacer()
                                 }
@@ -99,12 +98,12 @@ struct OverviewScreen: View {
                             
                         VStack {
                             HStack(alignment: .bottom) {
-                                Text("Připomínky (\(self.vm.notes.count))")
+                                Text("overview.notes \(self.vm.notes.count)")
                                     .font(.system(size: 18, weight: .bold, design: .rounded))
                                 
                                 Spacer()
                                 
-                                Button("Zobrazit vše") {
+                                Button("overview.show-all") {
                                     
                                 }
                                 .buttonStyle(BasicButtonStyle())
@@ -115,7 +114,7 @@ struct OverviewScreen: View {
                         
                             if (self.vm.notes.isEmpty) {
                                 Spacer()
-                                Text("Žádné připomínky 📝")
+                                Text("overview.no-notes")
                                     .font(.system(size: 16, weight: .medium, design: .rounded))
                                 Spacer()
                             } else {
@@ -135,7 +134,7 @@ struct OverviewScreen: View {
                             
                             HStack {
                                 Spacer()
-                                Button("+ Přidat") {
+                                Button("overview.add") {
                                     self.showNotesAddSheet.toggle()
                                 }
                                 .buttonStyle(BasicButtonStyle())
@@ -174,15 +173,15 @@ struct OverviewScreen: View {
         return DateFormatter.basic.string(from: Date())
     }
     
-    fileprivate func getWeekStatus() -> String {
+    fileprivate func getWeekStatus() -> LocalizedStringKey {
         let weekOfYear = self.calendar.component(.weekOfYear, from: Date())
         
         if (weekOfYear % 2 == 0)
         {
-            return "sudý týden"
+            return LocalizedStringKey("overview.even-week")
         }
         
-        return "lichý týden"
+        return LocalizedStringKey("overview.odd-week")
     }
 }
 

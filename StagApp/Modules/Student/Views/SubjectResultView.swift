@@ -22,21 +22,21 @@ struct SubjectResultView: View {
                     .truncationMode(.tail)
                 Text((self.subject.department ?? "") + "/" + (self.subject.short ?? "")).font(.system(size: 18, design: .rounded))
                     .truncationMode(.tail)
-                Text("6 kreditů").font(.system(size: 15, design: .rounded))
+                Text("student.credits \(subject.credits)").font(.system(size: 15, design: .rounded))
                 
-                (Text("Zápočet").bold() + Text(StringHelper.concatStringsToOne(strings:
+                (Text("student.before-exam").bold() + Text(StringHelper.concatStringsToOne(strings:
                                                         subject.creditBeforeExamTeacher ?? "",
                                                         subject.creditBeforeExamDate ?? "",
                                                         separatorOnFirstPosition: true
                                            )).font(.system(size: 15, design: .rounded)))
                 
-                (Text("Zkouška").bold() + Text(StringHelper.concatStringsToOne(strings:
+                (Text("student.exam").bold() + Text(StringHelper.concatStringsToOne(strings:
                                                         subject.examTeacher ?? "",
                                                         subject.examDate ?? "",
                                                         separatorOnFirstPosition: true
                                            )).font(.system(size: 15, design: .rounded)))
                 
-                (Text("Hodnocení").bold() + Text(StringHelper.concatStringsToOne(strings:
+                (Text("student.evaluation").bold() + Text(StringHelper.concatStringsToOne(strings:
                                                         subject.examGrade ?? "?",
                                                         separatorOnFirstPosition: true
                                             )).font(.system(size: 15, design: .rounded)))
