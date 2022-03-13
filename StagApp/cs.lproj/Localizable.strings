@@ -98,7 +98,7 @@
 
 
 /// MARK: STUDENT
-"student.credits %@" = "%@ kreditů";
+"student.credits %d" = "%d kreditů";
 "student.before-exam" = "Zápočet";
 "student.exam" = "Zkouška";
 "student.evaluation" = "Hodnocení";

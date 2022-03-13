@@ -19,7 +19,7 @@ struct SubjectMapper {
         subject.semester = subjectResult.semester
         subject.examTeacher = subjectResult.examTeacher
         subject.examPoints = subjectResult.examPoints
-        subject.examDate = subjectResult.examDate
+        subject.examDate = subjectResult.examDate == nil ? nil : (subjectResult.examDate!.isEmpty ? nil : subjectResult.examDate!)
         subject.examAttempt = subjectResult.examAttempt
         subject.examGrade = subjectResult.examGrade
         subject.creditBeforeExamTeacher = subjectResult.creditBeforeExamTeacher

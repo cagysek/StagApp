@@ -12,6 +12,7 @@
         <attribute name="lastname" optional="YES" attributeType="String"/>
         <attribute name="studentId" optional="YES" attributeType="String"/>
         <attribute name="studyProgram" optional="YES" attributeType="String"/>
+        <attribute name="studyType" optional="YES" attributeType="String"/>
         <attribute name="studyYear" optional="YES" attributeType="String"/>
         <attribute name="titleAfter" optional="YES" attributeType="String"/>
         <attribute name="titleBefore" optional="YES" attributeType="String"/>
@@ -46,8 +47,8 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Student" positionX="176.5559692382812" positionY="76.86398315429688" width="128" height="193"/>
-        <element name="Subject" positionX="-94.350830078125" positionY="64.1005859375" width="128" height="299"/>
         <element name="Note" positionX="45" positionY="198" width="128" height="74"/>
+        <element name="Student" positionX="176.5559692382812" positionY="76.86398315429688" width="128" height="194"/>
+        <element name="Subject" positionX="-94.350830078125" positionY="64.1005859375" width="128" height="299"/>
     </elements>
 </model>

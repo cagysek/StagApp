@@ -100,7 +100,7 @@
 
 
 /// MARK: STUDENT
-"student.credits %@" = "%@ credits";
+"student.credits %d" = "%d credits";
 "student.before-exam" = "Cr. prior exam";
 "student.exam" = "Exam";
 "student.evaluation" = "Evaluation";

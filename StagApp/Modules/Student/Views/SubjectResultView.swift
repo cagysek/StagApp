@@ -22,6 +22,7 @@ struct SubjectResultView: View {
                     .truncationMode(.tail)
                 Text((self.subject.department ?? "") + "/" + (self.subject.short ?? "")).font(.system(size: 18, design: .rounded))
                     .truncationMode(.tail)
+                
                 Text("student.credits \(subject.credits)").font(.system(size: 15, design: .rounded))
                 
                 (Text("student.before-exam").bold() + Text(StringHelper.concatStringsToOne(strings:

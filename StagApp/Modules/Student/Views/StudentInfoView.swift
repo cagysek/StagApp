@@ -8,40 +8,54 @@
 import SwiftUI
 
 struct StudentInfoView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
-    
-    @FetchRequest(
-        entity: Student.entity(), sortDescriptors: []
-    ) var student: FetchedResults<Student>
+//    @Environment(\.managedObjectContext) var managedObjectContext
+//    
+//    @FetchRequest(
+//        entity: Student.entity(), sortDescriptors: []
+//    ) var student: FetchedResults<Student>
     
     @Binding var studentInfoData: Student?
+    
+    var statistics: SubjectStatistics
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.white)
-                .padding()
-                .padding(.top, -15)
+                .padding([.leading,.trailing])
+//                .padding(.top, -15)
             
             VStack {
-//                Text(self.studentInfoData?.getStudentFullNameWithTitles() ?? "")
-                Text(self.student.first?.getStudentFullNameWithTitles() ?? "")
+                Text(self.studentInfoData?.getStudentFullNameWithTitles() ?? "")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .padding(.bottom, 5)
                 
                 HStack {
-                    Spacer()
-                    StatisticLabelView(label: "student.stat-credits", value: "55/120")
-                    Spacer()
-                    StatisticLabelView(label: "student.stat-avg", value: "2.12")
-                    Spacer()
-                    StatisticLabelView(label: "student.stat-year", value: "3.")
-                    Spacer()
+                    Text(StringHelper.concatStringsToOne(strings: self.studentInfoData?.studentId ?? "", self.studentInfoData?.email ?? ""))
+                        .font(.system(size: 15, weight: .light, design: .rounded))
+                        .foregroundColor(.gray)
                 }
                 
+                HStack {
+                    Text(StringHelper.concatStringsToOne(strings: self.studentInfoData?.faculty ?? "", self.studentInfoData?.studyProgram ?? ""))
+                        .font(.system(size: 15, weight: .light, design: .rounded))
+                        .foregroundColor(.gray)
+                }
+                .padding(.bottom, 5)
+                
+                HStack {
+                    Spacer()
+                    StatisticLabelView(label: "student.stat-credits", value: "\(String(self.statistics.getCurrentCredits()))/120")
+                    Spacer()
+                    StatisticLabelView(label: "student.stat-avg", value: String(format: "%.2f", self.statistics.getAverage()))
+                    Spacer()
+                    StatisticLabelView(label: "student.stat-year", value: "\(self.studentInfoData?.studyYear ?? "").       ")
+                    Spacer()
+                }
             }
+            .padding([.leading, .trailing])
         }
-        .frame(height: 150)
+        .frame(height: 180)
         .shadow(color: Color.shadow, radius: 4)
     }
 }

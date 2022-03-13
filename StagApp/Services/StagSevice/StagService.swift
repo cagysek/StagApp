@@ -150,9 +150,9 @@ final class StagService: IStagService {
             } catch let jsonError {
                 print(jsonError)
                 
-                print(String(data: data!, encoding: .utf8))
+//                print(String(data: data!, encoding: .utf8))
                 
-                fatalError("JSON Parse error")
+//                fatalError("JSON Parse error")
 //                completion(.failure(jsonError.localizedDescription as! NSError))
             }
             

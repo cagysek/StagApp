@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StudentScreen: View {
     
-    @StateObject var vm = StudentInfoViewModel(stagService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()))
+    @StateObject var vm = StudentInfoViewModel(dataManager: DataManager(stagApiService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext())), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()), subjectStatisticsCalculator: SubjectStatisticsCalculator())
     
     @State var studyYears: Array<Int> = []
     
@@ -27,14 +27,15 @@ struct StudentScreen: View {
                     
                     Spacer()
                 }
-                .padding()
+                .padding([.leading, .top, .trailing])
                 
                 
-                StudentInfoView(studentInfoData: self.$vm.studentInfo)
+                StudentInfoView(studentInfoData: self.$vm.studentInfo, statistics: self.vm.getTotalStatistics())
                     
                 YearsScrollView(selectedYear: self.$selectedYear, studyYears: self.studyYears, vm: vm)
+                    .padding([.bottom, .top])
                 
-                YearSubjectsView(winterSubjects: self.$vm.winterSubjects, summerSubjects: self.$vm.summerSubjects)
+                YearSubjectsView(winterSubjects: self.$vm.winterSubjects, summerSubjects: self.$vm.summerSubjects, statistics: self.$vm.yearStatistics)
             }
         }
         .foregroundColor(.defaultFontColor)

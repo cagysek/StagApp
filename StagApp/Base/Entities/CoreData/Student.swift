@@ -26,6 +26,7 @@ class Student: NSManagedObject, Decodable {
         case faculty = "fakultaSp"
         case studyYear = "rocnik"
         case email = "email"
+        case studyType = "typSp"
     }
     
     required convenience init(from decoder: Decoder) throws {
@@ -47,6 +48,7 @@ class Student: NSManagedObject, Decodable {
         self.faculty = try container.decode(String?.self, forKey: .faculty)
         self.studyYear = try container.decode(String?.self, forKey: .studyYear)
         self.email = try container.decode(String?.self, forKey: .email)
+        self.studyType = try container.decode(String?.self, forKey: .studyType)
     }
     
     

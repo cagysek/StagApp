@@ -18,6 +18,8 @@ protocol ISubjectRepository {
     func getStudyYears() -> [[String : String]]?
     func getSubjects(year: Int, semester: String) -> [Subject]
     func deleteAll() -> Void
+    func getTotalCreditsCount() -> Int
+    func get(predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]?) -> [Subject]
 }
 
 class SubjectRepository: ISubjectRepository {
@@ -26,6 +28,8 @@ class SubjectRepository: ISubjectRepository {
     
     // The Core Data book repository.
     private let repository: CoreDataRepository<Subject>
+    
+    private let ENTITY_NAME: String = "Subject"
 
     /// Designated initializer
     /// - Parameter context: The context used for storing and quering Core Data.
@@ -66,7 +70,7 @@ class SubjectRepository: ISubjectRepository {
     }
     
     public func getSubjects(year: Int, semester: String) -> [Subject] {
-        let request = NSFetchRequest<Subject>(entityName: "Subject")
+        let request = NSFetchRequest<Subject>(entityName: self.ENTITY_NAME)
         
         request.predicate = NSPredicate(format: "year = %@ AND semester = %@", String(year), semester)
         
@@ -85,7 +89,7 @@ class SubjectRepository: ISubjectRepository {
     
     public func getStudentYearsAndSemesters() -> [[String : String]]?
     {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Subject")
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.ENTITY_NAME)
         request.returnsObjectsAsFaults = false
         request.propertiesToGroupBy = ["year", "semester"]
         request.propertiesToFetch = ["year", "semester"]
@@ -109,7 +113,7 @@ class SubjectRepository: ISubjectRepository {
     
     public func getStudyYears() -> [[String : String]]?
     {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Subject")
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.ENTITY_NAME)
         request.returnsObjectsAsFaults = false
         request.propertiesToGroupBy = ["year"]
         request.propertiesToFetch = ["year"]
@@ -133,6 +137,50 @@ class SubjectRepository: ISubjectRepository {
         return nil;
     }
     
+    func get(predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]?) -> [Subject] {
+        let result = self.repository.get(predicate: predicate, sortDescriptors: sortDescriptors)
+        
+        switch result {
+            
+        case .success(let subjects):
+                return subjects
+        case .failure(let error):
+                print(error)
+                return []
+        }
+    }
+    
+    public func getTotalCreditsCount() -> Int {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.ENTITY_NAME)
+        
+        let expression = NSExpressionDescription()
+        expression.expression =  NSExpression(forFunction: "sum:", arguments:[NSExpression(forKeyPath: "credits")])
+        expression.name = "creditsTotal";
+        expression.expressionResultType = NSAttributeType.doubleAttributeType
+        
+        
+        request.propertiesToFetch = [expression]
+        request.resultType = NSFetchRequestResultType.dictionaryResultType
+        
+        let acceptedMarks:[String] = ["1","2","3","S"]
+        
+        request.predicate = NSPredicate(format: "examDate != NULL AND examGrade IN %@", acceptedMarks)
+        
+        do {
+            
+           let results = try self.context.fetch(request)
+            
+           let resultMap = results[0] as! [String:Int]
+            
+           return resultMap["creditsTotal"]!
+            
+       } catch let error as NSError {
+           NSLog("Error when summing amounts: \(error.localizedDescription)")
+       }
+        
+        return 0
+    }
+    
     public func saveContext() -> Result<Bool, Error> {
         return self.repository.saveContext()
     }
@@ -143,7 +191,7 @@ class SubjectRepository: ISubjectRepository {
     
     public func deleteAll() -> Void {
         do {
-            let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Subject")
+            let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: self.ENTITY_NAME)
             let deleteAll = NSBatchDeleteRequest(fetchRequest: deleteFetch)
             
             try self.context.execute(deleteAll)

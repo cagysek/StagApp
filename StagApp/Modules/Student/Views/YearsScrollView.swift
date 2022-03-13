@@ -17,7 +17,7 @@ struct YearsScrollView: View {
     var vm: StudentInfoViewModel
     
     var body: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
             
             HStack {
                 
@@ -35,11 +35,8 @@ struct YearsScrollView: View {
                     .if(self.selectedYear != studyYear) { $0.buttonStyle(WhiteCapsuleButtonStyle()) }
                 }
             }
-            .padding()
         }
-        
-        .padding(.bottom, -15)
-        .padding(.top, -15)
+        .padding([.leading, .trailing])
     }
     
     

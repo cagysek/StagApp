@@ -20,6 +20,7 @@ struct StudentInfo: Codable {
         case faculty = "fakultaSp"
         case studyYear = "rocnik"
         case email = "email"
+        case studyType = "typSp"
     }
     
     
@@ -33,6 +34,7 @@ struct StudentInfo: Codable {
     let faculty: String
     let studyYear: String
     let email: String
+    let studyType: String
     
     /**
         Returns student full name with titles

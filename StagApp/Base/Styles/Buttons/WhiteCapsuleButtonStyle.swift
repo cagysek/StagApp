@@ -25,6 +25,6 @@ struct WhiteCapsuleButtonStyle: ButtonStyle {
             .font(.system(size: self.fontSize, weight: .semibold, design: .rounded))
             .frame(height: self.fontSize * 2)
             .clipShape(Capsule())
-            .shadow(color: .shadow, radius: 8)
+            .shadow(color: .shadow, radius: 2)
     }
 }

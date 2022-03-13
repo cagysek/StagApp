@@ -12,6 +12,7 @@ struct YearSubjectsView: View {
     
     @Binding var winterSubjects: [Subject]
     @Binding var summerSubjects: [Subject]
+    @Binding var statistics: SubjectStatistics?
     
     var body: some View {
         ScrollView(.vertical) {
@@ -20,23 +21,23 @@ struct YearSubjectsView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.white)
-                        .padding()
+                        .padding([.trailing, .leading])
                     
                     VStack {
                         HStack {
                             Spacer()
-                            StatisticLabelView(label: "student.stat-credits", value: "55/120")
+                            StatisticLabelView(label: "student.stat-credits", value: "\(statistics?.getCurrentCredits() ?? 0)/\(statistics?.getTotalCredits() ?? 0)")
                             Spacer()
-                            StatisticLabelView(label: "student.stat-avg", value: "2.12")
+                            StatisticLabelView(label: "student.stat-avg", value: String(format: "%.2f", (statistics?.getAverage() ?? 0)))
                             Spacer()
-                            StatisticLabelView(label: "student.stat-done", value: "2/10")
+                            StatisticLabelView(label: "student.stat-done", value: "\(statistics?.getCompletedSubjects() ?? 0)/\(statistics?.getTotalSubjects() ?? 0)")
                             Spacer()
                         }
-                        
                     }
+                    .padding()
                 }
-                .frame(height: 100)
                 .shadow(color: Color.shadow, radius: 4)
+                
                 
                 
                 Text("student.winter-semester")

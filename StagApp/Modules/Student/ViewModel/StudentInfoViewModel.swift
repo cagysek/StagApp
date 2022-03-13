@@ -20,38 +20,31 @@ final class StudentInfoViewModel: IStudentInfoViewModel {
     
     @Published var studentInfo: Student? = nil
     
-    let dataService: IDataManager
+    @Published var yearStatistics: SubjectStatistics? = nil
     
-    let stagService: IStagService
+    private let dataService: IDataManager
     
-    let subjectRepository: ISubjectRepository
+    private let subjectRepository: ISubjectRepository
     
-    init(stagService: IStagService, subjectRepository: ISubjectRepository) {
-        self.stagService = stagService
+    private let subjectStatisctisCalculator: ISubjectStatisticsCaltulator
+    
+    init(dataManager: IDataManager, subjectRepository: ISubjectRepository, subjectStatisticsCalculator: ISubjectStatisticsCaltulator) {
         self.subjectRepository = subjectRepository
         
-        self.dataService = DataManager(stagApiService: stagService, subjectRepository: subjectRepository)
-        
+        self.dataService = dataManager
+        self.subjectStatisctisCalculator = subjectStatisticsCalculator
     }
     
     public func getUserData() {
-        self.dataService.syncData()
-        
         self.studentInfo = CoreDataManager.getStudentInfo()
-//        self.subjects = CoreDataManager.getSubjects(year: year)
-//        do {
-//            self.studentInfoData = try await stagService.fetchStudentInfo()
-//            self.examResults = try await stagService.fetchExamResults()
-//        } catch {
-//            print(error)
-//        }
-        
     }
     
     public func updateSubjectData(year: Int)
     {
         self.winterSubjects = self.subjectRepository.getSubjects(year: year, semester: ESemester.WINTER.rawValue)
         self.summerSubjects = self.subjectRepository.getSubjects(year: year, semester: ESemester.SUMMER.rawValue)
+        
+        self.yearStatistics = self.subjectStatisctisCalculator.getStatistics(subjects: self.winterSubjects + self.summerSubjects)
     }
     
     public func getStudyYears() -> Array<Int> {
@@ -72,6 +65,12 @@ final class StudentInfoViewModel: IStudentInfoViewModel {
         
         
         return intYears
+    }
+    
+    public func getTotalStatistics() -> SubjectStatistics {
+        let subjects = self.subjectRepository.get(predicate: nil, sortDescriptors: nil)
+        
+        return self.subjectStatisctisCalculator.getStatistics(subjects: subjects)
     }
     
     
