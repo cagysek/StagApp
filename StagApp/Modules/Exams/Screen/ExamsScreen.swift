@@ -9,7 +9,12 @@ import SwiftUI
 
 struct ExamsScreen: View {
     
-    @ObservedObject var vm = ExamsViewModel(stagService: StagService())
+    @ObservedObject var vm: ExamsViewModel
+    
+    
+    init() {
+        self._vm = ObservedObject(wrappedValue: ExamsViewModel(stagService: StagService()))
+    }
     
 //    @ObservedObject var data: [String: [Exam]]
     

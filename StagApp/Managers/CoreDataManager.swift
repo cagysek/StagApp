@@ -34,8 +34,9 @@ class CoreDataManager: ObservableObject {
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
             
-            
+            #if DEBUG
             print(container.persistentStoreCoordinator.persistentStores.first!.url ?? "Container not found")
+            #endif
             
             if let error = error as NSError? {
 

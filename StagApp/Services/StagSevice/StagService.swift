@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol IStagService {
     ///
@@ -16,13 +17,13 @@ protocol IStagService {
     func fetchExamResults() async throws -> [SubjectResult]
     
     /// Fetchs student's basic info
-    func fetchStudentInfo(completion: @escaping (Result<Student, Error>) -> Void)
+    func fetchStudentInfo(studentId: String, completion: @escaping (Result<Student, Error>) -> Void)
     
     /// Fetchs student's subjects
-    func fetchSubjects(year: String, semester: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void)
+    func fetchSubjects(year: String, semester: String, studentId: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void)
     
     /// Fetchs student's exam results
-    func fetchSubjectResults(completion: @escaping (Result<[SubjectResult], Error>) -> Void)
+    func fetchSubjectResults(username: String, studentId: String, completion: @escaping (Result<[SubjectResult], Error>) -> Void)
     
     /// Fetchs student's schedule actions for specific date
     func fetchScheduleActions(for date: Date) async throws -> [ScheduleAction]
@@ -41,19 +42,23 @@ protocol IStagService {
     
     /// Fetchs subject students
     func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent]
+    
+    /// Confirm user credentials and return user's informations
+    func fetchUserLogin(username: String, password: String) async throws -> LoginResult
 }
 
 final class StagService: IStagService {
-    
-//    let coreData = CoreDataService()
  
     enum StagServiceError: Error {
         case failed
         case failedToDecode
         case invalidStatusCode
-        case notAuthorized
+        case accessDenied
+        case unauthorized
         case unknowError
     }
+    
+    private let LOGIN_COOKIE_NAME = "WSCOOKIE"
     
     func fetch() async throws -> [Credentials] {
         let urlSession = URLSession.shared
@@ -69,16 +74,17 @@ final class StagService: IStagService {
     }
     
     
-    public func fetchStudentInfo(completion: @escaping (Result<Student, Error>) -> Void) {
-        let url = self.createUrl(endpoint: APIConstants.studentInfo)
+    public func fetchStudentInfo(studentId: String, completion: @escaping (Result<Student, Error>) -> Void) {
         
-        let request = self.getBaseRequest(url: url)
+        let request = self.getBaseRequest(endpoint: APIConstants.studentInfo, additionalParams: ["osCislo": studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                completion(.failure(error.localizedDescription as! Error))
+                completion(.failure(error))
                 return
             }
+            
+            print(String(data: data!, encoding: .utf8))
             
             do {
                 let decoder = JSONDecoder(context: CoreDataManager.getContext())
@@ -87,19 +93,18 @@ final class StagService: IStagService {
                 completion(.success(student))
             } catch let jsonError {
                 print(jsonError)
-                completion(.failure(jsonError.localizedDescription as! Error))
+                completion(.failure(jsonError))
             }
             
         }.resume()
     }
     
     
-    public func fetchSubjects(year: String, semester: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void) {
-        var url = self.createUrl(endpoint: APIConstants.subjects)
+    public func fetchSubjects(year: String, semester: String, studentId: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void) {
         
-        url = url.appending("semestr", value: semester).appending("rok", value: year)
-        
-        let request = self.getBaseRequest(url: url)
+        let request = self.getBaseRequest(
+            endpoint: APIConstants.subjects,
+            additionalParams: [StagParamsKeys.semester: semester, StagParamsKeys.year: year, StagParamsKeys.studentId: studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
@@ -117,22 +122,18 @@ final class StagService: IStagService {
             } catch let jsonError {
                 print(jsonError)
                 
-                print(String(data: data!, encoding: .utf8))
+//                print(String(data: data!, encoding: .utf8))
                 
-                fatalError("JSON Parse error")
+                
 //                completion(.failure(jsonError.localizedDescription as! NSError))
             }
             
         }.resume()
     }
     
-    public func fetchSubjectResults(completion: @escaping (Result<[SubjectResult], Error>) -> Void) {
-        let url = self.createUrl(endpoint: APIConstants.subjectResults)
-//        url = url.appending("semestr", value: "ZS").appending("rok", value: "2020")
+    public func fetchSubjectResults(username: String, studentId: String, completion: @escaping (Result<[SubjectResult], Error>) -> Void) {
         
-        var request = self.getBaseRequest(url: url)
-        
-    
+        let request = self.getBaseRequest(endpoint: APIConstants.subjectResults, additionalParams: [StagParamsKeys.username: username, StagParamsKeys.studentId: studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
@@ -163,9 +164,8 @@ final class StagService: IStagService {
         Fetch user's data from API
      */
     public func fetchStudentInfoAsync() async throws -> StudentInfo {
-        let url = self.createUrl(endpoint: APIConstants.studentInfo)
         
-        var request = getBaseRequest(url: url)
+        var request = getBaseRequest(endpoint: APIConstants.studentInfo)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -179,9 +179,7 @@ final class StagService: IStagService {
      */
     public func fetchExamResults() async throws -> [SubjectResult] {
         
-        let url = self.createUrl(endpoint: APIConstants.subjectResults)
-        
-        var request = self.getBaseRequest(url: url)
+        var request = getBaseRequest(endpoint: APIConstants.subjectResults)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -201,11 +199,8 @@ final class StagService: IStagService {
      */
     public func fetchScheduleActions(for date: Date) async throws -> [ScheduleAction] {
         
-        var url = self.createUrl(endpoint: APIConstants.scheduleActions)
-        url = url.appending("datumOd", value: DateFormatter.basic.string(from: date))
-                 .appending("datumDo", value: DateFormatter.basic.string(from: date))
+        var request = getBaseRequest(endpoint: APIConstants.scheduleActions, additionalParams: ["datumOd": DateFormatter.basic.string(from: date), "datumDo": DateFormatter.basic.string(from: date)])
         
-        var request = self.getBaseRequest(url: url)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -219,10 +214,8 @@ final class StagService: IStagService {
     }
     
     public func fetchExamDates() async throws -> [Exam] {
+        var request = getBaseRequest(endpoint: APIConstants.exams)
         
-        let url = self.createUrl(endpoint: APIConstants.exams)
-        
-        var request = self.getBaseRequest(url: url)
         request.cachePolicy = .reloadIgnoringLocalCacheData
         request.timeoutInterval = 0
         
@@ -239,9 +232,7 @@ final class StagService: IStagService {
     
     public func fetchExamLogIn(examId: Int) async throws -> String? {
         
-        let url = self.createUrl(endpoint: APIConstants.examsLogIn).appending("termIdno", value: String(examId))
-        
-        var request = getBaseRequest(url: url)
+        var request = getBaseRequest(endpoint: APIConstants.examsLogIn, additionalParams: ["termIdno": String(examId)])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -252,9 +243,7 @@ final class StagService: IStagService {
     
     public func fetchExamLogOut(examId: Int) async throws -> String? {
         
-        let url = self.createUrl(endpoint: APIConstants.examsLogOut).appending("termIdno", value: String(examId))
-        
-        var request = self.getBaseRequest(url: url)
+        var request = getBaseRequest(endpoint: APIConstants.examsLogOut, additionalParams: ["termIdno": String(examId)])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -266,12 +255,7 @@ final class StagService: IStagService {
     
     public func fetchSubjectDetailInfo(department: String, short: String) async throws -> SubjectDetail {
         
-        let url = self.createUrl(endpoint: APIConstants.subjectDetailInfo)
-            .appending("katedra", value: department)
-            .appending("zkratka", value: short)
-        
-        
-        var request = self.getBaseRequest(url: url)
+        var request = getBaseRequest(endpoint: APIConstants.subjectDetailInfo, additionalParams: ["katedra": department, "zkratka": short])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -282,20 +266,36 @@ final class StagService: IStagService {
     
     
     public func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent] {
-        
-        let url = self.createUrl(endpoint: APIConstants.subjectStudents)
-            .appending("roakIdno", value: String(subjectId))
-        
-        var request = self.getBaseRequest(url: url)
+    
+        var request = getBaseRequest(endpoint: APIConstants.subjectStudents, additionalParams: ["roakIdno": String(subjectId)])
         
         let (data, response) = try await self.performRequest(request: &request)
-        print(String(data: data, encoding: .utf8))
+        
         try self.errorHandling(response: response)
         
         
         let subjectStudentsRoot = try JSONDecoder().decode(SubjectStudentRoot.self, from: data)
         
         return subjectStudentsRoot.subjectStudents
+    }
+    
+    public func fetchUserLogin(username: String, password: String) async throws -> LoginResult {
+        
+        let authData = (username + ":" + password).data(using: .utf8)!.base64EncodedString()
+        
+        var request = getBaseRequest(endpoint: APIConstants.login)
+        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+        
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+        var loginResult = try JSONDecoder().decode(LoginResult.self, from: data)
+        
+        loginResult.cookie = self.getLoginCookie(response: response)
+        
+        return loginResult
     }
     
     /**
@@ -320,33 +320,90 @@ final class StagService: IStagService {
         
         if (response.statusCode == 200) {
             return
+        } else if (response.statusCode == 401) {
+            throw StagServiceError.unauthorized
         } else if (response.statusCode == 403) {
-            throw StagServiceError.notAuthorized
+            throw StagServiceError.accessDenied
         }
                
         throw StagServiceError.invalidStatusCode
     }
     
-    /**
-        Returns url for request
-        - endpoint: API endpoint to call
-        - lang: output language
-        - outputFormat: output formating
-     */
-    private func createUrl(endpoint: String, lang: String = "cs", outputFormat: String = "JSON") -> URL {
+    /// Return login cookie, returns nil if not set
+    private func getLoginCookie(response: URLResponse) -> String? {
         
-        let url = APIConstants.baseUrl.appending(endpoint).appending("?lang=\(lang)&outputFormat=\(outputFormat)&osCislo=\(SecretConstants.username)&stagUser=\(SecretConstants.username)")
+        guard let response = response as? HTTPURLResponse else {
+            return nil
+        }
+
+        let headers = response.allHeaderFields as! [String: String]
+        
+        let cookies = HTTPCookie.cookies(withResponseHeaderFields: headers, for: response.url!)
+        
+        HTTPCookieStorage.shared.setCookies(cookies, for: response.url!, mainDocumentURL: nil)
+        
+        for cookie in cookies {
+            if (cookie.name == self.LOGIN_COOKIE_NAME) {
+                return cookie.value
+            }
+        }
+        
+        return nil
+    }
+    
+    
+    /// Returns url for request
+    /// - Parameter endpoint: API endpoint to call
+    
+    private func createUrl(endpoint: String, configuration: StagServiceConfiguration) -> URL {
+        let url = "\(configuration.baseUri)/services/rest2/\(endpoint)?lang=\(configuration.language)&outputFormat=json"
         
         return URL(string: url)!
     }
     
-    private func getBaseRequest(url: URL) -> URLRequest {
+    /// Returns base request for endpoint with authorization cookie
+    /// Request contains base setting
+    ///  - Parameter endpoint: Api endpoint to call
+    ///  - Parameter additionalParams: additional params to GET request
+    private func getBaseRequest(endpoint: String, additionalParams: [String: String] = [:]) -> URLRequest {
+        
+        let configuration = self.getConfiguration()
+        
+        var url = self.createUrl(endpoint: endpoint, configuration: configuration)
+        
+        for (key, value) in additionalParams {
+            url = url.appending(key, value: value)
+        }
+        
         var request = URLRequest(url: url)
-        
-        let authData = (SecretConstants.username + ":" + SecretConstants.password).data(using: .utf8)!.base64EncodedString()
-        
-        request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
+
+        request.addValue("WSCOOKIE=\(configuration.cookie)", forHTTPHeaderField: "Cookie")
         
         return request
+    }
+    
+    /// Returns API configuration by user preferences
+    private func getConfiguration() -> StagServiceConfiguration {
+        
+        // load default url by selected university from user storage
+        let storedUniversityId = UserDefaults.standard.integer(forKey: UserDefaultKeys.SELECTED_UNIVERSITY)
+        var url = ""
+        
+        if (storedUniversityId != 0) {
+            let university = Universities.getUniversityById(id: storedUniversityId)
+            
+            if (university != nil) {
+                url = university!.url
+            }
+        }
+        
+        // loads authorization cookie
+        let keychain = KeychainManager()
+        let cookie = keychain.getCookie() ?? ""
+        
+        // loads prefered localization, loads system if not set, if system not set loads czech...
+        let language = UserDefaults.standard.string(forKey: UserDefaultKeys.LANGUAGE) ?? Locale.current.languageCode ?? "cs"
+        
+        return StagServiceConfiguration(baseUri: url, language: language, cookie: cookie)
     }
 }

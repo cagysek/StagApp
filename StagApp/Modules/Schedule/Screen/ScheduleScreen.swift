@@ -9,13 +9,18 @@ import SwiftUI
 
 struct ScheduleScreen: View {
     
-    @StateObject var vm = ScheduleViewModel(stagService: StagService())
+    @ObservedObject var vm: ScheduleViewModel
     
     @Binding var selectedDate: Date?
     
     @State private var showSheetActionDetail = false
     
     @State private var lastSelectedSchedule: ScheduleAction? = nil
+    
+    init(selectedDate: Binding<Date?>) {
+        self._vm = ObservedObject(wrappedValue: ScheduleViewModel(stagService: StagService()))
+        self._selectedDate = selectedDate
+    }
         
     var body: some View {
         ZStack {

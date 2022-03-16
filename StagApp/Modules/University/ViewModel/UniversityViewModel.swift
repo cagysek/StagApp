@@ -25,7 +25,12 @@ class UniversityViewModel: IUniversityViewModel {
     }
     
     public func selectUniversity(id: Int) -> Void {
-        UserDefaults.standard.set(id, forKey: UserDefaultKeys.SELECTED_UNIVERSITY)
+        
+        guard let university = Universities.getUniversityById(id: id) else {
+            return
+        }
+        
+        UserDefaults.standard.set(university.id, forKey: UserDefaultKeys.SELECTED_UNIVERSITY)
     }
     
 }

@@ -31,4 +31,6 @@ enum APIConstants {
     static let subjectDetailInfo = "/predmety/getPredmetInfo"
     
     static let subjectStudents = "/student/getStudentiByRoakce"
+    
+    static let login = "/help/getStagUserForActualUser"
 }

@@ -49,8 +49,6 @@ class ExamsViewModel: IExamsViewModel {
                 return true
             }
             
-            print(result)
-            
         } catch {
             print(error)
             
@@ -67,8 +65,6 @@ class ExamsViewModel: IExamsViewModel {
             if (result == "OK") {
                 return true
             }
-            
-            print(result)
             
         } catch {
             print(error)

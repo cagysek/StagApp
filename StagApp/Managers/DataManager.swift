@@ -2,10 +2,10 @@ import Foundation
 
 
 protocol IDataManager {
-    func syncData()
-    func syncUserData()
-    func syncSubjects()
-    func syncAdditionalSubjectInfo()
+    func syncData(username: String, studentId: String)
+    func syncUserData(studentId: String)
+    func syncSubjects(username: String, studentId: String)
+    func syncAdditionalSubjectInfo(studentId: String)
     func deleteCachedData() -> Void
 }
 
@@ -18,21 +18,21 @@ struct DataManager: IDataManager {
     let subjectRepository: ISubjectRepository
     
         
-    public func syncData() {
+    public func syncData(username: String, studentId: String) {
         
         // saves basic student info
-        self.syncUserData()
+        self.syncUserData(studentId: studentId)
 
         // first load all subjects results. Request returns all study data
-        self.syncSubjects()
+        self.syncSubjects(username: username, studentId: studentId)
     }
     
     /// Saves studens data into database
-    public func syncUserData() {
+    public func syncUserData(studentId: String) {
         
         CoreDataManager.deleteStudentInfo()
         
-        self.stagApiService.fetchStudentInfo { result in
+        self.stagApiService.fetchStudentInfo(studentId: studentId) { result in
             switch result {
                 case .success(let student):
                     
@@ -50,7 +50,7 @@ struct DataManager: IDataManager {
     }
     
     /// Saves additional subject informations into database
-    public func syncAdditionalSubjectInfo() {
+    public func syncAdditionalSubjectInfo(studentId: String) {
         
         guard let yearsAndSemesters = self.subjectRepository.getStudentYearsAndSemesters() else {
             return;
@@ -61,7 +61,7 @@ struct DataManager: IDataManager {
             let semester = yearsAndSemester["semester"]!
             let year = yearsAndSemester["year"]!
             
-            self.stagApiService.fetchSubjects(year: year, semester: semester) { result in
+            self.stagApiService.fetchSubjects(year: year, semester: semester, studentId: studentId) { result in
                 switch result {
                     case .success(let subjects):
                         for subject in subjects {
@@ -88,10 +88,10 @@ struct DataManager: IDataManager {
     }
   
     /// Saves student results into database
-    public func syncSubjects() {
+    public func syncSubjects(username: String, studentId: String) {
 
         
-        self.stagApiService.fetchSubjectResults { result in
+        self.stagApiService.fetchSubjectResults(username: username, studentId: studentId) { result in
             switch result {
             case .success(let subjectResults):
                 
@@ -112,7 +112,7 @@ struct DataManager: IDataManager {
             
                 
                 // loads subject's full names + credits
-                self.syncAdditionalSubjectInfo()
+                self.syncAdditionalSubjectInfo(studentId: studentId)
             
             case .failure(let error):
                 print(error.localizedDescription)
