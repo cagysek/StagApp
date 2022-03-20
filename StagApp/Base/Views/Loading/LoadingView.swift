@@ -14,13 +14,13 @@ struct LoadingView: View {
     var body: some View {
         VStack(spacing: 8) {
             ProgressView()
-            Text(text)
+            Text(LocalizedStringKey(self.text))
         }
     }
 }
 
 struct LoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadingView(text: "Fetching...")
+        LoadingView(text: "common.loading")
     }
 }

@@ -16,10 +16,17 @@ protocol IExamsViewModel: ObservableObject {
 class ExamsViewModel: IExamsViewModel {
     
     @Published var exams: [String: [Exam]] = [:]
+    @Published var state: State = .idle
     
     let stagService: IStagService
     let studentRepository: IStudentRepository
     let keychainManager: IKeychainManager
+    
+    
+    enum State {
+        case idle
+        case loading
+    }
     
     init(stagService: IStagService, studentRepository: IStudentRepository, keychainManager: IKeychainManager) {
         self.stagService = stagService
@@ -29,11 +36,14 @@ class ExamsViewModel: IExamsViewModel {
     
     public func loadExams() async -> Void {
         
+        self.state = .loading
+        
         let student = self.studentRepository.getStudent()!
         
         do {
             self.exams = [:]
             self.exams = try await self.prepareDataForView(data: self.stagService.fetchExamDates(studentId: student.studentId!))
+            self.state = .idle
         } catch {
             print(error)
         }

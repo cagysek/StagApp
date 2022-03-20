@@ -65,6 +65,7 @@
 "login.password" = "Password";
 "login.username" = "Username";
 "login.action" = "Log in";
+"login.fetching-data" = "Loading user's data...";
 
 
 /// MARK: SCHEDULE
@@ -82,6 +83,8 @@
 "exam.enroll-error" = "Cannot be enrolled";
 "exam.no-exams" = "No announced exams 🏝🏄";
 "exam.headline" = "Exams";
+"exam.enroll-text" = "Do you really want to enroll for the exam?";
+"exam.unenroll-text" = "Do you really want to uneroll from the exam?";
 
 
 /// MARK: OVERVIEW
@@ -115,3 +118,9 @@
 
 /// MARK: MORE
 "more.headline" = "More";
+
+
+/// MARK: COMMON
+"common.yes" = "Yes";
+"common.no" = "No";
+"common.loading" = "Loading...";

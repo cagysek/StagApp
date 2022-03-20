@@ -15,6 +15,8 @@ struct ExamTermView: View {
     
     @State var isEnrolled: Bool = false
     @State var currentStudentCount: Int = 0
+    @State var showUnrollDialog: Bool = false
+    @State var showEnrollDialog: Bool = false
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -34,7 +36,7 @@ struct ExamTermView: View {
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                 
                 Label {
-                    Text("\(self.exam.building)/\(self.exam.room)")
+                    Text("\(self.exam.building)-\(self.exam.room)")
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                 } icon: {
                     Image("symbol-pin-2")
@@ -62,24 +64,34 @@ struct ExamTermView: View {
                     if (self.exam.isEnrollable) {
                         if (self.isEnrolled) {
                             Button("exam.unenroll", action: {
-                                Task.init {
-                                    let result = await vm.logOutFromExam(examId: self.exam.id)
-                                    print(result)
-                                    if (result) {
-                                        self.isEnrolled = false
-                                        self.currentStudentCount -= 1
+                                self.showUnrollDialog = true
+                            })
+                            .confirmationDialog("exam.unenroll-text", isPresented: self.$showUnrollDialog, titleVisibility: .visible, actions: {
+                                Button("common.yes", role: .destructive) {
+                                    Task.init {
+                                        let result = await vm.logOutFromExam(examId: self.exam.id)
+                                        
+                                        if (result) {
+                                            self.isEnrolled = false
+                                            self.currentStudentCount -= 1
+                                        }
                                     }
                                 }
                             })
                             .font(.system(size: 15, weight: .medium, design: .rounded))
                         } else {
                             Button("exam.enroll", action: {
-                                Task.init {
-                                    let result = await vm.logInToExam(examId: self.exam.id)
-                                    print(result)
-                                    if (result) {
-                                        self.isEnrolled = true
-                                        self.currentStudentCount += 1
+                                self.showEnrollDialog = true
+                            })
+                            .confirmationDialog("exam.enroll-text", isPresented: self.$showEnrollDialog, titleVisibility: .visible, actions: {
+                                Button("common.yes", role: .destructive) {
+                                    Task.init {
+                                        let result = await vm.logInToExam(examId: self.exam.id)
+                                        
+                                        if (result) {
+                                            self.isEnrolled = true
+                                            self.currentStudentCount += 1
+                                        }
                                     }
                                 }
                             })
@@ -88,8 +100,10 @@ struct ExamTermView: View {
                     } else {
                         if (self.exam.enrolled) {
                             Text(self.exam.limitEnrollableMsg ?? "exam.unenroll-error")
+                                .font(.system(size: 15, weight: .medium, design: .rounded))
                         } else {
                             Text(self.exam.limitEnrollableMsg ?? "exam.unenroll-error")
+                                .font(.system(size: 15, weight: .medium, design: .rounded))
                         }
                     }
                     

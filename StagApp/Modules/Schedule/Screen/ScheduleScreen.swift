@@ -73,7 +73,7 @@ struct ScheduleScreen: View {
                                             .frame(height: 90)
                                             .shadow(color: Color.shadow, radius: 8)
                                         
-                                        LoadingView(text: "Načítám data")
+                                        LoadingView(text: "common.loading")
                                     }
                                     .padding()
                                     

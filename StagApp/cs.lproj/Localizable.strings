@@ -63,6 +63,7 @@
 "login.password" = "Heslo";
 "login.username" = "Uživatelské jméno";
 "login.action" = "Přihlásit se";
+"login.fetching-data" = "Načítám uživatelská data...";
 
 
 /// MARK: SCHEDULE
@@ -80,7 +81,8 @@
 "exam.enroll-error" = "Nelze se zapsat";
 "exam.no-exams" = "Žádné vypsané zkoušky 🏝🏄";
 "exam.headline" = "Zkoušky";
-
+"exam.enroll-text" = "Opravdu se chceš zapsat na zkoušku?";
+"exam.unenroll-text" = "Opravdu se chceš odepsat ze zkoušky?";
 
 /// MARK: OVERVIEW
 "overview.note-cell-reaming %@" = "Zbývá %@ dní";
@@ -112,3 +114,8 @@
 
 /// MARK: MORE
 "more.headline" = "Další";
+
+/// MARK: COMMON
+"common.yes" = "Ano";
+"common.no" = "Ne";
+"common.loading" = "Načítám...";
