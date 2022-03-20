@@ -16,6 +16,7 @@ import UIKit
 struct ContentView: View {
     
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = false
+    @AppStorage(UserDefaultKeys.IS_STUDENT) private var isStudent = true
     
     @State private var selection = 2
     
@@ -37,11 +38,14 @@ struct ContentView: View {
                     }
                     .tag(0)
              
-                ExamsScreen()
+                if (isStudent) {
+                    ExamsScreen()
                     .tabItem {
                         TabItem(title: "exam.headline", iconName: "pencil");
                     }
                     .tag(1)
+                }
+                
              
                 OverviewScreen(selectedTabIndex: self.$selection, selectedDate: self.$selectedDate)
                     .tabItem {
@@ -49,11 +53,14 @@ struct ContentView: View {
                     }
                     .tag(2)
              
-                StudentScreen()
+                if (isStudent) {
+                    StudentScreen()
                     .tabItem {
                         TabItem(title: "student.headline", iconName: "graduationcap");
                     }
                     .tag(3)
+                }
+                
                 
                 MoreScreen()
                     .tabItem {

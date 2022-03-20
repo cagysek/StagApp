@@ -20,7 +20,7 @@ struct LoginScreen: View {
     
     @ObservedObject private var vm = LoginViewModelImpl(
         stagService: StagService(),
-        dataManager: DataManager(stagApiService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext())),
+        dataManager: DataManager(stagApiService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()), teacherRepository: TeacherRepository(context: CoreDataManager.getContext())),
         keychainManager: KeychainManager()
     )
     

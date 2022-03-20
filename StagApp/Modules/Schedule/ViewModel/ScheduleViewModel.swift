@@ -20,8 +20,7 @@ class ScheduleViewModel: IScheduleViewModel {
     @Published var scheduleActions: [ScheduleAction] = []
     @Published var state: State = State.idle
     
-    let stagService: IStagService
-    let studentRepository: IStudentRepository
+    let scheduleFacade: IScheduleFacade
     
     
     enum State {
@@ -30,9 +29,8 @@ class ScheduleViewModel: IScheduleViewModel {
         case fetchingData
     }
     
-    init(stagService: IStagService, studentRepository: IStudentRepository) {
-        self.stagService = stagService
-        self.studentRepository = studentRepository
+    init(scheduleFacade: IScheduleFacade) {
+        self.scheduleFacade = scheduleFacade
     }
     
     
@@ -40,15 +38,9 @@ class ScheduleViewModel: IScheduleViewModel {
         
         self.state = State.fetchingData
         
-        let student = self.studentRepository.getStudent()!
+        self.scheduleActions = await self.scheduleFacade.loadScheduleActions(for: date)
         
-        do {
-            self.scheduleActions = try await stagService.fetchScheduleActions(studentId: student.studentId!, for: date)
-            
-            self.state = State.idle
-        } catch {
-            print(error)
-        }
+        self.state = State.idle
     }
-    
+        
 }

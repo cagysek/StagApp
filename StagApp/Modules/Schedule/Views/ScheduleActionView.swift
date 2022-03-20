@@ -32,7 +32,7 @@ struct ScheduleActionView: View {
                         .font(.system(size: 14, weight: .regular, design: .rounded))
                     Text(scheduleAction.title)
                         .font(.system(size: 16, weight: .bold, design: .rounded))
-                    Text("\(scheduleAction.department)/\(scheduleAction.titleShort)")
+                    Text("\(scheduleAction.department)-\(scheduleAction.titleShort)")
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                     Label(scheduleAction.teacher?.getFormattedName() ?? "-", systemImage: "person")
                         .font(.system(size: 15, weight: .medium, design: .rounded))

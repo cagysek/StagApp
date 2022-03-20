@@ -114,6 +114,7 @@
 
 /// MARK: MORE
 "more.headline" = "Další";
+"more.logout" = "Odhlásit se";
 
 /// MARK: COMMON
 "common.yes" = "Ano";

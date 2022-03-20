@@ -18,7 +18,7 @@ struct ScheduleScreen: View {
     @State private var lastSelectedSchedule: ScheduleAction? = nil
     
     init(selectedDate: Binding<Date?>) {
-        self._vm = ObservedObject(wrappedValue: ScheduleViewModel(stagService: StagService(), studentRepository: StudentRepository(context: CoreDataManager.getContext())))
+        self._vm = ObservedObject(wrappedValue: ScheduleViewModel(scheduleFacade: ScheduleFacade(stagService: StagService(), studentRepository: StudentRepository(context: CoreDataManager.getContext()), teacherRepository: TeacherRepository(context: CoreDataManager.getContext()))))
         self._selectedDate = selectedDate
     }
         

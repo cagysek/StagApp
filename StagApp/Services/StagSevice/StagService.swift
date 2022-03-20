@@ -26,7 +26,7 @@ protocol IStagService {
     func fetchSubjectResults(username: String, studentId: String, completion: @escaping (Result<[SubjectResult], Error>) -> Void)
     
     /// Fetchs student's schedule actions for specific date
-    func fetchScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction]
+    func fetchStudentScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction]
     
     /// Fetchs student's exam dates
     func fetchExamDates(studentId: String) async throws -> [Exam]
@@ -45,10 +45,17 @@ protocol IStagService {
     
     /// Confirm user credentials and return user's informations
     func fetchUserLogin(username: String, password: String) async throws -> LoginResult
+    
+    /// Fetchs teacher's informations
+    func getTeacherInfo(teacherId: Int) async throws -> Teacher?
+    
+    /// Fetchs student's subjects
+    func getTeacherScheduleActions(teacherId: String, for date: Date) async throws -> [ScheduleAction]
 }
 
 final class StagService: IStagService {
- 
+    
+    
     enum StagServiceError: Error {
         case failed
         case failedToDecode
@@ -76,15 +83,13 @@ final class StagService: IStagService {
     
     public func fetchStudentInfo(studentId: String, completion: @escaping (Result<Student, Error>) -> Void) {
         
-        let request = self.getBaseRequest(endpoint: APIConstants.studentInfo, additionalParams: ["osCislo": studentId])
+        let request = self.getBaseRequest(endpoint: APIConstants.studentInfo, additionalParams: [StagParamsKeys.studentId: studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
-            print(String(data: data!, encoding: .utf8))
             
             do {
                 let decoder = JSONDecoder(context: CoreDataManager.getContext())
@@ -197,10 +202,10 @@ final class StagService: IStagService {
     /**
         Fetch schedule actions for user
      */
-    public func fetchScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction] {
+    public func fetchStudentScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction] {
         
         var request = getBaseRequest(
-            endpoint: APIConstants.scheduleActions,
+            endpoint: APIConstants.studentScheduleActions,
             additionalParams: [StagParamsKeys.fromDate: DateFormatter.basic.string(from: date), StagParamsKeys.toDate: DateFormatter.basic.string(from: date), StagParamsKeys.studentId: studentId])
         
         
@@ -263,7 +268,7 @@ final class StagService: IStagService {
     
     public func fetchSubjectDetailInfo(department: String, short: String) async throws -> SubjectDetail {
         
-        var request = getBaseRequest(endpoint: APIConstants.subjectDetailInfo, additionalParams: ["katedra": department, "zkratka": short])
+        var request = getBaseRequest(endpoint: APIConstants.subjectDetailInfo, additionalParams: [StagParamsKeys.department: department, StagParamsKeys.shortcut: short])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -275,7 +280,7 @@ final class StagService: IStagService {
     
     public func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent] {
     
-        var request = getBaseRequest(endpoint: APIConstants.subjectStudents, additionalParams: ["roakIdno": String(subjectId)])
+        var request = getBaseRequest(endpoint: APIConstants.subjectStudents, additionalParams: [StagParamsKeys.subjectId: String(subjectId)])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -305,6 +310,55 @@ final class StagService: IStagService {
         
         return loginResult
     }
+    
+    
+    func getTeacherInfo(teacherId: Int) async throws -> Teacher? {
+        var request = getBaseRequest(endpoint: APIConstants.teacherInfo, additionalParams: [StagParamsKeys.teacherId: String(teacherId)])
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+        let decoder = JSONDecoder(context: CoreDataManager.getContext())
+        
+        return try decoder.decode(Teacher.self, from: data)
+    }
+    
+    func getTeacherScheduleActions(teacherId: String, for date: Date) async throws -> [ScheduleAction] {
+        var request = getBaseRequest(
+            endpoint: APIConstants.teacherScheduleActions,
+            additionalParams: [StagParamsKeys.fromDate: DateFormatter.basic.string(from: date), StagParamsKeys.toDate: DateFormatter.basic.string(from: date), StagParamsKeys.teacherId: teacherId]
+        )
+        
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+        
+        
+        let scheduleActionsData = try JSONDecoder().decode(ScheduleActionsRoot.self, from: data)
+        
+        return scheduleActionsData.scheduleActions
+    }
+    
+    func getTeacherScheduleActions(teacherId: String) async throws -> [ScheduleAction] {
+        var request = getBaseRequest(
+            endpoint: APIConstants.teacherScheduleActions,
+            additionalParams: [StagParamsKeys.teacherId: teacherId]
+        )
+        
+        
+        let (data, response) = try await self.performRequest(request: &request)
+        
+        try self.errorHandling(response: response)
+        
+        
+        let scheduleActionsData = try JSONDecoder().decode(ScheduleActionsRoot.self, from: data)
+        
+        return scheduleActionsData.scheduleActions
+    }
+    
     
     /**
         Perform request. Adds general modifications to request

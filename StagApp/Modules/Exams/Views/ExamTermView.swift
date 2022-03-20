@@ -23,7 +23,7 @@ struct ExamTermView: View {
             RoundedRectangle(cornerRadius: 8)
                 .padding(.leading)
                 .padding(.trailing)
-                .foregroundColor((!self.exam.isEnrollable || self.isEnrolled) ? .customLightRed : .customLightBlue)
+                .foregroundColor(self.getBackgroundColor())
             
             
             VStack(alignment: .leading, spacing: 5) {
@@ -128,6 +128,17 @@ struct ExamTermView: View {
             }
         }
         .padding(.bottom, 10)
+    }
+    
+    
+    private func getBackgroundColor() -> Color {
+        if (!self.exam.isEnrollable) {
+            return .customLightRed
+        } else if (self.isEnrolled) {
+            return .customYellow
+        }
+        
+        return .customLightBlue
     }
 }
 

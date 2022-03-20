@@ -11,7 +11,6 @@ struct ExamsScreen: View {
     
     @ObservedObject var vm: ExamsViewModel
     
-    
     init() {
         self._vm = ObservedObject(wrappedValue: ExamsViewModel(stagService: StagService(), studentRepository: StudentRepository(context: CoreDataManager.getContext()), keychainManager: KeychainManager()))
     }
@@ -91,10 +90,10 @@ struct ExamsScreen: View {
                 .task {
                     await vm.loadExams()
                 }
-                    
             }
         }
         .foregroundColor(.defaultFontColor)
+        
     }
         
 }

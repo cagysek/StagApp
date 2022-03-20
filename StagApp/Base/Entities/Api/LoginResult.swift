@@ -20,7 +20,7 @@ struct LoginResult: Decodable {
     
     let role: String
     let studentId: String?
-    let teacherId: String?
+    let teacherId: Int?
     let username: String
     var cookie: String?
     

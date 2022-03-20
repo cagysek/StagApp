@@ -31,7 +31,7 @@ public struct ScheduleAction: Decodable, Identifiable {
     let title: String
     let department: String
     let titleShort: String
-    let teacher: Teacher?
+    let teacher: TeacherApi?
     let year: String
     let building: String?
     let room: String?

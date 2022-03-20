@@ -38,7 +38,10 @@ class ExamsViewModel: IExamsViewModel {
         
         self.state = .loading
         
-        let student = self.studentRepository.getStudent()!
+        guard let student = self.studentRepository.getStudent() else {
+            self.state = .idle
+            return
+        }
         
         do {
             self.exams = [:]

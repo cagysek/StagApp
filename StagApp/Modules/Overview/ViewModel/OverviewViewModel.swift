@@ -23,14 +23,12 @@ class OverviewViewModel: IOverviewViewModel {
     @Published var scheduleActions: [ScheduleAction] = []
     @Published var scheduleActionsCount: Int = 0
     
-    let stagService: IStagService
+    let scheduleFacade: IScheduleFacade
     let noteRepository: INoteRepository
-    let studentRepository: IStudentRepository
     
-    init(stagService: StagService, noteRepository: INoteRepository, studentRepository: IStudentRepository) {
-        self.stagService = stagService
+    init(noteRepository: INoteRepository, scheduleFacade: IScheduleFacade) {
         self.noteRepository = noteRepository
-        self.studentRepository = studentRepository
+        self.scheduleFacade = scheduleFacade
         
         self.updateNotes()
     }
@@ -44,21 +42,16 @@ class OverviewViewModel: IOverviewViewModel {
         
 //        self.state = State.fetchingData
         
-        let student = self.studentRepository.getStudent()!
         
         Task {
-            do {
-                let items = try await self.stagService.fetchScheduleActions(studentId: student.studentId!, for: Date())
+            
+            let currentDate = Date()
+            
+            let items = await self.scheduleFacade.loadScheduleActions(for: currentDate)
                 
-                let currentDate = Date()
-                
-                DispatchQueue.main.async {
-                    self.scheduleActions = self.splitScheduleActionByTimeForView(scheduleActions: items, currentDate: currentDate, itemsToReturn: 2)
-                    self.scheduleActionsCount = items.count
-                }
-                
-            } catch {
-                print(error)
+            DispatchQueue.main.async {
+                self.scheduleActions = self.splitScheduleActionByTimeForView(scheduleActions: items, currentDate: currentDate, itemsToReturn: 2)
+                self.scheduleActionsCount = items.count
             }
         }
     }

@@ -75,10 +75,10 @@ struct MoreScreen: View {
                         }
                         
                         
-                        Text("Odhlásit se")
-                            .onTapGesture {
-                                self.isLogged = false
-                            }
+                        Button("more.logout") {
+                            self.isLogged = false
+                        }
+                        .foregroundColor(.red)
                         
                     }
                     

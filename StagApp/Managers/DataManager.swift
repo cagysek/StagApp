@@ -2,33 +2,36 @@ import Foundation
 
 
 protocol IDataManager {
-    func syncData(username: String, studentId: String)
-    func syncUserData(studentId: String)
+    func syncStudentData(username: String, studentId: String)
+    func syncStudentInfo(studentId: String)
     func syncSubjects(username: String, studentId: String)
     func syncAdditionalSubjectInfo(studentId: String)
-    func deleteCachedData() -> Void
+    func deleteStudentCachedData() -> Void
+    func deleteTeacherCachedData() -> Void
+    func syncTeacherInfo(teacherId: Int) -> Void
 }
 
 
 /// This class pro
 ///
 struct DataManager: IDataManager {
-    
+        
     let stagApiService: IStagService
     let subjectRepository: ISubjectRepository
+    let teacherRepository: ITeacherRepository
     
         
-    public func syncData(username: String, studentId: String) {
+    public func syncStudentData(username: String, studentId: String) {
         
         // saves basic student info
-        self.syncUserData(studentId: studentId)
+        self.syncStudentInfo(studentId: studentId)
 
         // first load all subjects results. Request returns all study data
         self.syncSubjects(username: username, studentId: studentId)
     }
     
     /// Saves studens data into database
-    public func syncUserData(studentId: String) {
+    public func syncStudentInfo(studentId: String) {
         
         CoreDataManager.deleteStudentInfo()
         
@@ -132,12 +135,42 @@ struct DataManager: IDataManager {
     }
     
     
-    public func deleteCachedData() -> Void {
+    public func deleteStudentCachedData() -> Void {
         CoreDataManager.deleteStudentInfo()
         
         self.subjectRepository.deleteAll();
         
         CoreDataManager.saveContext()
+    }
+    
+    
+    func deleteTeacherCachedData() {
+        self.teacherRepository.delete()
+    }
+    
+    func syncTeacherInfo(teacherId: Int) {
+        self.deleteTeacherCachedData()
+        
+        Task {
+            do {
+                print(1)
+                guard let teacherInfo = try await self.stagApiService.getTeacherInfo(teacherId: teacherId) else {
+                    return
+                }
+                
+                print(teacherInfo)
+                
+                _ = self.teacherRepository.insert(teacherInfo)
+                
+                _ = self.teacherRepository.saveContext()
+                
+                
+            } catch {
+                print(error)
+            }
+            
+        }
+        
     }
     
     

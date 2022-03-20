@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Teacher: Decodable {
+public struct TeacherApi: Decodable {
  
     enum CodingKeys: String, CodingKey {
         case id = "ucitIdno"

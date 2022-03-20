@@ -118,6 +118,7 @@
 
 /// MARK: MORE
 "more.headline" = "More";
+"more.logout" = "Logout";
 
 
 /// MARK: COMMON

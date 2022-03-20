@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 
 struct Exam: Decodable {
@@ -36,7 +37,7 @@ struct Exam: Decodable {
     }
     
     let id: Int
-    let teacher: Teacher?
+    let teacher: TeacherApi?
     let subject: String
     let department: String
     let year: String
@@ -58,7 +59,7 @@ struct Exam: Decodable {
     let limitEnrollableMsg: String?
     let limitEnrollableDescription: String?
     let note: String?
-    
+        
 }
 
 

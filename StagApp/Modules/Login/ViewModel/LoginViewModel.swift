@@ -59,9 +59,17 @@ final class LoginViewModelImpl: LoginViewModel {
                         
                         self.state = .fetchingData
                         
-                        self.syncUserData(username: data.username, studentId: data.studentId!)
+                        if (data.studentId != nil) {
+                            
+                            self.syncStudentData(username: data.username, studentId: data.studentId!)
+                        }
+                        
+                        if (data.teacherId != nil) {
+                            self.syncTeacherData(username: data.username, teacherId: data.teacherId!)
+                        }
                         
                         self.markUserLogged()
+                        self.markIsStudent(studentId: data.studentId)
                     }
                 }
                 
@@ -93,9 +101,18 @@ final class LoginViewModelImpl: LoginViewModel {
         UserDefaults.standard.set(true, forKey: UserDefaultKeys.IS_LOGED)
     }
     
-    private func syncUserData(username: String, studentId: String) -> Void {
-        self.dataManager.deleteCachedData()
-        self.dataManager.syncData(username: username, studentId: studentId)
+    private func markIsStudent(studentId: String?) -> Void {
+        UserDefaults.standard.set(studentId != nil, forKey: UserDefaultKeys.IS_STUDENT)
+    }
+    
+    private func syncStudentData(username: String, studentId: String) -> Void {
+        self.dataManager.deleteStudentCachedData()
+        self.dataManager.syncStudentData(username: username, studentId: studentId)
+    }
+    
+    private func syncTeacherData(username: String, teacherId: Int) -> Void {
+        self.dataManager.deleteTeacherCachedData()
+        self.dataManager.syncTeacherInfo(teacherId: teacherId)
     }
     
     private func setAuthorizationCookie(cookie: String) -> Bool {
