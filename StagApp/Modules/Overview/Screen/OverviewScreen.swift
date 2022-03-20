@@ -14,7 +14,8 @@ struct OverviewScreen: View {
     @Binding var selectedTabIndex: Int
     @State private var showNotesAddSheet = false
     
-    @StateObject var vm = OverviewViewModel(stagService: StagService(), noteRepository: NoteRepository(context: CoreDataManager.getContext()))
+    @StateObject var vm = OverviewViewModel(stagService: StagService(), noteRepository: NoteRepository(context: CoreDataManager.getContext()),
+                                            studentRepository: StudentRepository(context: CoreDataManager.getContext()))
     
     @Binding var selectedDate: Date?
     

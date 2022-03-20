@@ -13,7 +13,7 @@ struct ExamsScreen: View {
     
     
     init() {
-        self._vm = ObservedObject(wrappedValue: ExamsViewModel(stagService: StagService()))
+        self._vm = ObservedObject(wrappedValue: ExamsViewModel(stagService: StagService(), studentRepository: StudentRepository(context: CoreDataManager.getContext()), keychainManager: KeychainManager()))
     }
     
 //    @ObservedObject var data: [String: [Exam]]

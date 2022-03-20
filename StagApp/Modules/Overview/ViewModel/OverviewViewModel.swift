@@ -25,10 +25,12 @@ class OverviewViewModel: IOverviewViewModel {
     
     let stagService: IStagService
     let noteRepository: INoteRepository
+    let studentRepository: IStudentRepository
     
-    init(stagService: StagService, noteRepository: INoteRepository) {
+    init(stagService: StagService, noteRepository: INoteRepository, studentRepository: IStudentRepository) {
         self.stagService = stagService
         self.noteRepository = noteRepository
+        self.studentRepository = studentRepository
         
         self.updateNotes()
     }
@@ -39,9 +41,14 @@ class OverviewViewModel: IOverviewViewModel {
     }
     
     public func updateSchedule() -> Void {
+        
+//        self.state = State.fetchingData
+        
+        let student = self.studentRepository.getStudent()!
+        
         Task {
             do {
-                let items = try await self.stagService.fetchScheduleActions(for: Date())
+                let items = try await self.stagService.fetchScheduleActions(studentId: student.studentId!, for: Date())
                 
                 let currentDate = Date()
                 

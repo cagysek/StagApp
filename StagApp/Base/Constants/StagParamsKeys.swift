@@ -18,4 +18,5 @@ enum StagParamsKeys {
     public static let shortcut = "zkratka"
     public static let semester = "semestr"
     public static let year = "rok"
+    public static let examId = "termIdno"
 }

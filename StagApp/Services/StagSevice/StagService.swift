@@ -26,16 +26,16 @@ protocol IStagService {
     func fetchSubjectResults(username: String, studentId: String, completion: @escaping (Result<[SubjectResult], Error>) -> Void)
     
     /// Fetchs student's schedule actions for specific date
-    func fetchScheduleActions(for date: Date) async throws -> [ScheduleAction]
+    func fetchScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction]
     
     /// Fetchs student's exam dates
-    func fetchExamDates() async throws -> [Exam]
+    func fetchExamDates(studentId: String) async throws -> [Exam]
     
     /// Log in student to exam
-    func fetchExamLogIn(examId: Int) async throws -> String?
+    func fetchExamLogIn(studentId: String, username: String, examId: Int) async throws -> String?
     
     /// Logout student from exam
-    func fetchExamLogOut(examId: Int) async throws -> String?
+    func fetchExamLogOut(studentId: String, username: String, examId: Int) async throws -> String?
     
     /// Fetchs subject detail
     func fetchSubjectDetailInfo(department: String, short: String) async throws -> SubjectDetail
@@ -197,9 +197,11 @@ final class StagService: IStagService {
     /**
         Fetch schedule actions for user
      */
-    public func fetchScheduleActions(for date: Date) async throws -> [ScheduleAction] {
+    public func fetchScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction] {
         
-        var request = getBaseRequest(endpoint: APIConstants.scheduleActions, additionalParams: ["datumOd": DateFormatter.basic.string(from: date), "datumDo": DateFormatter.basic.string(from: date)])
+        var request = getBaseRequest(
+            endpoint: APIConstants.scheduleActions,
+            additionalParams: [StagParamsKeys.fromDate: DateFormatter.basic.string(from: date), StagParamsKeys.toDate: DateFormatter.basic.string(from: date), StagParamsKeys.studentId: studentId])
         
         
         let (data, response) = try await self.performRequest(request: &request)
@@ -213,8 +215,8 @@ final class StagService: IStagService {
         return scheduleActionsData.scheduleActions
     }
     
-    public func fetchExamDates() async throws -> [Exam] {
-        var request = getBaseRequest(endpoint: APIConstants.exams)
+    public func fetchExamDates(studentId: String) async throws -> [Exam] {
+        var request = getBaseRequest(endpoint: APIConstants.exams, additionalParams: [StagParamsKeys.studentId: studentId])
         
         request.cachePolicy = .reloadIgnoringLocalCacheData
         request.timeoutInterval = 0
@@ -230,9 +232,12 @@ final class StagService: IStagService {
         return examsData.exams
     }
     
-    public func fetchExamLogIn(examId: Int) async throws -> String? {
+    public func fetchExamLogIn(studentId: String, username: String, examId: Int) async throws -> String? {
         
-        var request = getBaseRequest(endpoint: APIConstants.examsLogIn, additionalParams: ["termIdno": String(examId)])
+        var request = getBaseRequest(
+            endpoint: APIConstants.examsLogIn,
+            additionalParams: [StagParamsKeys.examId: String(examId), StagParamsKeys.studentId: studentId, StagParamsKeys.username: username]
+        )
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -241,9 +246,12 @@ final class StagService: IStagService {
         return String(data: data, encoding: .utf8)
     }
     
-    public func fetchExamLogOut(examId: Int) async throws -> String? {
+    public func fetchExamLogOut(studentId: String, username: String, examId: Int) async throws -> String? {
         
-        var request = getBaseRequest(endpoint: APIConstants.examsLogOut, additionalParams: ["termIdno": String(examId)])
+        var request = getBaseRequest(
+            endpoint: APIConstants.examsLogOut,
+            additionalParams: [StagParamsKeys.examId: String(examId), StagParamsKeys.studentId: studentId, StagParamsKeys.username: username]
+        )
         
         let (data, response) = try await self.performRequest(request: &request)
         

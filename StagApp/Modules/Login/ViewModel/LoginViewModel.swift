@@ -46,14 +46,14 @@ final class LoginViewModelImpl: LoginViewModel {
         Task {
             do {
                 let data = try await stagService.fetchUserLogin(username: username, password: password)
-                    
-                
                 
                 if (data.cookie != nil) {
                     // should be false.. check if cookie value in keychain is not set
                     _ = self.keychainManager.removeCookie()
+                    _ = self.keychainManager.removeUsername()
                     
                     let result = self.setAuthorizationCookie(cookie: data.cookie!)
+                    _ = self.saveUsername(username: username)
                     
                     if (result) {
                         
@@ -100,6 +100,10 @@ final class LoginViewModelImpl: LoginViewModel {
     
     private func setAuthorizationCookie(cookie: String) -> Bool {
         return self.keychainManager.saveCookie(cookieValue: cookie)
+    }
+    
+    private func saveUsername(username: String) -> Bool {
+        return self.keychainManager.saveUsername(username: username)
     }
 }
 
