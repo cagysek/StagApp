@@ -43,6 +43,14 @@ struct MoreScreen: View {
                             
                             
                         }
+                        
+                        Section(header: Text("Učitel").font(.system(size: 14, weight: .regular, design: .rounded))) {
+                            NavigationLink {
+                                ThesesScreen()
+                            } label: {
+                                Text("theses.title")
+                            }
+                        }
 
                         Section(header: Text("Další funkce").font(.system(size: 14, weight: .regular, design: .rounded))) {
                             NavigationLink {

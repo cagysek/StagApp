@@ -11,16 +11,38 @@ struct LoadingView: View {
     
     let text: String
     
+    let withBackground: Bool
+    
     var body: some View {
-        VStack(spacing: 8) {
-            ProgressView()
-            Text(LocalizedStringKey(self.text))
+        Group {
+            if (withBackground) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill()
+                        .foregroundColor(Color.white)
+                        .frame(height: 90)
+                        .shadow(color: Color.shadow, radius: 8)
+                    
+                    VStack(spacing: 8) {
+                        ProgressView()
+                        Text(LocalizedStringKey(self.text))
+                    }
+                }
+                .padding()
+            }
+            else
+            {
+                VStack(spacing: 8) {
+                    ProgressView()
+                    Text(LocalizedStringKey(self.text))
+                }
+            }
         }
     }
 }
 
 struct LoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadingView(text: "common.loading")
+        LoadingView(text: "common.loading", withBackground: true)
     }
 }

@@ -153,12 +153,9 @@ struct DataManager: IDataManager {
         
         Task {
             do {
-                print(1)
-                guard let teacherInfo = try await self.stagApiService.getTeacherInfo(teacherId: teacherId) else {
+                guard let teacherInfo = try await self.stagApiService.fetchTeacherInfo(teacherId: teacherId) else {
                     return
                 }
-                
-                print(teacherInfo)
                 
                 _ = self.teacherRepository.insert(teacherInfo)
                 

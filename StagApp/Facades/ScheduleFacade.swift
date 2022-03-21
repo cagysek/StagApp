@@ -55,7 +55,7 @@ struct ScheduleFacade: IScheduleFacade {
         }
         
         do {
-            return try await stagService.getTeacherScheduleActions(teacherId: String(teacher.teacherId), for: date)
+            return try await stagService.fetchTeacherScheduleActions(teacherId: String(teacher.teacherId), for: date)
         } catch {
             print(error)
         }

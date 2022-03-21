@@ -109,11 +109,11 @@ struct LoginScreen: View {
                             Spacer()
                         }
                 case .loading:
-                    LoadingView(text: "common.loading")
+                    LoadingView(text: "common.loading", withBackground: false)
                 case .error(let error):
                     Text(error)
                 case .fetchingData:
-                    LoadingView(text: "login.fetching-data")
+                    LoadingView(text: "login.fetching-data", withBackground: false)
             }
         }
         .foregroundColor(.defaultFontColor)

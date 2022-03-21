@@ -20,4 +20,5 @@ enum StagParamsKeys {
     public static let year = "rok"
     public static let examId = "termIdno"
     public static let subjectId = "roakIdno"
+    public static let assignmentYear = "rokZadani"
 }

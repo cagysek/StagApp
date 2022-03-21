@@ -12,14 +12,20 @@ struct StringHelper {
     public static func concatStringsToOne(strings: String..., separatorOnFirstPosition: Bool = false, separator: String = " ∙ ") -> String {
         var result = "";
         
+        
         for string in strings
         {
-            if (separatorOnFirstPosition || !result.isEmpty)
+            if (!result.isEmpty && !string.isEmpty)
             {
                 result += separator
             }
             
             result += string
+        }
+        
+        if (separatorOnFirstPosition && !result.isEmpty)
+        {
+            result = separator + result
         }
         
         return result;

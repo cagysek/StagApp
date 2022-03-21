@@ -69,16 +69,8 @@ struct ExamsScreen: View {
                                     Text("exam.no-exams").font(.system(size: 16, weight: .regular, design: .rounded))
                                 }
                             }
-                        case .loading:
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill()
-                                    .foregroundColor(Color.white)
-                                    .frame(height: 90)
-                                    .shadow(color: Color.shadow, radius: 8)
-                                
-                                LoadingView(text: "common.loading")
-                            }
+                        case .fetchingData:
+                            LoadingView(text: "common.loading", withBackground: true)
                         }
                         
                         

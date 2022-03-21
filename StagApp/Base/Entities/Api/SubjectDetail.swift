@@ -54,6 +54,6 @@ struct SubjectDetail: Decodable {
     let examForm: String
     let requirements: String
     let content: String
-    let prerequisites: String
+    let prerequisites: String?
     let subjectUrl: String?
 }

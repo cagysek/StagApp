@@ -18,16 +18,9 @@ protocol IScheduleViewModel: ObservableObject {
 class ScheduleViewModel: IScheduleViewModel {
     
     @Published var scheduleActions: [ScheduleAction] = []
-    @Published var state: State = State.idle
+    @Published var state: AsyncState = .idle
     
     let scheduleFacade: IScheduleFacade
-    
-    
-    enum State {
-        case idle
-        case error(msg: String)
-        case fetchingData
-    }
     
     init(scheduleFacade: IScheduleFacade) {
         self.scheduleFacade = scheduleFacade
@@ -36,11 +29,11 @@ class ScheduleViewModel: IScheduleViewModel {
     
     public func loadScheduleActions(for date: Date) async -> Void {
         
-        self.state = State.fetchingData
+        self.state = AsyncState.fetchingData
         
         self.scheduleActions = await self.scheduleFacade.loadScheduleActions(for: date)
         
-        self.state = State.idle
+        self.state = AsyncState.idle
     }
         
 }

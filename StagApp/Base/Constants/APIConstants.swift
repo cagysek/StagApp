@@ -37,4 +37,6 @@ enum APIConstants {
     static let teacherInfo = "/ucitel/getUcitelInfo"
     
     static let teacherScheduleActions = "/rozvrhy/getRozvrhByUcitel"
+    
+    static let Theses = "/kvalifikacniprace/getKvalifikacniPrace"
 }

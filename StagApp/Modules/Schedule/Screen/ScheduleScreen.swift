@@ -41,49 +41,24 @@ struct ScheduleScreen: View {
 
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-                        switch self.vm.state {
-                            case .idle:
-                                    if (!self.vm.scheduleActions.isEmpty) {
-                                        ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
-                                            ScheduleActionView(scheduleAction: scheduleAction)
-                                                .onTapGesture {
-                                                    self.lastSelectedSchedule = scheduleAction
-                                                    self.showSheetActionDetail.toggle()
-                                                    
-                                                }
+                            switch self.vm.state {
+                                case .idle:
+                                        if (!self.vm.scheduleActions.isEmpty) {
+                                            ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
+                                                ScheduleActionView(scheduleAction: scheduleAction)
+                                                    .onTapGesture {
+                                                        self.lastSelectedSchedule = scheduleAction
+                                                        self.showSheetActionDetail.toggle()
+                                                        
+                                                    }
+                                            }
                                         }
-                                    }
-                                    else {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .fill()
-                                                .foregroundColor(Color.white)
-                                                .frame(height: 90)
-                                                .shadow(color: Color.shadow, radius: 8)
-                                            
-                                            Text("schedule.no-class-today").font(.system(size: 16, weight: .regular, design: .rounded))
+                                        else {
+                                            WhiteComponent(text: "schedule.no-class-today")
                                         }
-                                        .padding()
-                                    }
-                            case .fetchingData:
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .fill()
-                                            .foregroundColor(Color.white)
-                                            .frame(height: 90)
-                                            .shadow(color: Color.shadow, radius: 8)
-                                        
-                                        LoadingView(text: "common.loading")
-                                    }
-                                    .padding()
-                                    
-                            case .error(msg: let msg):
-                                Text(msg)
-                        }
-                            
-                            
-                            
-                            
+                                case .fetchingData:
+                                    LoadingView(text: "common.loading", withBackground: true)
+                            }
                         }
                         .padding(.bottom, 30)
 

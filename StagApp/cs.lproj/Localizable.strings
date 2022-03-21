@@ -120,3 +120,12 @@
 "common.yes" = "Ano";
 "common.no" = "Ne";
 "common.loading" = "Načítám...";
+
+/// MARK: THESES
+"theses.title" = "Kvalifikační práce";
+"theses.work" = " práce";
+"theses.supervisor" = "Vedoucí";
+"theses.consultant" = "Konzultant";
+"theses.opponent" = "Oponent";
+"theses.trainer" = "Školitel";
+"theses.empty" = "Nejste veden u žádných kvalifikačních prací.";

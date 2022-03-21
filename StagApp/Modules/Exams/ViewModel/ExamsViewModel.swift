@@ -16,7 +16,7 @@ protocol IExamsViewModel: ObservableObject {
 class ExamsViewModel: IExamsViewModel {
     
     @Published var exams: [String: [Exam]] = [:]
-    @Published var state: State = .idle
+    @Published var state: AsyncState = .idle
     
     let stagService: IStagService
     let studentRepository: IStudentRepository
@@ -36,7 +36,7 @@ class ExamsViewModel: IExamsViewModel {
     
     public func loadExams() async -> Void {
         
-        self.state = .loading
+        self.state = .fetchingData
         
         guard let student = self.studentRepository.getStudent() else {
             self.state = .idle

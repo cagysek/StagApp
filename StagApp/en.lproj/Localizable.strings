@@ -125,3 +125,13 @@
 "common.yes" = "Yes";
 "common.no" = "No";
 "common.loading" = "Loading...";
+
+
+/// MARK: THESES
+"theses.title" = "Theses";
+"theses.work" = " thesis";
+"theses.supervisor" = "Supervisor";
+"theses.consultant" = "Consultant";
+"theses.opponent" = "Opponent";
+"theses.trainer" = "Trainer";
+"theses.empty" = "You are not listed on any theses.";
