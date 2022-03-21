@@ -10,6 +10,7 @@ import SwiftUI
 struct MoreScreen: View {
     
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = true
+    @AppStorage(UserDefaultKeys.HAS_TEACHER_ID) private var hasTeacherId = false
     
     var body: some View {
         NavigationView {
@@ -44,11 +45,13 @@ struct MoreScreen: View {
                             
                         }
                         
-                        Section(header: Text("Učitel").font(.system(size: 14, weight: .regular, design: .rounded))) {
-                            NavigationLink {
-                                ThesesScreen()
-                            } label: {
-                                Text("theses.title")
+                        if (self.hasTeacherId) {
+                            Section(header: Text("Učitel").font(.system(size: 14, weight: .regular, design: .rounded))) {
+                                NavigationLink {
+                                    ThesesScreen()
+                                } label: {
+                                    Text("theses.title")
+                                }
                             }
                         }
 

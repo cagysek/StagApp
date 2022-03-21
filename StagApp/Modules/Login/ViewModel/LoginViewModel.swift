@@ -37,6 +37,19 @@ final class LoginViewModelImpl: LoginViewModel {
         self.dataManager = dataManager
         self.keychainManager = keychainManager
         
+        // on login screen clear all cached data
+        self.clearAllCachedData()
+    }
+    
+    private func clearAllCachedData() -> Void {
+        // should be false.. check if any data is stored in keychain
+        _ = self.keychainManager.removeCookie()
+        _ = self.keychainManager.removeUsername()
+        
+        self.dataManager.deleteStudentCachedData()
+        self.dataManager.deleteTeacherCachedData()
+        
+        UserDefaults.standard.set(false, forKey: UserDefaultKeys.IS_STUDENT)
     }
     
     func getLogin(username: String, password: String) {
@@ -48,9 +61,7 @@ final class LoginViewModelImpl: LoginViewModel {
                 let data = try await stagService.fetchUserLogin(username: username, password: password)
                 
                 if (data.cookie != nil) {
-                    // should be false.. check if cookie value in keychain is not set
-                    _ = self.keychainManager.removeCookie()
-                    _ = self.keychainManager.removeUsername()
+                    
                     
                     let result = self.setAuthorizationCookie(cookie: data.cookie!)
                     _ = self.saveUsername(username: username)
@@ -70,14 +81,12 @@ final class LoginViewModelImpl: LoginViewModel {
                         
                         self.markUserLogged()
                         self.markIsStudent(studentId: data.studentId)
+                        self.markHasTeacherId(teacherId: data.teacherId)
                     }
                 }
                 
                 
                 self.state = .idle
-                
-                print(data)
-     
             } catch {
                 self.state = .idle
                 print(error)
@@ -105,13 +114,15 @@ final class LoginViewModelImpl: LoginViewModel {
         UserDefaults.standard.set(studentId != nil, forKey: UserDefaultKeys.IS_STUDENT)
     }
     
+    private func markHasTeacherId(teacherId: Int?) -> Void {
+        UserDefaults.standard.set(teacherId != nil, forKey: UserDefaultKeys.HAS_TEACHER_ID)
+    }
+    
     private func syncStudentData(username: String, studentId: String) -> Void {
-        self.dataManager.deleteStudentCachedData()
         self.dataManager.syncStudentData(username: username, studentId: studentId)
     }
     
     private func syncTeacherData(username: String, teacherId: Int) -> Void {
-        self.dataManager.deleteTeacherCachedData()
         self.dataManager.syncTeacherInfo(teacherId: teacherId)
     }
     

@@ -12,4 +12,5 @@ public enum UserDefaultKeys {
     static let SELECTED_UNIVERSITY = "selectedUniversity"
     static let LANGUAGE = "language"
     static let IS_STUDENT = "isStudent"
+    static let HAS_TEACHER_ID = "hasTeacherId"
 }
