@@ -47,9 +47,11 @@ struct ScheduleScreen: View {
                                             ForEach(vm.scheduleActions, id: \.id) { scheduleAction in
                                                 ScheduleActionView(scheduleAction: scheduleAction)
                                                     .onTapGesture {
-                                                        self.lastSelectedSchedule = scheduleAction
-                                                        self.showSheetActionDetail.toggle()
                                                         
+                                                        if (scheduleAction.scheduleId != nil) {
+                                                            self.lastSelectedSchedule = scheduleAction
+                                                            self.showSheetActionDetail.toggle()
+                                                        }
                                                     }
                                             }
                                         }

@@ -62,7 +62,7 @@ struct ContentView: View {
                 }
                 
                 
-                MoreScreen()
+                MoreScreen(selectedTabIndex: self.$selection)
                     .tabItem {
                         TabItem(title: "more.headline", iconName: "line.3.horizontal");
                     }

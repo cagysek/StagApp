@@ -12,6 +12,8 @@ struct MoreScreen: View {
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = true
     @AppStorage(UserDefaultKeys.HAS_TEACHER_ID) private var hasTeacherId = false
     
+    @Binding var selectedTabIndex: Int
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -88,6 +90,7 @@ struct MoreScreen: View {
                         
                         Button("more.logout") {
                             self.isLogged = false
+                            self.selectedTabIndex = 2
                         }
                         .foregroundColor(.red)
                         
@@ -108,6 +111,6 @@ struct MoreScreen: View {
 
 struct MoreScreen_Previews: PreviewProvider {
     static var previews: some View {
-        MoreScreen()
+        MoreScreen(selectedTabIndex: .constant(2))
     }
 }

@@ -5,7 +5,7 @@ import SwiftUI
 public struct ScheduleAction: Decodable, Identifiable {
     
     enum CodingKeys: String, CodingKey {
-        case id = "roakIdno"
+        case scheduleId = "roakIdno"
         case title = "nazev"
         case department = "katedra"
         case titleShort = "predmet"
@@ -27,7 +27,8 @@ public struct ScheduleAction: Decodable, Identifiable {
         case type = "druhAkce"
     }
     
-    public let id: Int
+    public let id = UUID()
+    let scheduleId: Int?
     let title: String
     let department: String
     let titleShort: String
@@ -100,7 +101,7 @@ public struct ScheduleAction: Decodable, Identifiable {
             
             return Color.customLightGreen
             
-        } else if (self.labelShort == "Zkouška") {
+        } else if (self.labelShort == "Zkouška" || (self.labelShort == "Záp. před zk.")) {
                     
             return Color.customYellow
                     

@@ -103,7 +103,8 @@ struct SubjectDetailScreen: View {
             .task {
                 if (self.scheduleAction != nil) {
                     await self.vm.loadSubjectDetail(department: self.scheduleAction!.department, short: self.scheduleAction!.titleShort)
-                    await self.vm.loadSubjectStudents(subjectId: self.scheduleAction!.id)
+                    
+                    await self.vm.loadSubjectStudents(subjectId: self.scheduleAction!.scheduleId!)
                 }
             }
         }

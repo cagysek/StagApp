@@ -384,7 +384,8 @@ final class StagService: IStagService {
      */
     private func performRequest(request: inout URLRequest) async throws -> (Data, URLResponse)
     {
-        let configuration = URLSessionConfiguration.ephemeral
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
         
         let urlSession = URLSession(configuration: configuration)
         
@@ -457,6 +458,7 @@ final class StagService: IStagService {
         }
         
         var request = URLRequest(url: url)
+        
 
         request.addValue("WSCOOKIE=\(configuration.cookie)", forHTTPHeaderField: "Cookie")
         
