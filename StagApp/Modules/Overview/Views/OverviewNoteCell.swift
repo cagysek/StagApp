@@ -31,7 +31,7 @@ struct OverviewNoteCell: View {
                 
                 if (note.date != nil) {
                     Label {
-                        Text("overview.note-cell-reaming %@ \(self.getDaysBetween(sinceDate: note.date!))")
+                        Text("overview.note-cell-reaming \(self.getDaysBetween(sinceDate: note.date!))")
 //                        Text(DateFormatter.basic.string(from: note.date!))
                             .font(.system(size: 15, weight: .bold, design: .rounded))
                     } icon: {
