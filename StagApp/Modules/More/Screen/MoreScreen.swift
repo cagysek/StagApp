@@ -33,13 +33,13 @@ struct MoreScreen: View {
                     List {
                         Section(header: Text("ZČU").font(.system(size: 14, weight: .regular, design: .rounded))) {
                             NavigationLink {
-                                DietScreen()
+                                CanteenScreen()
                             } label: {
                                 Text("Jídelníček")
                             }
                             
                             NavigationLink {
-                                DietScreen()
+                                CanteenScreen()
                             } label: {
                                 Text("Webmail")
                             }
@@ -59,13 +59,13 @@ struct MoreScreen: View {
 
                         Section(header: Text("Další funkce").font(.system(size: 14, weight: .regular, design: .rounded))) {
                             NavigationLink {
-                                DietScreen()
+                                CanteenScreen()
                             } label: {
                                 Text("Učebny")
                             }
                             
                             NavigationLink {
-                                DietScreen()
+                                CanteenScreen()
                             } label: {
                                 Text("Studenti")
                             }
@@ -75,13 +75,13 @@ struct MoreScreen: View {
                         Section(header: Text("Obecné").font(.system(size: 14, weight: .regular, design: .rounded))) {
                             
                             NavigationLink {
-                                DietScreen()
+                                CanteenScreen()
                             } label: {
                                 Text("Nastavení")
                             }
                             
                             NavigationLink {
-                                DietScreen()
+                                CanteenScreen()
                             } label: {
                                 Text("O aplikaci")
                             }

@@ -52,9 +52,13 @@
 /// MARK: UNIVERSITY
 "university.pick-text" = "Vyber si svojí univerzitu";
 
-/// MARK: DIET
-"diet.title" = "Diet";
-
+/// MARK: CANTEEN
+"canteen.title" = "Menza";
+"canteen.main-meal" = "Hlavní jídla";
+"canteen.soup" = "Polévky";
+"canteen.no-meals" = "Dnes nejsou v menze podávána žádná jídla.";
+"canteen.no-soups" = "Dnes nejsou v menze podávány žádné polévky.";
+"canteen.note" = "*Ceny jídel jsou platné v den výdeje od 10:30 hodin, v ostatní dny a časy jsou jen orientační.";
 
 /// MARK: LOGIN
 "login.change-university" = "Změnit univerzitu";

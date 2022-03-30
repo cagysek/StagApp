@@ -72,7 +72,7 @@ final class StagService: IStagService {
     
     func fetch() async throws -> [Credentials] {
         let urlSession = URLSession.shared
-        let url = URL(string: APIConstants.baseUrl.appending("/api/..."))
+        let url = URL(string: StagAPIConstants.baseUrl.appending("/api/..."))
         let (data, response) = try await urlSession.data(from: url!)
         
         guard let response = response as? HTTPURLResponse,
@@ -86,7 +86,7 @@ final class StagService: IStagService {
     
     public func fetchStudentInfo(studentId: String, completion: @escaping (Result<Student, Error>) -> Void) {
         
-        let request = self.getBaseRequest(endpoint: APIConstants.studentInfo, additionalParams: [StagParamsKeys.studentId: studentId])
+        let request = self.getBaseRequest(endpoint: StagAPIConstants.studentInfo, additionalParams: [StagParamsKeys.studentId: studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -111,7 +111,7 @@ final class StagService: IStagService {
     public func fetchSubjects(year: String, semester: String, studentId: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void) {
         
         let request = self.getBaseRequest(
-            endpoint: APIConstants.subjects,
+            endpoint: StagAPIConstants.subjects,
             additionalParams: [StagParamsKeys.semester: semester, StagParamsKeys.year: year, StagParamsKeys.studentId: studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -141,7 +141,7 @@ final class StagService: IStagService {
     
     public func fetchSubjectResults(username: String, studentId: String, completion: @escaping (Result<[SubjectResult], Error>) -> Void) {
         
-        let request = self.getBaseRequest(endpoint: APIConstants.subjectResults, additionalParams: [StagParamsKeys.studentId: studentId])
+        let request = self.getBaseRequest(endpoint: StagAPIConstants.subjectResults, additionalParams: [StagParamsKeys.studentId: studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
@@ -173,7 +173,7 @@ final class StagService: IStagService {
      */
     public func fetchStudentInfoAsync() async throws -> StudentInfo {
         
-        var request = getBaseRequest(endpoint: APIConstants.studentInfo)
+        var request = getBaseRequest(endpoint: StagAPIConstants.studentInfo)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -187,7 +187,7 @@ final class StagService: IStagService {
      */
     public func fetchExamResults() async throws -> [SubjectResult] {
         
-        var request = getBaseRequest(endpoint: APIConstants.subjectResults)
+        var request = getBaseRequest(endpoint: StagAPIConstants.subjectResults)
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -208,7 +208,7 @@ final class StagService: IStagService {
     public func fetchStudentScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction] {
         
         var request = getBaseRequest(
-            endpoint: APIConstants.studentScheduleActions,
+            endpoint: StagAPIConstants.studentScheduleActions,
             additionalParams: [StagParamsKeys.fromDate: DateFormatter.basic.string(from: date), StagParamsKeys.toDate: DateFormatter.basic.string(from: date), StagParamsKeys.studentId: studentId])
         
         
@@ -224,7 +224,7 @@ final class StagService: IStagService {
     }
     
     public func fetchExamDates(studentId: String) async throws -> [Exam] {
-        var request = getBaseRequest(endpoint: APIConstants.exams, additionalParams: [StagParamsKeys.studentId: studentId])
+        var request = getBaseRequest(endpoint: StagAPIConstants.exams, additionalParams: [StagParamsKeys.studentId: studentId])
         
         request.cachePolicy = .reloadIgnoringLocalCacheData
         request.timeoutInterval = 0
@@ -243,7 +243,7 @@ final class StagService: IStagService {
     public func fetchExamLogIn(studentId: String, username: String, examId: Int) async throws -> String? {
         
         var request = getBaseRequest(
-            endpoint: APIConstants.examsLogIn,
+            endpoint: StagAPIConstants.examsLogIn,
             additionalParams: [StagParamsKeys.examId: String(examId), StagParamsKeys.studentId: studentId, StagParamsKeys.username: username]
         )
         
@@ -257,7 +257,7 @@ final class StagService: IStagService {
     public func fetchExamLogOut(studentId: String, username: String, examId: Int) async throws -> String? {
         
         var request = getBaseRequest(
-            endpoint: APIConstants.examsLogOut,
+            endpoint: StagAPIConstants.examsLogOut,
             additionalParams: [StagParamsKeys.examId: String(examId), StagParamsKeys.studentId: studentId, StagParamsKeys.username: username]
         )
         
@@ -271,7 +271,7 @@ final class StagService: IStagService {
     
     public func fetchSubjectDetailInfo(department: String, short: String) async throws -> SubjectDetail {
         
-        var request = getBaseRequest(endpoint: APIConstants.subjectDetailInfo, additionalParams: [StagParamsKeys.department: department, StagParamsKeys.shortcut: short])
+        var request = getBaseRequest(endpoint: StagAPIConstants.subjectDetailInfo, additionalParams: [StagParamsKeys.department: department, StagParamsKeys.shortcut: short])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -283,7 +283,7 @@ final class StagService: IStagService {
     
     public func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent] {
     
-        var request = getBaseRequest(endpoint: APIConstants.subjectStudents, additionalParams: [StagParamsKeys.subjectId: String(subjectId)])
+        var request = getBaseRequest(endpoint: StagAPIConstants.subjectStudents, additionalParams: [StagParamsKeys.subjectId: String(subjectId)])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -299,7 +299,7 @@ final class StagService: IStagService {
         
         let authData = (username + ":" + password).data(using: .utf8)!.base64EncodedString()
         
-        var request = getBaseRequest(endpoint: APIConstants.login)
+        var request = getBaseRequest(endpoint: StagAPIConstants.login)
         request.addValue("Basic \(authData)", forHTTPHeaderField: "Authorization")
         
         
@@ -316,7 +316,7 @@ final class StagService: IStagService {
     
     
     public func fetchTeacherInfo(teacherId: Int) async throws -> Teacher? {
-        var request = getBaseRequest(endpoint: APIConstants.teacherInfo, additionalParams: [StagParamsKeys.teacherId: String(teacherId)])
+        var request = getBaseRequest(endpoint: StagAPIConstants.teacherInfo, additionalParams: [StagParamsKeys.teacherId: String(teacherId)])
         
         let (data, response) = try await self.performRequest(request: &request)
         
@@ -329,7 +329,7 @@ final class StagService: IStagService {
     
     public func fetchTeacherScheduleActions(teacherId: String, for date: Date) async throws -> [ScheduleAction] {
         var request = getBaseRequest(
-            endpoint: APIConstants.teacherScheduleActions,
+            endpoint: StagAPIConstants.teacherScheduleActions,
             additionalParams: [StagParamsKeys.fromDate: DateFormatter.basic.string(from: date), StagParamsKeys.toDate: DateFormatter.basic.string(from: date), StagParamsKeys.teacherId: teacherId]
         )
         
@@ -347,7 +347,7 @@ final class StagService: IStagService {
     
     public func getTeacherScheduleActions(teacherId: String) async throws -> [ScheduleAction] {
         var request = getBaseRequest(
-            endpoint: APIConstants.teacherScheduleActions,
+            endpoint: StagAPIConstants.teacherScheduleActions,
             additionalParams: [StagParamsKeys.teacherId: teacherId]
         )
         
@@ -364,7 +364,7 @@ final class StagService: IStagService {
     
     public func fetchTheses(teacherId: String, assignmentYear: String) async throws -> [Thesis] {
         var request = getBaseRequest(
-            endpoint: APIConstants.Theses,
+            endpoint: StagAPIConstants.Theses,
             additionalParams: [StagParamsKeys.teacherId: teacherId, StagParamsKeys.assignmentYear: assignmentYear]
         )
         

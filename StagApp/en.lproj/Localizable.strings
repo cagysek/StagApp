@@ -54,8 +54,13 @@
 /// MARK: UNIVERSITY
 "university.pick-text" = "Select your university";
 
-/// MARK: DIET
-"diet.title" = "Diet";
+/// MARK: CANTEEN
+"canteen.title" = "Canteen";
+"canteen.main-meal" = "Main meals";
+"canteen.soup" = "Soups";
+"canteen.no-meals" = "There are no meals served in the canteen today.";
+"canteen.no-soups" = "There are no soups served in the canteen today.";
+"canteen.note" = "*The prices are valid on the day of dispensing from 10:30 a.m., other days and times are approximate.";
 
 
 /// MARK: LOGIN
