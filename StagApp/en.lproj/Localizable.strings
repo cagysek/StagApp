@@ -66,6 +66,7 @@
 "login.username" = "Username";
 "login.action" = "Log in";
 "login.fetching-data" = "Loading user's data...";
+"login.external-action" = "Go to login";
 
 
 /// MARK: SCHEDULE

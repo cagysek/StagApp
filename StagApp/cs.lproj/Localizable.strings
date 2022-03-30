@@ -64,6 +64,7 @@
 "login.username" = "Uživatelské jméno";
 "login.action" = "Přihlásit se";
 "login.fetching-data" = "Načítám uživatelská data...";
+"login.external-action" = "Přejít na přihlášení";
 
 
 /// MARK: SCHEDULE

@@ -93,7 +93,7 @@ final class StagService: IStagService {
                 completion(.failure(error))
                 return
             }
-            
+            print(String(data: data!, encoding: .utf8))
             do {
                 let decoder = JSONDecoder(context: CoreDataManager.getContext())
                 
@@ -141,7 +141,7 @@ final class StagService: IStagService {
     
     public func fetchSubjectResults(username: String, studentId: String, completion: @escaping (Result<[SubjectResult], Error>) -> Void) {
         
-        let request = self.getBaseRequest(endpoint: APIConstants.subjectResults, additionalParams: [StagParamsKeys.username: username, StagParamsKeys.studentId: studentId])
+        let request = self.getBaseRequest(endpoint: APIConstants.subjectResults, additionalParams: [StagParamsKeys.studentId: studentId])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             
@@ -159,7 +159,7 @@ final class StagService: IStagService {
             } catch let jsonError {
                 print(jsonError)
                 
-//                print(String(data: data!, encoding: .utf8))
+                print(String(data: data!, encoding: .utf8))
                 
 //                fatalError("JSON Parse error")
 //                completion(.failure(jsonError.localizedDescription as! NSError))
@@ -384,7 +384,7 @@ final class StagService: IStagService {
      */
     private func performRequest(request: inout URLRequest) async throws -> (Data, URLResponse)
     {
-        let configuration = URLSessionConfiguration.default
+        let configuration = URLSessionConfiguration.ephemeral
         configuration.requestCachePolicy = .returnCacheDataElseLoad
         
         let urlSession = URLSession(configuration: configuration)

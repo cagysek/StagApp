@@ -50,6 +50,7 @@ final class LoginViewModelImpl: LoginViewModel {
         self.dataManager.deleteTeacherCachedData()
         
         UserDefaults.standard.set(false, forKey: UserDefaultKeys.IS_STUDENT)
+        UserDefaults.standard.set(false, forKey: UserDefaultKeys.HAS_TEACHER_ID)
     }
     
     func getLogin(username: String, password: String) {
@@ -61,7 +62,6 @@ final class LoginViewModelImpl: LoginViewModel {
                 let data = try await stagService.fetchUserLogin(username: username, password: password)
                 
                 if (data.cookie != nil) {
-                    
                     
                     let result = self.setAuthorizationCookie(cookie: data.cookie!)
                     _ = self.saveUsername(username: username)
@@ -94,6 +94,52 @@ final class LoginViewModelImpl: LoginViewModel {
         }
     }
     
+    public func processExternalLogin(externalLoginResult: ExternalLoginResult) {
+        
+        self.state = .loading
+        
+        if (!externalLoginResult.isValid())
+        {
+            return
+        }
+        
+        Task {
+            do {
+                    
+                let result = self.setAuthorizationCookie(cookie: externalLoginResult.getStagUserTicket()!)
+                _ = self.saveUsername(username: externalLoginResult.getStagUserName()!)
+
+                if (result) {
+                    self.state = .fetchingData
+                    
+                    let studentId = externalLoginResult.getStagUserInfo()?.getStudentId() ?? nil
+
+                    if (studentId != nil) {
+                        self.syncStudentData(username: externalLoginResult.getStagUserName()!, studentId: studentId!)
+                    }
+
+                    let teacherId = externalLoginResult.getStagUserInfo()?.getTeacherId() ?? nil
+                    if (teacherId != nil) {
+                        self.syncTeacherData(username: externalLoginResult.getStagUserName()!, teacherId: teacherId!)
+                    }
+
+                    self.markUserLogged()
+                    self.markIsStudent(studentId: studentId)
+                    self.markHasTeacherId(teacherId: teacherId)
+                } else {
+
+                }
+
+                
+                
+                self.state = .idle
+            } catch {
+                self.state = .idle
+                print(error)
+            }
+        }
+    }
+    
     public func getSelectedUniversity() -> University? {
         
         let selectedUniversity = UserDefaults.standard.integer(forKey: UserDefaultKeys.SELECTED_UNIVERSITY)
@@ -104,6 +150,14 @@ final class LoginViewModelImpl: LoginViewModel {
         }
         
         return Universities.getUniversityById(id: selectedUniversity)
+    }
+    
+    public func getLoginUrl() -> String? {
+        guard let university = self.getSelectedUniversity() else {
+            return nil
+        }
+        
+        return "\(university.url)/login?originalURL=https://www.stag-client.cz&longTicket=true"
     }
     
     private func markUserLogged() -> Void {

@@ -18,11 +18,17 @@ struct LoginScreen: View {
     @State var showUniversity: Bool = false
     @State var university: University? = nil
     
+    @State var showSelectUniversityAlert: Bool = false
+    
+    @State var externalLoginResult: ExternalLoginResult? = nil
+    
     @ObservedObject private var vm = LoginViewModelImpl(
         stagService: StagService(),
         dataManager: DataManager(stagApiService: StagService(), subjectRepository: SubjectRepository(context: CoreDataManager.getContext()), teacherRepository: TeacherRepository(context: CoreDataManager.getContext())),
         keychainManager: KeychainManager()
     )
+    
+    @State var showLoginWebView: Bool = false
     
     var body: some View {
         
@@ -74,37 +80,79 @@ struct LoginScreen: View {
                                 .padding()
                                 
                             
-                            TextField(
-                                    "login.username",
-                                     text: $username
-                            )
-                            .textFieldStyle(LoginTextFieldStyle())
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
-                            
-                            SecureField(
-                                    "login.password",
-                                     text: $password
-                            )
-                            .textFieldStyle(LoginTextFieldStyle())
-                            .padding(20)
-                            
-                            
-                            Button("login.action", action: {
-                                withAnimation(.easeOut(duration: 0.4)) {
-                                    
-                                    self.vm.getLogin(username: self.username, password: self.password)
-                                    
-                                    
-        //                            self.vm.dataManager.deleteCachedData()
-        //                            self.vm.dataManager.syncData()
-        //                            self.isLogged.toggle()
-                                }
+                            /* TODO: Fix external login for DEMO university. Current is not possible log in throught external login. Url in webview return empty page with error: nsurlerrordomain:-1017 */
+                            if (self.selectedUniversity == 13) {
+                                TextField(
+                                        "login.username",
+                                         text: $username
+                                )
+                                .textFieldStyle(LoginTextFieldStyle())
+                                .padding(.leading, 20)
+                                .padding(.trailing, 20)
                                 
-                            })
-                            .buttonStyle(LoginButtonStyle())
-                            .padding(.leading)
-                            .padding(.trailing)
+                                SecureField(
+                                        "login.password",
+                                         text: $password
+                                )
+                                .textFieldStyle(LoginTextFieldStyle())
+                                .padding(20)
+                                
+                                
+                                NavigationLink(destination:
+                                                ExternalLoginWebView(url: self.vm.getLoginUrl()!, externalLoginResult: $externalLoginResult)
+                                                    .navigationBarTitleDisplayMode(.inline)
+                                                    .onDisappear() {
+                                                        print(externalLoginResult)
+                                                        self.vm.processExternalLogin(externalLoginResult: externalLoginResult!)
+                                                    }
+                                               , isActive: $showLoginWebView) {
+                                    Button("login.action", action: {
+                                        withAnimation(.easeOut(duration: 0.4)) {
+                                            self.vm.getLogin(username: self.username, password: self.password)
+                                        }
+                                        
+                                    })
+                                    .buttonStyle(LoginButtonStyle())
+                                    .padding(.leading)
+                                    .padding(.trailing)
+                                    .alert("Vyberte univerzitu", isPresented: self.$showSelectUniversityAlert) {
+                                        Button("OK", role: .cancel) { }
+                                    }
+                                }
+                            } else {
+                                
+                                NavigationLink(destination:
+                                                ExternalLoginWebView(url: self.vm.getLoginUrl()!, externalLoginResult: $externalLoginResult)
+                                                    .navigationBarTitleDisplayMode(.inline)
+                                                    .onDisappear() {
+                                                        
+                                                        if (externalLoginResult != nil) {
+                                                            self.vm.processExternalLogin(externalLoginResult: externalLoginResult!)
+                                                        }
+                                                        
+                                                    }
+                                               , isActive: $showLoginWebView) {
+                                    Button("login.external-action", action: {
+                                        withAnimation(.easeOut(duration: 0.4)) {
+                                            
+                                            if (self.vm.getLoginUrl() == nil) {
+                                                self.showSelectUniversityAlert = true
+                                                
+                                            } else {
+                                                self.showLoginWebView = true
+                                            }
+                                        }
+                                        
+                                    })
+                                    .buttonStyle(LoginButtonStyle())
+                                    .padding(.leading)
+                                    .padding(.trailing)
+                                    .alert("Vyberte univerzitu", isPresented: self.$showSelectUniversityAlert) {
+                                        Button("OK", role: .cancel) { }
+                                    }
+                                }
+                            }
+                            
                             
                             Spacer()
                         }
@@ -122,6 +170,9 @@ struct LoginScreen: View {
             self.showUniversity = self.selectedUniversity == 0
             self.university = self.vm.getSelectedUniversity()
         }
+//        .sheet(isPresented: self.$showLoginWebView) {
+//            WebView(url: "https://stag-ws.zcu.cz/ws/login?originalURL=http://www.stag-client.cz&longTicket=true")
+//        }
         
         
                 
