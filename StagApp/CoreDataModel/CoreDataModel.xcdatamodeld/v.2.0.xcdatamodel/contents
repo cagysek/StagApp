@@ -4,6 +4,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="descriptionText" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="userName" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="category">
         <attribute name="email" optional="YES" attributeType="String"/>
@@ -55,7 +56,7 @@
         <attribute name="titleBefore" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Note" positionX="45" positionY="198" width="128" height="74"/>
+        <element name="Note" positionX="45" positionY="198" width="128" height="89"/>
         <element name="Student" positionX="176.5559692382812" positionY="76.86398315429688" width="128" height="194"/>
         <element name="Subject" positionX="-94.350830078125" positionY="64.1005859375" width="128" height="299"/>
         <element name="Teacher" positionX="45" positionY="198" width="128" height="119"/>

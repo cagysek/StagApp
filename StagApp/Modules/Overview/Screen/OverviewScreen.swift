@@ -20,7 +20,8 @@ struct OverviewScreen: View {
             stagService: StagService(),
             studentRepository: StudentRepository(context: CoreDataManager.getContext()),
             teacherRepository: TeacherRepository(context: CoreDataManager.getContext())
-        )
+        ),
+        keychainManager: KeychainManager()
     )
     
     @Binding var selectedDate: Date?

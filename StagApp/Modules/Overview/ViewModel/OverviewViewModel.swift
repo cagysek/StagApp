@@ -25,17 +25,24 @@ class OverviewViewModel: IOverviewViewModel {
     
     let scheduleFacade: IScheduleFacade
     let noteRepository: INoteRepository
+    let keychainManager: IKeychainManager
     
-    init(noteRepository: INoteRepository, scheduleFacade: IScheduleFacade) {
+    init(noteRepository: INoteRepository, scheduleFacade: IScheduleFacade, keychainManager: IKeychainManager) {
         self.noteRepository = noteRepository
         self.scheduleFacade = scheduleFacade
+        self.keychainManager = keychainManager
         
         self.updateNotes()
     }
     
     
     public func updateNotes() -> Void {
-        self.notes = self.noteRepository.getAll()
+        
+        guard let username = keychainManager.getUsername() else {
+            return
+        }
+        
+        self.notes = self.noteRepository.getByUserName(username: username)
     }
     
     public func updateSchedule() -> Void {

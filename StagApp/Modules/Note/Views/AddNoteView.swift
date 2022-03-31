@@ -11,7 +11,7 @@ struct AddNoteView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @StateObject private var vm = NoteViewModel(noteRepository: NoteRepository(context: CoreDataManager.getContext()))
+    @StateObject private var vm = NoteViewModel(noteRepository: NoteRepository(context: CoreDataManager.getContext()), keycheinManager: KeychainManager())
     
     @State private var title: String = ""
     @State private var description: String = ""

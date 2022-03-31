@@ -17,8 +17,11 @@ class NoteViewModel: INoteViewModel {
     
     private let noteRepository: INoteRepository
     
-    init(noteRepository: INoteRepository) {
+    private let keychainManager: IKeychainManager
+    
+    init(noteRepository: INoteRepository, keycheinManager: IKeychainManager) {
         self.noteRepository = noteRepository
+        self.keychainManager = keycheinManager
     }
     
     
@@ -30,6 +33,7 @@ class NoteViewModel: INoteViewModel {
         
         note.title = title
         note.descriptionText = description
+        note.userName = self.keychainManager.getUsername()
         
         if (includeDate) {
             note.date = date

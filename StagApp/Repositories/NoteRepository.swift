@@ -13,6 +13,7 @@ protocol INoteRepository{
     func insert(_ note: Note) -> Result<Bool, Error>
     func create() -> Note?
     func getAll() -> [Note]
+    func getByUserName(username: String) -> [Note]
 }
 
 class NoteRepository: INoteRepository {
@@ -52,6 +53,20 @@ class NoteRepository: INoteRepository {
     
     public func getAll() -> [Note] {
         let result =  self.repository.get(predicate: nil, sortDescriptors: nil)
+        
+        switch result {
+            case .success(let notes):
+                return notes
+        case .failure:
+            return []
+        }
+    }
+    
+    public func getByUserName(username: String) -> [Note] {
+        
+        let predicate = NSPredicate(format: "userName = %@", username)
+        
+        let result =  self.repository.get(predicate: predicate, sortDescriptors: nil)
         
         switch result {
             case .success(let notes):
