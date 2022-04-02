@@ -183,7 +183,6 @@ struct OverviewScreen: View {
             AddNoteView()
         }
         .onAppear {
-            print("aaaa");
             self.vm.updateNotes()
             self.vm.updateSchedule()
         }

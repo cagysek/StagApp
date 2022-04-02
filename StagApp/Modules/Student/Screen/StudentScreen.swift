@@ -35,7 +35,7 @@ struct StudentScreen: View {
                 YearsScrollView(selectedYear: self.$selectedYear, studyYears: self.studyYears, vm: vm)
                     .padding([.bottom, .top])
                 
-                YearSubjectsView(winterSubjects: self.$vm.winterSubjects, summerSubjects: self.$vm.summerSubjects, statistics: self.$vm.yearStatistics)
+                YearSubjectsView(winterSubjects: self.$vm.winterSubjects, summerSubjects: self.$vm.summerSubjects, statistics: self.$vm.yearStatistics, selectedYear: self.$selectedYear)
             }
         }
         .foregroundColor(.defaultFontColor)
