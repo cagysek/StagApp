@@ -22,6 +22,7 @@ class OverviewViewModel: IOverviewViewModel {
     @Published var notes: [Note] = []
     @Published var scheduleActions: [ScheduleAction] = []
     @Published var scheduleActionsCount: Int = 0
+    @Published var state: AsyncState = .idle
     
     let scheduleFacade: IScheduleFacade
     let noteRepository: INoteRepository
@@ -31,11 +32,9 @@ class OverviewViewModel: IOverviewViewModel {
         self.noteRepository = noteRepository
         self.scheduleFacade = scheduleFacade
         self.keychainManager = keychainManager
-        
-        self.updateNotes()
     }
     
-    
+    @MainActor
     public func updateNotes() -> Void {
         
         guard let username = keychainManager.getUsername() else {
@@ -45,21 +44,23 @@ class OverviewViewModel: IOverviewViewModel {
         self.notes = self.noteRepository.getByUserName(username: username)
     }
     
+    @MainActor
     public func updateSchedule() -> Void {
         
-//        self.state = State.fetchingData
+        self.state = .fetchingData
         
         
         Task {
+            self.state = .fetchingData
             
             let currentDate = Date()
             
             let items = await self.scheduleFacade.loadScheduleActions(for: currentDate)
-                
-            DispatchQueue.main.async {
-                self.scheduleActions = self.splitScheduleActionByTimeForView(scheduleActions: items, currentDate: currentDate, itemsToReturn: 2)
-                self.scheduleActionsCount = items.count
-            }
+            
+            self.scheduleActions = self.splitScheduleActionByTimeForView(scheduleActions: items, currentDate: currentDate, itemsToReturn: 2)
+            self.scheduleActionsCount = items.count
+            
+            self.state = .idle
         }
     }
     

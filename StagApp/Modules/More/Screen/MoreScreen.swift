@@ -35,14 +35,14 @@ struct MoreScreen: View {
                             NavigationLink {
                                 CanteenScreen()
                             } label: {
-                                Text("Jídelníček")
+                                Text("canteen.title")
                             }
                             
-                            NavigationLink {
-                                CanteenScreen()
-                            } label: {
-                                Text("Webmail")
-                            }
+//                            NavigationLink {
+//                                CanteenScreen()
+//                            } label: {
+//                                Text("Webmail")
+//                            }
                             
                             
                         }
@@ -57,19 +57,21 @@ struct MoreScreen: View {
                             }
                         }
 
-                        Section(header: Text("Další funkce").font(.system(size: 14, weight: .regular, design: .rounded))) {
-                            NavigationLink {
-                                CanteenScreen()
-                            } label: {
-                                Text("Učebny")
-                            }
-                            
-                            NavigationLink {
-                                CanteenScreen()
-                            } label: {
-                                Text("Studenti")
-                            }
-                        }
+                        
+//
+//                        Section(header: Text("Další funkce").font(.system(size: 14, weight: .regular, design: .rounded))) {
+//                            NavigationLink {
+//                                CanteenScreen()
+//                            } label: {
+//                                Text("Učebny")
+//                            }
+//
+//                            NavigationLink {
+//                                CanteenScreen()
+//                            } label: {
+//                                Text("Studenti")
+//                            }
+//                        }
                         
                         
                         Section(header: Text("Obecné").font(.system(size: 14, weight: .regular, design: .rounded))) {

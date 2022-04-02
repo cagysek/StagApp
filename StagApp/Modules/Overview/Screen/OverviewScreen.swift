@@ -14,7 +14,7 @@ struct OverviewScreen: View {
     @Binding var selectedTabIndex: Int
     @State private var showNotesAddSheet = false
     
-    @StateObject var vm = OverviewViewModel(
+    @ObservedObject var vm = OverviewViewModel(
         noteRepository: NoteRepository(context: CoreDataManager.getContext()),
         scheduleFacade: ScheduleFacade(
             stagService: StagService(),
@@ -71,24 +71,35 @@ struct OverviewScreen: View {
                             .padding(.leading, 30)
                             .padding(.bottom, 10)
                         
-                            if (self.vm.scheduleActions.isEmpty) {
-                                if (self.vm.scheduleActionsCount == 0) {
-                                    Spacer()
-                                    Text("overview.no-class-today")
-                                        .font(.system(size: 16, weight: .medium, design: .rounded))
-                                    Spacer()
-                                }
-                                else {
-                                    Spacer()
-                                    Text("overview.class-end")
-                                        .font(.system(size: 16, weight: .medium, design: .rounded))
-                                    Spacer()
-                                }
-                            } else {
-                                ForEach(self.vm.scheduleActions) { scheduleAction in
-                                    OverviewSubjectCell(scheduleAction: scheduleAction)
-                                }
+                            
+                            switch self.vm.state {
+                                case .idle:
+                                    Group {
+                                        if (self.vm.scheduleActions.isEmpty) {
+                                            if (self.vm.scheduleActionsCount == 0) {
+                                                Spacer()
+                                                Text("overview.no-class-today")
+                                                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                                                Spacer()
+                                            }
+                                            else {
+                                                Spacer()
+                                                Text("overview.class-end")
+                                                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                                                Spacer()
+                                            }
+                                        } else {
+                                            ForEach(self.vm.scheduleActions) { scheduleAction in
+                                                OverviewSubjectCell(scheduleAction: scheduleAction)
+                                            }
+                                        }
+                                    }
+                                case .fetchingData:
+                                    LoadingView(text: "common.loading", withBackground: true)
+                                
                             }
+                            
+                            
                         }
                         .padding(.top, 15)
                         
@@ -172,8 +183,11 @@ struct OverviewScreen: View {
             AddNoteView()
         }
         .onAppear {
+            print("aaaa");
+            self.vm.updateNotes()
             self.vm.updateSchedule()
         }
+        
         
     }
     
