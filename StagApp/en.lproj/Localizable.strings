@@ -141,3 +141,18 @@
 "theses.opponent" = "Opponent";
 "theses.trainer" = "Trainer";
 "theses.empty" = "You are not listed on any theses.";
+
+
+/// MARK: SETTINGS
+"settings.title" = "Settings";
+"settings.common" = "Common";
+"settings.language" = "Language";
+"settings.default" = "System";
+"settings.version" = "Version";
+"settings.build" = "Build";
+"settings.about" = "About";
+
+
+/// MARK: LANGUAGES
+"cs" = "Czech";
+"en" = "English";

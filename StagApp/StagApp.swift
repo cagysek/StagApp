@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct StagApp: App {
 
+    @AppStorage(UserDefaultKeys.LANGUAGE) private var language = Locale.current.languageCode ?? ELanguage.DEFAULT
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, CoreDataManager.getContext())                
+                .environment(\.managedObjectContext, CoreDataManager.getContext())
+                .environment(\.locale, .init(identifier: self.language == ELanguage.system.rawValue ? Locale.current.languageCode ?? ELanguage.DEFAULT : self.language))
         }
     }
 }

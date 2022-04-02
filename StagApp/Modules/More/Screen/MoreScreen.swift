@@ -75,9 +75,9 @@ struct MoreScreen: View {
                         Section(header: Text("Obecné").font(.system(size: 14, weight: .regular, design: .rounded))) {
                             
                             NavigationLink {
-                                CanteenScreen()
+                                SettingsScreen()
                             } label: {
-                                Text("Nastavení")
+                                Text("settings.title")
                             }
                             
                             NavigationLink {

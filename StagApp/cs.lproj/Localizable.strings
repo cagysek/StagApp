@@ -134,3 +134,18 @@
 "theses.opponent" = "Oponent";
 "theses.trainer" = "Školitel";
 "theses.empty" = "Nejste veden u žádných kvalifikačních prací.";
+
+
+/// MARK: SETTINGS
+"settings.title" = "Nastavení";
+"settings.common" = "Obecné";
+"settings.language" = "Jazyk";
+"settings.default" = "Dle systému";
+"settings.version" = "Verze";
+"settings.build" = "Build";
+"settings.about" = "O aplikaci";
+
+
+/// MARK: LANGUAGES
+"cs" = "Čeština";
+"en" = "Angličtina";
