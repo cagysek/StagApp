@@ -148,11 +148,6 @@ final class StagService: IStagService {
                 completion(.success(subjects.subjectResult))
             } catch let jsonError {
                 print(jsonError)
-                
-                print(String(data: data!, encoding: .utf8))
-                
-//                fatalError("JSON Parse error")
-//                completion(.failure(jsonError.localizedDescription as! NSError))
             }
             
         }.resume()

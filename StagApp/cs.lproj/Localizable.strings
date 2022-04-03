@@ -72,6 +72,8 @@
 "login.alert-title" = "Nepodařilo se přihlásit";
 "login.unauthorized" = "Neplatné přihlašovací jméno nebo heslo.";
 "login.error" = "Při přihlašování došlo k chybě. Opakujte akci prosím později.";
+"login.warning" = "Upozornění";
+"login.role-warning" = "Přihlásil jste se pod rolí (%@), která není plně podporovaná (ST, VY). Některé funkce mohou být omezeny.";
 
 
 /// MARK: SCHEDULE
@@ -142,7 +144,7 @@
 "theses.consultant" = "Konzultant";
 "theses.opponent" = "Oponent";
 "theses.trainer" = "Školitel";
-"theses.empty" = "Nejste veden u žádných kvalifikačních prací.";
+"theses.empty" = "Nejste veden u žádné kvalifikační práce.";
 
 
 /// MARK: SETTINGS

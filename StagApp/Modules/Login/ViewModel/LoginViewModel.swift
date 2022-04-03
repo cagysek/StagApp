@@ -82,6 +82,7 @@ final class LoginViewModelImpl: LoginViewModel {
                         self.markUserLogged()
                         self.markIsStudent(studentId: data.studentId)
                         self.markHasTeacherId(teacherId: data.teacherId)
+                        self.checkRole(role: data.role)
                     }
                 }
                 
@@ -133,6 +134,7 @@ final class LoginViewModelImpl: LoginViewModel {
                 self.markUserLogged()
                 self.markIsStudent(studentId: studentId)
                 self.markHasTeacherId(teacherId: teacherId)
+                self.checkRole(role: externalLoginResult.getStagUserRole()!)
             } else {
                 
                 NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "login.alert-title", msg: "login.error"))
@@ -140,6 +142,14 @@ final class LoginViewModelImpl: LoginViewModel {
             
             self.state = .idle
         }
+    }
+    
+    private func checkRole(role: String) -> Void {
+        if (role == "ST" || role == "VY") {
+            return;
+        }
+        
+        NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "login.warning", msg: "login.role-warning", arguments: role))
     }
     
     public func getSelectedUniversity() -> University? {

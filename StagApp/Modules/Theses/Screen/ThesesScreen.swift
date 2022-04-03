@@ -43,7 +43,7 @@ struct ThesesScreen: View {
             self.vm.loadTheses()
         }
         .navigationTitle("theses.title")
-        .navigationBarTitleDisplayMode(.automatic)
+        .navigationBarTitleDisplayMode(.inline)
             
         
         

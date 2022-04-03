@@ -75,6 +75,8 @@
 "login.alert-title" = "Failed to log in";
 "login.unauthorized" = "Invalid login or password.";
 "login.error" = "An error occurred during login. Please repeat the action later.";
+"login.warning" = "Warning";
+"login.role-warning" = "You have logged in with a role (%@) that is not fully supported (ST, VY). Some features may be restricted.";
 
 
 /// MARK: SCHEDULE

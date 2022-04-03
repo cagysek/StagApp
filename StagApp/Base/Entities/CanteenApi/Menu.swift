@@ -13,7 +13,7 @@ struct Menu: Decodable {
 }
 
 struct Meal: Decodable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     let name: String
     let allergens: [Allergens]
     let prices: [Prices]

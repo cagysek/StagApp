@@ -15,12 +15,12 @@ struct AlertData {
     
     static let empty = AlertData(title: "", msg: "")
     
-    init(title: String = "", msg: String = "") {
+    init(title: String = "", msg: String = "", arguments: CVarArg...) {
         
         let language = LanguageService.shared.language
         
         // locale texts by language
         self.title = Text(title.localized(language))
-        self.msg = Text(msg.localized(language))
+        self.msg = Text(msg.localized(language, args: arguments))
     }
 }
