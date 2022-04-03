@@ -72,6 +72,9 @@
 "login.action" = "Log in";
 "login.fetching-data" = "Loading user's data...";
 "login.external-action" = "Go to login";
+"login.alert-title" = "Failed to log in";
+"login.unauthorized" = "Invalid login or password.";
+"login.error" = "An error occurred during login. Please repeat the action later.";
 
 
 /// MARK: SCHEDULE
@@ -91,6 +94,12 @@
 "exam.headline" = "Exams";
 "exam.enroll-text" = "Do you really want to enroll for the exam?";
 "exam.unenroll-text" = "Do you really want to uneroll from the exam?";
+"exam.alert-title-log-in-success" = "Success!";
+"exam.alert-title-error" = "Error!";
+"exam.error" = "There was an error when the exam was written. Please repeat the action later.";
+"exam.log-in-success" = "You have successfully applied for the exam.";
+"exam.alert-title-log-out-success" = "Logged out!";
+"exam.log-out-success" = "You successfully checked out of the exam.";
 
 
 /// MARK: OVERVIEW

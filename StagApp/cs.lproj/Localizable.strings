@@ -69,6 +69,9 @@
 "login.action" = "Přihlásit se";
 "login.fetching-data" = "Načítám uživatelská data...";
 "login.external-action" = "Přejít na přihlášení";
+"login.alert-title" = "Nepodařilo se přihlásit";
+"login.unauthorized" = "Neplatné přihlašovací jméno nebo heslo.";
+"login.error" = "Při přihlašování došlo k chybě. Opakujte akci prosím později.";
 
 
 /// MARK: SCHEDULE
@@ -88,6 +91,12 @@
 "exam.headline" = "Zkoušky";
 "exam.enroll-text" = "Opravdu se chceš zapsat na zkoušku?";
 "exam.unenroll-text" = "Opravdu se chceš odepsat ze zkoušky?";
+"exam.alert-title-log-in-success" = "Je to tam!";
+"exam.alert-title-error" = "Chyba!";
+"exam.error" = "Při zapsání zkoušky došlo k chybě. Opakujte akci prosím později.";
+"exam.log-in-success" = "Úspěšně si se přihlásil na zkoušku.";
+"exam.alert-title-log-out-success" = "Odhlášeno!";
+"exam.log-out-success" = "Úspěšně si se odhlásil ze zkoušky.";
 
 /// MARK: OVERVIEW
 "overview.note-cell-reaming %@" = "Zbývá %@ dní";

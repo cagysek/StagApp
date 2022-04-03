@@ -58,16 +58,6 @@ protocol IStagService {
 
 final class StagService: IStagService {
     
-    
-    enum StagServiceError: Error {
-        case failed
-        case failedToDecode
-        case invalidStatusCode
-        case accessDenied
-        case unauthorized
-        case unknowError
-    }
-    
     private let LOGIN_COOKIE_NAME = "WSCOOKIE"
     
     func fetch() async throws -> [Credentials] {
@@ -93,7 +83,7 @@ final class StagService: IStagService {
                 completion(.failure(error))
                 return
             }
-            print(String(data: data!, encoding: .utf8))
+            
             do {
                 let decoder = JSONDecoder(context: CoreDataManager.getContext())
                 
@@ -485,7 +475,7 @@ final class StagService: IStagService {
         let cookie = keychain.getCookie() ?? ""
         
         // loads prefered localization, loads system if not set, if system not set loads czech...
-        let language = UserDefaults.standard.string(forKey: UserDefaultKeys.LANGUAGE) ?? Locale.current.languageCode ?? "cs"
+        let language = LanguageService.shared.language
         
         return StagServiceConfiguration(baseUri: url, language: language, cookie: cookie)
     }

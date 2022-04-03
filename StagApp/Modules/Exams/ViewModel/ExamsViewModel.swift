@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol IExamsViewModel: ObservableObject {
     
     func loadExams() async -> Void
@@ -66,11 +67,16 @@ class ExamsViewModel: IExamsViewModel {
             let result = try await self.stagService.fetchExamLogIn(studentId: student.studentId!, username: username, examId: examId)
             
             if (result == "OK") {
+                NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "exam.alert-title-log-in-success", msg: "exam.log-in-success"))
+                
                 return true
+            } else {
+                NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "exam.alert-title-error", msg: result ?? "exam.error"))
             }
             
+            
         } catch {
-            print(error)
+            NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "exam.alert-title-error", msg: "exam.error"))
             
             return false
         }
@@ -86,11 +92,15 @@ class ExamsViewModel: IExamsViewModel {
             let result = try await self.stagService.fetchExamLogOut(studentId: student.studentId!, username: username, examId: examId)
             
             if (result == "OK") {
+                NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "exam.alert-title-log-in-success", msg: "exam.log-in-success"))
+                
                 return true
+            } else {
+                NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "exam.alert-title-error", msg: result ?? "exam.error"))
             }
             
         } catch {
-            print(error)
+            NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "exam.alert-title-error", msg: "exam.error"))
             
             return false
         }

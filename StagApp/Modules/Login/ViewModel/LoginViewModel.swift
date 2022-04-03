@@ -87,10 +87,14 @@ final class LoginViewModelImpl: LoginViewModel {
                 
                 
                 self.state = .idle
+            } catch StagServiceError.unauthorized {
+                NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "login.alert-title", msg: "login.unauthorized"))
             } catch {
-                self.state = .idle
-                print(error)
+                
+                NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "login.alert-title", msg: "login.error"))
             }
+            
+            self.state = .idle
         }
     }
     
@@ -100,43 +104,41 @@ final class LoginViewModelImpl: LoginViewModel {
         
         if (!externalLoginResult.isValid())
         {
+            NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "login.alert-title", msg: "login.error"))
+            
+            self.state = .idle
+            
             return
         }
         
         Task {
-            do {
                     
-                let result = self.setAuthorizationCookie(cookie: externalLoginResult.getStagUserTicket()!)
-                _ = self.saveUsername(username: externalLoginResult.getStagUserName()!)
+            let result = self.setAuthorizationCookie(cookie: externalLoginResult.getStagUserTicket()!)
+            _ = self.saveUsername(username: externalLoginResult.getStagUserName()!)
 
-                if (result) {
-                    self.state = .fetchingData
-                    
-                    let studentId = externalLoginResult.getStagUserInfo()?.getStudentId() ?? nil
+            if (result) {
+                self.state = .fetchingData
+                
+                let studentId = externalLoginResult.getStagUserInfo()?.getStudentId() ?? nil
 
-                    if (studentId != nil) {
-                        self.syncStudentData(username: externalLoginResult.getStagUserName()!, studentId: studentId!)
-                    }
-
-                    let teacherId = externalLoginResult.getStagUserInfo()?.getTeacherId() ?? nil
-                    if (teacherId != nil) {
-                        self.syncTeacherData(username: externalLoginResult.getStagUserName()!, teacherId: teacherId!)
-                    }
-
-                    self.markUserLogged()
-                    self.markIsStudent(studentId: studentId)
-                    self.markHasTeacherId(teacherId: teacherId)
-                } else {
-
+                if (studentId != nil) {
+                    self.syncStudentData(username: externalLoginResult.getStagUserName()!, studentId: studentId!)
                 }
 
+                let teacherId = externalLoginResult.getStagUserInfo()?.getTeacherId() ?? nil
+                if (teacherId != nil) {
+                    self.syncTeacherData(username: externalLoginResult.getStagUserName()!, teacherId: teacherId!)
+                }
+
+                self.markUserLogged()
+                self.markIsStudent(studentId: studentId)
+                self.markHasTeacherId(teacherId: teacherId)
+            } else {
                 
-                
-                self.state = .idle
-            } catch {
-                self.state = .idle
-                print(error)
+                NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "login.alert-title", msg: "login.error"))
             }
+            
+            self.state = .idle
         }
     }
     

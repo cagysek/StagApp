@@ -152,28 +152,20 @@ struct LoginScreen: View {
                             
                             Spacer()
                         }
-                case .loading:
-                    LoadingView(text: "common.loading", withBackground: false)
-                case .error(let error):
-                    Text(error)
-                case .fetchingData:
-                    LoadingView(text: "login.fetching-data", withBackground: false)
+                    case .loading:
+                        LoadingView(text: "common.loading", withBackground: false)
+                    case .error(let error):
+                        Text(error)
+                    case .fetchingData:
+                        LoadingView(text: "login.fetching-data", withBackground: false)
+                }
             }
-        }
-        .foregroundColor(.defaultFontColor)
-        .navigationBarHidden(true)
-        .onAppear {
-            self.showUniversity = self.selectedUniversity == 0
-            self.university = self.vm.getSelectedUniversity()
-        }
-//        .sheet(isPresented: self.$showLoginWebView) {
-//            WebView(url: "https://stag-ws.zcu.cz/ws/login?originalURL=http://www.stag-client.cz&longTicket=true")
-//        }
-        
-        
-                
-                
-               
+            .foregroundColor(.defaultFontColor)
+            .navigationBarHidden(true)
+            .onAppear {
+                self.showUniversity = self.selectedUniversity == 0
+                self.university = self.vm.getSelectedUniversity()
+            }
         }
     }
 }

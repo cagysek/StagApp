@@ -9,13 +9,11 @@ import SwiftUI
 
 struct ExamsScreen: View {
     
-    @ObservedObject var vm: ExamsViewModel
+    @StateObject var vm: ExamsViewModel
     
     init() {
-        self._vm = ObservedObject(wrappedValue: ExamsViewModel(stagService: StagService(), studentRepository: StudentRepository(context: CoreDataManager.getContext()), keychainManager: KeychainManager()))
+        self._vm = StateObject(wrappedValue: ExamsViewModel(stagService: StagService(), studentRepository: StudentRepository(context: CoreDataManager.getContext()), keychainManager: KeychainManager()))
     }
-    
-//    @ObservedObject var data: [String: [Exam]]
     
     var body: some View {
         ZStack {
@@ -72,12 +70,9 @@ struct ExamsScreen: View {
                         case .fetchingData:
                             LoadingView(text: "common.loading", withBackground: true)
                                 .padding(-8)
-                        }
-                        
-                        
+                        }       
                     }
                 }
-                
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
                 .task {
