@@ -12,8 +12,8 @@ struct LoginScreen: View {
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = false
     @AppStorage(UserDefaultKeys.SELECTED_UNIVERSITY) private var selectedUniversity = 0
     
-    @State private var username: String = "K21B5173P"
-    @State private var password: String = "demo"
+    @State private var username: String = ""
+    @State private var password: String = ""
     
     @State var showUniversity: Bool = false
     @State var university: University? = nil
