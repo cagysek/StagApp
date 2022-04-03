@@ -101,6 +101,8 @@ struct LoginScreen: View {
                                     
                                     
                                     Button("login.action", action: {
+                                        hideKeyboard()
+                                        
                                         withAnimation(.easeOut(duration: 0.4)) {
                                             self.vm.getLogin(username: self.username, password: self.password)
                                         }
@@ -165,6 +167,9 @@ struct LoginScreen: View {
             .onAppear {
                 self.showUniversity = self.selectedUniversity == 0
                 self.university = self.vm.getSelectedUniversity()
+            }
+            .onTapGesture {
+                hideKeyboard()
             }
         }
     }

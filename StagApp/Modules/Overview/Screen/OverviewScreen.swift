@@ -181,6 +181,9 @@ struct OverviewScreen: View {
             self.vm.updateNotes()
         }) {
             AddNoteView()
+                .onTapGesture {
+                    hideKeyboard()
+                }
         }
         .onAppear {
             self.vm.updateNotes()

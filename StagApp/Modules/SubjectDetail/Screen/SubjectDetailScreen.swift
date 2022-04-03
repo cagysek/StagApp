@@ -98,7 +98,9 @@ struct SubjectDetailScreen: View {
                         }
                 )
                 
+                
             }
+            
             .ignoresSafeArea(.all, edges: .bottom)
             .task {
                 if (self.scheduleAction != nil) {
