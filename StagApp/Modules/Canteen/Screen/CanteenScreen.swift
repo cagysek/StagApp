@@ -127,6 +127,7 @@ struct CanteenScreen: View {
         
         }
         .navigationTitle("canteen.title")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func getCanteenId(pickerValue: PickerSection) -> String {

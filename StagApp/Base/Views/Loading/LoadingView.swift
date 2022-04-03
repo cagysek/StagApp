@@ -26,6 +26,7 @@ struct LoadingView: View {
                     VStack(spacing: 8) {
                         ProgressView()
                         Text(LocalizedStringKey(self.text))
+                            .font(.system(size: 15, weight: .regular, design: .rounded))
                     }
                 }
                 .padding()
@@ -35,6 +36,7 @@ struct LoadingView: View {
                 VStack(spacing: 8) {
                     ProgressView()
                     Text(LocalizedStringKey(self.text))
+                        .font(.system(size: 15, weight: .regular, design: .rounded))
                 }
             }
         }

@@ -37,6 +37,14 @@ struct SubjectStatistics {
         return self.average
     }
     
+    public func getAverageString() -> String {
+        if (self.average.isNaN) {
+            return "-"
+        }
+        
+        return String(format: "%.2f", self.average)
+    }
+    
     public func getCredits() -> Int {
         return self.totalCredits
     }

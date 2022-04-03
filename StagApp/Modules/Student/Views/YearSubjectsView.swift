@@ -30,7 +30,7 @@ struct YearSubjectsView: View {
                                 Spacer()
                                 StatisticLabelView(label: "student.stat-credits", value: "\(statistics?.getCurrentCredits() ?? 0)/\(statistics?.getTotalCredits() ?? 0)")
                                 Spacer()
-                                StatisticLabelView(label: "student.stat-avg", value: String(format: "%.2f", (statistics?.getAverage() ?? 0)))
+                                StatisticLabelView(label: "student.stat-avg", value: statistics?.getAverageString() ?? "0")
                                 Spacer()
                                 StatisticLabelView(label: "student.stat-done", value: "\(statistics?.getCompletedSubjects() ?? 0)/\(statistics?.getTotalSubjects() ?? 0)")
                                 Spacer()

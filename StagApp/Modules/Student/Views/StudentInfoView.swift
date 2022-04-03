@@ -40,6 +40,7 @@ struct StudentInfoView: View {
                     Text(StringHelper.concatStringsToOne(strings: self.studentInfoData?.faculty ?? "", self.studentInfoData?.studyProgram ?? ""))
                         .font(.system(size: 15, weight: .light, design: .rounded))
                         .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
                 }
                 .padding(.bottom, 5)
                 
@@ -47,7 +48,7 @@ struct StudentInfoView: View {
                     Spacer()
                     StatisticLabelView(label: "student.stat-credits", value: "\(String(self.statistics.getCurrentCredits()))/120")
                     Spacer()
-                    StatisticLabelView(label: "student.stat-avg", value: String(format: "%.2f", self.statistics.getAverage()))
+                    StatisticLabelView(label: "student.stat-avg", value: self.statistics.getAverageString())
                     Spacer()
                     StatisticLabelView(label: "student.stat-year", value: "\(self.studentInfoData?.studyYear ?? "").       ")
                     Spacer()
