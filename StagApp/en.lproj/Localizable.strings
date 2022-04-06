@@ -89,6 +89,8 @@
 "login.error" = "An error occurred during login. Please repeat the action later.";
 "login.warning" = "Warning";
 "login.role-warning" = "You have logged in with a role (%@) that is not fully supported (ST, VY). Some features may be restricted.";
+"login.expired" = "Login expired";
+"login.expired-text" = "Your login has expired. Please log in again.";
 
 
 /// MARK: SCHEDULE

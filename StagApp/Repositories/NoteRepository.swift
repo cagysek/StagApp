@@ -72,7 +72,7 @@ class NoteRepository: INoteRepository {
         switch result {
             case .success(let notes):
                 return notes
-        case .failure(let error):
+        case .failure:
             return []
         }
     }

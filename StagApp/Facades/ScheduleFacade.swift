@@ -41,6 +41,10 @@ struct ScheduleFacade: IScheduleFacade {
         
         do {
             return try await stagService.fetchStudentScheduleActions(studentId: student.studentId!, for: date)
+        // if auth token expired
+        } catch StagServiceError.unauthorized {
+            
+            self.logOutExpiredToken()
         } catch {
             print(error)
         }
@@ -56,6 +60,8 @@ struct ScheduleFacade: IScheduleFacade {
         
         do {
             return try await stagService.fetchTeacherScheduleActions(teacherId: String(teacher.teacherId), for: date)
+        } catch StagServiceError.unauthorized {
+            self.logOutExpiredToken()
         } catch {
             print(error)
         }
@@ -63,5 +69,11 @@ struct ScheduleFacade: IScheduleFacade {
         return []
     }
     
+    
+    private func logOutExpiredToken() -> Void {
+        UserDefaults.standard.set(false, forKey: UserDefaultKeys.IS_LOGED)
+        
+        NotificationCenter.default.post(name: .showAlert, object: AlertData(title: "login.expired", msg: "login.expired-text"))
+    }
     
 }
