@@ -39,7 +39,7 @@ struct SubjectDetailScreen: View {
                             Spacer()
                             StatisticLabelView(label: "scheduleDetail.time", value: self.scheduleAction?.getTimeOfAction() ?? "")
                             Spacer()
-                            StatisticLabelView(label: "scheduleDetail.type", value: self.scheduleAction?.labelShort ?? "")
+                            StatisticLabelView(label: "scheduleDetail.type", value: self.scheduleAction?.getLabelShortTranslation() ?? "")
                             Spacer()
                         }
                     }
@@ -163,9 +163,9 @@ struct SubjectInfoView: View {
                         Spacer()
                         StatisticLabelView(label: "scheduleDetail.course-completion-type", value: subjectDetail.examType)
                         Spacer()
-                        StatisticLabelView(label: "scheduleDetail.course-completion-form", value: subjectDetail.examForm)
+                        StatisticLabelView(label: "scheduleDetail.course-completion-form", value: subjectDetail.examForm ?? "-")
                         Spacer()
-                        StatisticLabelView(label: "scheduleDetail.course-completion-credit-before", value: subjectDetail.creaditBeforeExam)
+                        StatisticLabelView(label: "scheduleDetail.course-completion-credit-before", value: subjectDetail.creaditBeforeExam ?? "-")
                         Spacer()
                     }
                 }
@@ -258,7 +258,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "scheduleDetail.prerequisite-courses") {
             HStack {
-                Text(subjectDetail.requiredSubjects)
+                Text(subjectDetail.requiredSubjects ?? "-")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -267,7 +267,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "scheduleDetail.course-objectives") {
             HStack {
-                Text(subjectDetail.goal)
+                Text(subjectDetail.goal ?? "-")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -277,7 +277,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "scheduleDetail.requirements-on-student") {
             HStack {
-                Text(subjectDetail.requirements)
+                Text(subjectDetail.requirements ?? "-")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -287,7 +287,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "scheduleDetail.content") {
             HStack {
-                Text(subjectDetail.content)
+                Text(subjectDetail.content ?? "-")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()
@@ -297,7 +297,7 @@ struct AnotherSubjectInfo: View {
         
         InformationBubble(title: "scheduleDetail.literature") {
             HStack {
-                Text(subjectDetail.literature)
+                Text(subjectDetail.literature ?? "-")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .padding(.leading)
                 Spacer()

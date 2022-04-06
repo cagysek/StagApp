@@ -14,7 +14,7 @@ struct OverviewNoteCell: View {
     var body: some View {
         ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.customLightRed)
+                .fill(self.getBackgroundColor(sinceDate: note.date))
             
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
@@ -30,13 +30,12 @@ struct OverviewNoteCell: View {
                 
                 if (note.date != nil) {
                     Label {
-                        Text("overview.note-cell-reaming \(self.getDaysBetween(sinceDate: note.date!))")
-//                        Text(DateFormatter.basic.string(from: note.date!))
+                        Text("overview.note-cell-reaming \(String(self.getDaysBetween(sinceDate: note.date!)))")
                             .font(.system(size: 15, weight: .bold, design: .rounded))
                     } icon: {
                         Image(systemName: "circle.fill")
                             .font(.system(size: 7))
-                            .foregroundColor(.red)
+                            .foregroundColor(self.getDaysBetween(sinceDate: note.date!) > 3 ? .green : .red)
                     }
                 }
                 
@@ -58,12 +57,27 @@ struct OverviewNoteCell: View {
         .padding(.trailing, 10)
     }
     
-    public func getDaysBetween(sinceDate: Date) -> String {
+    private func getDaysBetween(sinceDate: Date) -> Int {
         let calendar = Calendar.current
         let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: calendar.startOfDay(for: sinceDate))
         
         
-        return String(days.value(for: .day)!)
+        return days.value(for: .day)!
+    }
+    
+    private func getBackgroundColor(sinceDate: Date?) -> Color {
+        
+        if (sinceDate == nil) {
+            return .customLightBlue
+        }
+        
+        let days = self.getDaysBetween(sinceDate: sinceDate!)
+        
+        if (days > 0 && days > 3) {
+            return .customLightGreen
+        }
+        
+        return .customLightRed
     }
 }
 

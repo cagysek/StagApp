@@ -11,9 +11,6 @@ struct OverviewScreen: View {
     
     @Environment(\.calendar) var calendar
     
-    @Binding var selectedTabIndex: Int
-    @State private var showNotesAddSheet = false
-    
     @ObservedObject var vm = OverviewViewModel(
         noteRepository: NoteRepository(context: CoreDataManager.getContext()),
         scheduleFacade: ScheduleFacade(
@@ -25,10 +22,15 @@ struct OverviewScreen: View {
     )
     
     @Binding var selectedDate: Date?
+    @Binding var selectedTabIndex: Int
+    
+    @State private var showNotesAddSheet = false
+    @State private var showSubjectDetail = false
+    @State var showNoteList: Bool = false
     
     @State var selectedNote: Note? = nil
+    @State var selectedSubject: ScheduleAction? = nil
     
-    @State var showNoteList: Bool = false
     
     var body: some View {
         NavigationView {
@@ -96,6 +98,10 @@ struct OverviewScreen: View {
                                             } else {
                                                 ForEach(self.vm.scheduleActions) { scheduleAction in
                                                     OverviewSubjectCell(scheduleAction: scheduleAction)
+                                                        .onTapGesture {
+                                                            self.showSubjectDetail.toggle()
+                                                            self.selectedSubject = scheduleAction
+                                                        }
                                                 }
                                             }
                                         }
@@ -204,6 +210,9 @@ struct OverviewScreen: View {
                         hideKeyboard()
                     }
             }
+            .sheet(isPresented: $showSubjectDetail) {
+                SubjectDetailScreen(scheduleAction: self.$selectedSubject)
+            }
             .navigationBarHidden(true)
         }
         
@@ -232,6 +241,6 @@ struct OverviewScreen_Previews: PreviewProvider {
     @State static var date: Date? = Date()
     
     static var previews: some View {
-        OverviewScreen(selectedTabIndex: .constant(0), selectedDate: $date)
+        OverviewScreen(selectedDate: $date, selectedTabIndex: .constant(0))
     }
 }

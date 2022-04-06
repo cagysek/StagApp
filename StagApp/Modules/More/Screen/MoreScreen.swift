@@ -83,9 +83,9 @@ struct MoreScreen: View {
                             }
                             
                             NavigationLink {
-                                CanteenScreen()
+                                AboutScreen()
                             } label: {
-                                Text("O aplikaci")
+                                Text("about.title")
                             }
                         }
                         

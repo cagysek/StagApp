@@ -110,6 +110,42 @@ public struct ScheduleAction: Decodable, Identifiable {
             return Color.customDarkGray
         }
     }
+    
+    public func getLabelShortTranslation() -> String {
+        let language = LanguageService.shared.language
+        
+        switch self.label {
+            case "Přednáška":
+                return "scheduleDetail.lecture-short".localized(language)
+            case "Seminář":
+                return "scheduleDetail.seminar-short".localized(language)
+            case "Zkouška":
+                return "scheduleDetail.exam-short".localized(language)
+            case "Záp. před zk.":
+                return "scheduleDetail.credit-before-exam-short".localized(language)
+            default:
+                return self.label
+        }
+    }
+    
+    public func getLabelTranslation() -> String {
+        let language = LanguageService.shared.language
+        
+        switch self.label {
+            case "Přednáška":
+                return "scheduleDetail.lecture".localized(language)
+            case "Seminář":
+                return "scheduleDetail.seminar".localized(language)
+            case "Zkouška":
+                return "scheduleDetail.exam".localized(language)
+            case "Cvičení":
+                return "scheduleDetail.exercise".localized(language)
+            case "Záp. před zk.":
+                return "scheduleDetail.credit-before-exam".localized(language)
+            default:
+                return self.label
+        }
+    }
 }
 
 

@@ -43,17 +43,17 @@ struct SubjectDetail: Decodable {
     let speakers: String
     let practitioners: String
     let seminarTeachers: String
-    let requiredSubjects: String
-    let literature: String
+    let requiredSubjects: String?
+    let literature: String?
     let lectureCount: Int
     let practiseCount: Int
     let seminarCount: Int
-    let goal: String
+    let goal: String?
     let examType: String
-    let creaditBeforeExam: String
-    let examForm: String
-    let requirements: String
-    let content: String
+    let creaditBeforeExam: String?
+    let examForm: String?
+    let requirements: String?
+    let content: String?
     let prerequisites: String?
     let subjectUrl: String?
 }

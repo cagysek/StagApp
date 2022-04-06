@@ -23,6 +23,12 @@
 "scheduleDetail.lecture" = "Přednášky";
 "scheduleDetail.exercise" = "Cvičení";
 "scheduleDetail.seminar" = "Seminář";
+"scheduleDetail.credit-before-exam" = "Záp. před zk.";
+"scheduleDetail.lecture-short" = "Př";
+"scheduleDetail.exercise-short" = "Cv";
+"scheduleDetail.exam-short" = "Zk";
+"scheduleDetail.seminar-short" = "Se";
+"scheduleDetail.credit-before-exam-short" = "Záp.";
 "scheduleDetail.course-completion" = "Zakončení";
 "scheduleDetail.course-completion-type" = "Způsob";
 "scheduleDetail.course-completion-form" = "Forma";
@@ -160,6 +166,11 @@
 "settings.version" = "Verze";
 "settings.build" = "Build";
 "settings.about" = "O aplikaci";
+
+/// MARK: ABOUT
+"about.title" = "O aplikaci";
+"about.text" = "Tato mobilní aplikace vznikla jako diplomová práce Jana Čarnogurského ve spolupráci s IS/STAG. Cílem práce bylo vytvořit mobilní aplikaci, která bude fungovat pro operační systém iOS a bude umožnovat komunikaci s API IS/STAG. Díky čemuž umožní uživateli zobrazovat funkce webového portálu univerzity na svém mobilním zařízení.";
+"about.contact" = "Veškeré dotazy a připomínky směřujte na email: cagy@students.zcu.cz";
 
 
 /// MARK: LANGUAGES

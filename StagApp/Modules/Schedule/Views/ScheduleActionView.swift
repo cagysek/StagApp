@@ -28,7 +28,7 @@ struct ScheduleActionView: View {
                     .foregroundColor(scheduleAction.getBackgroundColor())
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(scheduleAction.label)
+                    Text(scheduleAction.getLabelTranslation())
                         .font(.system(size: 14, weight: .regular, design: .rounded))
                     Text(scheduleAction.title)
                         .font(.system(size: 16, weight: .bold, design: .rounded))

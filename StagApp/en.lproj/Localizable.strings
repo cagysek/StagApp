@@ -22,11 +22,18 @@
 "scheduleDetail.range-of-hours-per-week" = "Range of hours per week";
 "scheduleDetail.lecture" = "Lecture";
 "scheduleDetail.exercise" = "Exercise";
+"scheduleDetail.exam" = "Exam";
 "scheduleDetail.seminar" = "Seminar";
+"scheduleDetail.credit-before-exam" = "Credit prior exam";
+"scheduleDetail.lecture-short" = "Le";
+"scheduleDetail.exercise-short" = "Exe";
+"scheduleDetail.exam-short" = "Exa";
+"scheduleDetail.seminar-short" = "Se";
+"scheduleDetail.credit-before-exam-short" = "Cr.";
 "scheduleDetail.course-completion" = "Form of completion";
 "scheduleDetail.course-completion-type" = "Type";
 "scheduleDetail.course-completion-form" = "Form";
-"scheduleDetail.course-completion-credit-before" = "Credit prior to exam";
+"scheduleDetail.course-completion-credit-before" = "Cr. prior to exam";
 "scheduleDetail.guarantors" = "Guarantors";
 "scheduleDetail.lecturers" = "Lecturers";
 "scheduleDetail.seminarians" = "Seminarians";
@@ -167,6 +174,11 @@
 "settings.version" = "Version";
 "settings.build" = "Build";
 "settings.about" = "About";
+
+/// MARK: ABOUT
+"about.title" = "About";
+"about.text" = "This mobile application was created as a thesis work of Jan Čarnogurský in cooperation with IS/STAG. The aim of the work was to create a mobile application that will work for the iOS operating system and will allow communication with the IS/STAG API. This will allow the user to view the functions of the university's web portal on their mobile device.";
+"about.contact" = "All questions and comments direct to: cagy@students.zcu.cz";
 
 
 /// MARK: LANGUAGES

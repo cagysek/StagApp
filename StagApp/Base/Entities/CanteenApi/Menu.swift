@@ -13,6 +13,11 @@ struct Menu: Decodable {
 }
 
 struct Meal: Decodable, Identifiable {
+    
+    private enum CodingKeys: String, CodingKey {
+        case name, allergens, prices, number
+    }
+    
     var id = UUID()
     let name: String
     let allergens: [Allergens]

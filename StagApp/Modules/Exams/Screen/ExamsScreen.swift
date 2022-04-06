@@ -69,7 +69,7 @@ struct ExamsScreen: View {
                             }
                         case .fetchingData:
                             LoadingView(text: "common.loading", withBackground: true)
-                                .padding(-8)
+                                
                         }       
                     }
                 }

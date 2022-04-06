@@ -47,7 +47,7 @@ struct ContentView: View {
                 }
                 
              
-                OverviewScreen(selectedTabIndex: self.$selection, selectedDate: self.$selectedDate)
+                OverviewScreen(selectedDate: self.$selectedDate, selectedTabIndex: self.$selection)
                     .tabItem {
                         TabItem(title: "overview.headline", iconName: "house");
                     }
