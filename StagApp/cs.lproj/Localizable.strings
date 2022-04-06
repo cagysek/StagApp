@@ -40,13 +40,18 @@
 
 
 /// MARK: NOTE
-"note.placeholder" = "Poznámka";
-"note.title" = "Název";
+"note.placeholder" = "Poznámka...";
+"note.title" = "Poznámka";
 "note.date" = "Datum";
 "note.deadline" = "Deadline";
 "note.cancel" = "Zrušit";
 "note.add" = "Přidat";
 "note.new-note" = "Nová poznámka";
+"note.note-title" = "Titulek";
+"note.edit-title" = "Editace poznámky";
+"note.save" = "Uložiz";
+"note.edit" = "Upravit";
+"note.delete" = "Smazat";
 
 
 /// MARK: UNIVERSITY

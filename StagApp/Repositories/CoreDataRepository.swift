@@ -62,6 +62,8 @@ class CoreDataRepository<T: NSManagedObject>: Repository {
         let fetchRequest = Entity.fetchRequest()
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sortDescriptors
+        
+        
         do {
             // Perform the fetch request
             if let fetchResults = try managedObjectContext.fetch(fetchRequest) as? [Entity] {

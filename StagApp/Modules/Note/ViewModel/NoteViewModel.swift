@@ -9,6 +9,7 @@ import Foundation
 
 protocol INoteViewModel: ObservableObject {
     func insertNewNote(title: String, description: String, includeDate: Bool, date: Date) -> Bool
+    func saveNote(note: Note) -> Bool
 }
 
 class NoteViewModel: INoteViewModel {
@@ -43,6 +44,13 @@ class NoteViewModel: INoteViewModel {
             note.date = nil
         }
         
+        _ = self.noteRepository.insert(note)
+        _ = self.noteRepository.saveContext()
+        
+        return true
+    }
+    
+    public func saveNote(note: Note) -> Bool {
         _ = self.noteRepository.insert(note)
         _ = self.noteRepository.saveContext()
         

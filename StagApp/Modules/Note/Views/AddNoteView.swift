@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddNoteView: View {
     
+    
     @Environment(\.dismiss) var dismiss
     
     @StateObject private var vm = NoteViewModel(noteRepository: NoteRepository(context: CoreDataManager.getContext()), keycheinManager: KeychainManager())
@@ -18,7 +19,8 @@ struct AddNoteView: View {
     @State private var date: Date = Date()
     @State private var showDate: Bool = false
     
-//    private let desctiptionPlaceholder = LocalizedStringKey("note.placeholder")
+    @Binding var note: Note?
+    
     
     var body: some View {
         NavigationView {
@@ -30,28 +32,28 @@ struct AddNoteView: View {
                 ScrollView {
                     VStack {
                         VStack {
-                        TextField("note.title", text: $title)
+                            TextField("note.note-title", text: $title)
+                                .font(.body)
                                 .frame(height: 30)
                                 .padding(.leading, 7)
                                 .padding(.top, 6)
+                                
 
-                        Divider()
+                            Divider()
                             
-                        TextEditor(text: self.$description)
-                                .padding(.leading, 2)
-                            .frame(height: 200)
-                            .font(.system(size: 17, weight: .regular))
-                            
-//                            .foregroundColor(self.description == desctiptionPlaceholder ? .placeholderColor : .primary)
-//                            .onTapGesture {
-//                                if self.description == desctiptionPlaceholder {
-//                                    self.description = ""
-//                                }
-//                            }
+                            CustomTextEditor.init(placeholder: "note.placeholder".localized(LanguageService.shared.language), text: self.$description)
+                                .font(.body)
+                                .frame(height: 200)
+                                .cornerRadius(8)
+                                .shadow(color: .shadow, radius: 8)
+                                .background()
+                         
                         }
                         .background()
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .shadow(color: .shadow, radius: 8)
+                            
+
                         
                         VStack {
                             Toggle("note.date", isOn: $showDate)
@@ -61,6 +63,7 @@ struct AddNoteView: View {
                                 DatePicker("note.deadline", selection: $date, displayedComponents: [.date])
                                     .datePickerStyle(.graphical)
                                     .padding(7)
+                                    
                                     
                             }
                         }
@@ -84,27 +87,80 @@ struct AddNoteView: View {
                     }
                     .foregroundColor(.red),
                 trailing:
-                    Button("note.add") {
-                        let success = self.vm.insertNewNote(
-                            title: self.title,
-                            description: self.description,
-                            includeDate: self.showDate,
-                            date: self.date
-                        )
+                    Button(self.note == nil ? "note.add" : "note.save") {
+                        
+                        var success = false
+                        if (self.note == nil) {
+                            success = self.vm.insertNewNote(
+                                title: self.title,
+                                description: self.description,
+                                includeDate: self.showDate,
+                                date: self.date
+                            )
+                        } else {
+                            self.note!.title = self.title
+                            self.note!.descriptionText = self.description
+                            self.note!.date = self.showDate ? self.date : nil
+                            
+                            success = self.vm.saveNote(note: self.note!)
+                        }
+                        
                         
                         if (success) {
                             self.dismiss()
                         }
                     }
             )
-            .navigationBarTitle("note.new-note", displayMode: .inline)
+            .onAppear(perform: {
+                if (self.note != nil) {
+                    
+                    self.title = self.note!.title ?? ""
+                    self.description = self.note!.descriptionText ?? ""
+                    self.date = self.note!.date ?? Date()
+                    
+                    if (self.note?.date != nil) {
+                        self.showDate = true
+                    }
+                }
+            })
+            .navigationBarTitle(self.note == nil ? "note.new-note" : "note.edit-title", displayMode: .inline)
         }
         
     }
 }
 
-struct AddNoteView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddNoteView()
+
+
+struct CustomTextEditor: View {
+    let placeholder: String
+    
+    @Binding var text: String
+    
+    let internalPadding: CGFloat = 5
+    
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            
+            if text.isEmpty  {
+                Text(placeholder)
+                    .foregroundColor(Color.primary.opacity(0.25))
+                    .padding(EdgeInsets(top: 7, leading: 4, bottom: 0, trailing: 0))
+                    .padding(internalPadding)
+            }
+            
+            TextEditor(text: $text)
+                .padding(internalPadding)
+        }.onAppear() {
+            UITextView.appearance().backgroundColor = .clear
+        }.onDisappear() {
+            UITextView.appearance().backgroundColor = nil
+        }
     }
 }
+//
+//struct AddNoteView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddNoteView()
+//    }
+//}
+

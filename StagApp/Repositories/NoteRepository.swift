@@ -14,6 +14,7 @@ protocol INoteRepository{
     func create() -> Note?
     func getAll() -> [Note]
     func getByUserName(username: String) -> [Note]
+    func delete(note: Note) -> Bool
 }
 
 class NoteRepository: INoteRepository {
@@ -71,8 +72,19 @@ class NoteRepository: INoteRepository {
         switch result {
             case .success(let notes):
                 return notes
-        case .failure:
+        case .failure(let error):
             return []
+        }
+    }
+    
+    public func delete(note: Note) -> Bool {
+        let result = self.repository.delete(entity: note)
+        
+        switch result {
+            case .success(let success):
+                return success
+            case .failure:
+                return false
         }
     }
 }

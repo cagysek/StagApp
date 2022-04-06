@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OverviewNoteCell: View {
     
-    let note: Note
+    @ObservedObject var note: Note
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -19,9 +19,8 @@ struct OverviewNoteCell: View {
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
                     Text(note.title ?? "")
-                        .font(.system(size: 15, weight: .light, design: .rounded))
-                        .foregroundColor(Color.gray)
-                    
+                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                                            
                     Spacer()
                 }
                 
@@ -47,6 +46,8 @@ struct OverviewNoteCell: View {
                 Text(note.descriptionText ?? "")
                     .font(.system(size: 15, weight: .regular, design: .rounded))
                     .lineLimit(4)
+                    
+
             }
             
             .padding(7)

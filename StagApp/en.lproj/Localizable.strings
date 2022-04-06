@@ -41,13 +41,18 @@
 
 
 /// MARK: NOTE
-"note.placeholder" = "Note";
-"note.title" = "Title";
+"note.placeholder" = "Write you note...";
+"note.title" = "Note";
 "note.date" = "Date";
 "note.deadline" = "Deadline";
 "note.cancel" = "Cancel";
 "note.add" = "Add";
 "note.new-note" = "New note";
+"note.note-title" = "Note";
+"note.edit-title" = "Edit note";
+"note.save" = "Save";
+"note.edit" = "Edit";
+"note.delete" = "Delete";
 
 
 
