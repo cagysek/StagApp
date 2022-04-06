@@ -18,7 +18,7 @@ enum Universities {
         University(id: 5,title: "Univerzita Hradec Králové", url: "https://stagws.uhk.cz/ws", smallLogoImagePath: "05-hradec-simple", bigLogoImagePath: "05-hradec"),
         University(id: 6,title: "Univerzita Jana Evangelisty Purkyně v Ústí nad Labem", url: "https://ws.ujep.cz/ws", smallLogoImagePath: "06-ujep-simple", bigLogoImagePath: "06-ujep"),
         University(id: 7,title: "Univerzita Pardubice", url: "https://stag-ws.upce.cz/ws", smallLogoImagePath: "07-pardubice-simple", bigLogoImagePath: "07-pardubice"),
-//        University(id: 8,title: "Univerzita Palackého v Olomouci", url: "https://stag-ws.upol.cz/ws", smallLogoImagePath: "08-olomouc-simple", bigLogoImagePath: "08-olomouc"),
+        University(id: 8,title: "Univerzita Palackého v Olomouci", url: "https://stag-ws.upol.cz/ws", smallLogoImagePath: "08-olomouc-simple", bigLogoImagePath: "08-olomouc"),
         University(id: 9,title: "Univerzita Tomáše Bati ve Zlíně", url: "https://stag-ws.utb.cz/ws", smallLogoImagePath: "09-bata-simple", bigLogoImagePath: "09-bata"),
         University(id: 10,title: "Veterinární a farmaceutická univerzita Brno", url: "https://stagweb.vfu.cz/ws", smallLogoImagePath: "10-brno-simple", bigLogoImagePath: "10-brno"),
         University(id: 11,title: "Vysoká škola PRIGO", url: "https://stag-vsss.zcu.cz/ws", smallLogoImagePath: "11-prigo-simple", bigLogoImagePath: "11-prigo"),

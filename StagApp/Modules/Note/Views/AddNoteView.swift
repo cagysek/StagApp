@@ -18,6 +18,7 @@ struct AddNoteView: View {
     @State private var description: String = ""
     @State private var date: Date = Date()
     @State private var showDate: Bool = false
+    @State private var calendarId = UUID()
     
     @Binding var note: Note?
     
@@ -61,10 +62,11 @@ struct AddNoteView: View {
                             
                             if (showDate) {
                                 DatePicker("note.deadline", selection: $date, displayedComponents: [.date])
-                                    .datePickerStyle(.graphical)
                                     .padding(7)
-                                    
-                                    
+                                    .id(calendarId)
+                                    .onChange(of: date) { _ in
+                                        calendarId = UUID()
+                                    }
                             }
                         }
                         .background()

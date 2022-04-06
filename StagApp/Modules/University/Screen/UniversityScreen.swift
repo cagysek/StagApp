@@ -30,14 +30,18 @@ struct UniversityScreen: View {
                     ScrollView(.vertical, showsIndicators: true) {
                         ForEach(vm.getUniversities()) { university in
                             
-                            UniversityCellView(university: university)
-                                .onTapGesture {
-                                    self.vm.selectUniversity(id: university.id)
-                                    
-                                    withAnimation {
-                                        self.showUniversity = false
+                            // not supported yet
+                            if (university.id != 8) {
+                                UniversityCellView(university: university)
+                                    .onTapGesture {
+                                        self.vm.selectUniversity(id: university.id)
+                                        
+                                        withAnimation {
+                                            self.showUniversity = false
+                                        }
                                     }
-                                }
+                            }
+                            
                         }
                     }
                     
