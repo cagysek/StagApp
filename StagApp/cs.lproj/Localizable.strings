@@ -85,7 +85,8 @@
 "login.error" = "Při přihlašování došlo k chybě. Opakujte akci prosím později.";
 "login.warning" = "Upozornění";
 "login.role-warning" = "Přihlásil jste se pod rolí (%@), která není plně podporovaná (ST, VY). Některé funkce mohou být omezeny.";
-
+"login.expired" = "Přihlášení vypršelo";
+"login.expired-text" = "Platnost vašeho přihlášení vypršela. Přihlašte se prosím znovu";
 
 /// MARK: SCHEDULE
 "schedule.no-class-today" = "Dnes nemáš žádnou výuku! ☀️";
