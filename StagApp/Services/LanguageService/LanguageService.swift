@@ -27,7 +27,8 @@ class LanguageService {
     var language: String {
         get {
             guard let languageString = UserDefaults.standard.string(forKey: UserDefaultKeys.LANGUAGE) else {
-                return ELanguage.DEFAULT
+                // if user default values is not set, set system locale
+                return Locale.current.languageCode ?? ELanguage.DEFAULT
             }
             
             // if system language is set, loads system locale
