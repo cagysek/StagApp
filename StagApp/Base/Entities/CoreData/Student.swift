@@ -73,4 +73,15 @@ class Student: NSManagedObject, Decodable {
         
         return fullname;
     }
+    
+    public func getTotalCreditCount() -> Int {
+        if (self.studyType == "B") {
+            return 180
+        }
+        else if (self.studyType == "N") {
+            return 120
+        }
+        
+        return 300
+    }
 }

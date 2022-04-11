@@ -23,6 +23,7 @@
 "scheduleDetail.lecture" = "Přednášky";
 "scheduleDetail.exercise" = "Cvičení";
 "scheduleDetail.seminar" = "Seminář";
+"scheduleDetail.exam" = "Zkouška";
 "scheduleDetail.credit-before-exam" = "Záp. před zk.";
 "scheduleDetail.lecture-short" = "Př";
 "scheduleDetail.exercise-short" = "Cv";

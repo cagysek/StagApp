@@ -46,7 +46,7 @@ struct StudentInfoView: View {
                 
                 HStack {
                     Spacer()
-                    StatisticLabelView(label: "student.stat-credits", value: "\(String(self.statistics.getCurrentCredits()))/120")
+                    StatisticLabelView(label: "student.stat-credits", value: "\(String(self.statistics.getCurrentCredits()))/\(String(self.studentInfoData?.getTotalCreditCount() ?? 0))")
                     Spacer()
                     StatisticLabelView(label: "student.stat-avg", value: self.statistics.getAverageString())
                     Spacer()
