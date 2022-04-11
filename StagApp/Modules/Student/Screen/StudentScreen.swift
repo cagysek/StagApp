@@ -20,23 +20,26 @@ struct StudentScreen: View {
             Color.defaultBackground
                 .ignoresSafeArea()
             
-            VStack {
-                HStack(alignment: .bottom) {
-                    Text("student.headline")
-                        .font(.system(size: 32, weight: .bold, design: .rounded))
+            ScrollView {
+                VStack {
+                    HStack(alignment: .bottom) {
+                        Text("student.headline")
+                            .font(.system(size: 32, weight: .bold, design: .rounded))
+                        
+                        Spacer()
+                    }
+                    .padding([.leading, .top, .trailing])
                     
-                    Spacer()
+                    
+                    StudentInfoView(studentInfoData: self.$vm.studentInfo, statistics: self.vm.getTotalStatistics())
+                        
+                    YearsScrollView(selectedYear: self.$selectedYear, studyYears: self.studyYears, vm: vm)
+                        .padding([.bottom, .top])
+                    
+                    YearSubjectsView(winterSubjects: self.$vm.winterSubjects, summerSubjects: self.$vm.summerSubjects, statistics: self.$vm.yearStatistics, selectedYear: self.$selectedYear)
                 }
-                .padding([.leading, .top, .trailing])
-                
-                
-                StudentInfoView(studentInfoData: self.$vm.studentInfo, statistics: self.vm.getTotalStatistics())
-                    
-                YearsScrollView(selectedYear: self.$selectedYear, studyYears: self.studyYears, vm: vm)
-                    .padding([.bottom, .top])
-                
-                YearSubjectsView(winterSubjects: self.$vm.winterSubjects, summerSubjects: self.$vm.summerSubjects, statistics: self.$vm.yearStatistics, selectedYear: self.$selectedYear)
             }
+            
         }
         .foregroundColor(.defaultFontColor)
         .onAppear {

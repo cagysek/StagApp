@@ -16,8 +16,8 @@ struct YearSubjectsView: View {
     @Binding var selectedYear: Int
     
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView(.vertical) {
+//        ScrollViewReader { proxy in
+//            ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     
                     ZStack {
@@ -65,16 +65,16 @@ struct YearSubjectsView: View {
                 }
                 .padding(.bottom, 20)
             }
-            .onChange(of: selectedYear) { newValue in
-                
-                // reset scroll to top of scroll view
-                withAnimation {
-                    proxy.scrollTo(1)
-                }
-                
-            }
-        }
-    }
+//            .onChange(of: selectedYear) { newValue in
+//                
+//                // reset scroll to top of scroll view
+//                withAnimation {
+//                    proxy.scrollTo(1)
+//                }
+//                
+//            }
+//        }
+//    }
 }
 
 
