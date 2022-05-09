@@ -56,9 +56,9 @@
         <attribute name="titleBefore" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Note" positionX="45" positionY="198" width="128" height="89"/>
-        <element name="Student" positionX="176.5559692382812" positionY="76.86398315429688" width="128" height="194"/>
-        <element name="Subject" positionX="-94.350830078125" positionY="64.1005859375" width="128" height="299"/>
-        <element name="Teacher" positionX="45" positionY="198" width="128" height="119"/>
+        <element name="Note" positionX="33.4674072265625" positionY="214.5335083007812" width="128" height="89"/>
+        <element name="Student" positionX="205.0590209960937" positionY="77.41195678710938" width="128" height="194"/>
+        <element name="Subject" positionX="-145.834228515625" positionY="34.54792785644531" width="148.14404296875" height="313"/>
+        <element name="Teacher" positionX="38.86767578125" positionY="50.41206359863281" width="128" height="119"/>
     </elements>
 </model>
