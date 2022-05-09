@@ -11,6 +11,7 @@ struct SettingsScreen: View {
     
     @AppStorage(UserDefaultKeys.LANGUAGE) private var language = Locale.current.languageCode ?? ELanguage.DEFAULT
     
+    
     @State var notificationsEnabled: Bool = false
     
     @State private var languageIndex: ELanguage = .system

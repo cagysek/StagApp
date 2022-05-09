@@ -20,7 +20,7 @@
 "scheduleDetail.shortcut" = "Zkratka";
 "scheduleDetail.credits" = "Kredity";
 "scheduleDetail.range-of-hours-per-week" = "Rozsah hodin týdně";
-"scheduleDetail.lecture" = "Přednášky";
+"scheduleDetail.lecture" = "Přednáška";
 "scheduleDetail.exercise" = "Cvičení";
 "scheduleDetail.seminar" = "Seminář";
 "scheduleDetail.exam" = "Zkouška";
@@ -149,6 +149,7 @@
 "common.yes" = "Ano";
 "common.no" = "Ne";
 "common.loading" = "Načítám...";
+"common.no-internet" = "Bez připojení k internetu";
 
 /// MARK: THESES
 "theses.title" = "Kvalifikační práce";

@@ -156,6 +156,7 @@
 "common.yes" = "Yes";
 "common.no" = "No";
 "common.loading" = "Loading...";
+"common.no-internet" = "No internet connection";
 
 
 /// MARK: THESES
