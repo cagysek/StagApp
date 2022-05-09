@@ -30,7 +30,7 @@ class CanteenViewModel: ICanteenViewModel {
         
         Task {
             do {
-                self.menu = try await self.canteenService.fetchMenu(canteenId: canteenId, daysShift: self.getDateDifference(from: Date(), to: selectedDate), language: "cs")
+                self.menu = try await self.canteenService.fetchMenu(canteenId: canteenId, daysShift: self.getDateDifference(from: Date(), to: selectedDate), language: LanguageService.shared.language)
             }
             catch {
                 print(error)

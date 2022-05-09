@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsScreen: View {
     
-    @AppStorage(UserDefaultKeys.LANGUAGE) private var language = Locale.current.languageCode ?? ELanguage.DEFAULT
+    @AppStorage(UserDefaultKeys.LANGUAGE) private var language = LanguageService.shared.language
     
     
     @State var notificationsEnabled: Bool = false

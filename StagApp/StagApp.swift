@@ -11,7 +11,7 @@ import SwiftUI
 @main
 struct StagApp: App {
 
-    @AppStorage(UserDefaultKeys.LANGUAGE) private var language = Locale.current.languageCode ?? ELanguage.DEFAULT
+    @AppStorage(UserDefaultKeys.LANGUAGE) private var language = LanguageService.shared.language
     
     @ObservedObject var monitor = CheckNetworkService()
     

@@ -41,12 +41,21 @@ struct Meal: Decodable, Identifiable {
     public func pricesToString() -> String {
         var result = ""
         
+
+        let language = LanguageService.shared.language
+        
         for price in prices {
             if (!result.isEmpty) {
                 result += " ∙ "
             }
             
-            result += "\(price.type.prefix(3)): \(String(Int(price.price))) Kč"
+            var personStatus = price.type.prefix(3)
+            
+            if (personStatus == "Emp" && language == "cs") {
+                personStatus = "Zam"
+            }
+            
+            result += "\(personStatus): \(String(Int(price.price))) Kč"
         }
         
         return result

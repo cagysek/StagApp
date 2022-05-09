@@ -14,7 +14,7 @@ protocol ICanteenService {
 final class CanteenService: ICanteenService {
     
     public func fetchMenu(canteenId: String, daysShift: Int, language: String = "cs") async throws -> Menu {
-        
+        print(language)
         let url = URL(string: "\(CanteenApiConstants.baseUri)/\(canteenId)?lang=\(language)&daysShift=\(String(daysShift))")!
         
         let (data, _) = try await URLSession.shared.data(from: url)

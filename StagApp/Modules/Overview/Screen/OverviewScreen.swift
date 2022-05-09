@@ -196,7 +196,7 @@ struct OverviewScreen: View {
                         Spacer()
                     
                 }
-                .onAppear {
+                .onAppear() {
                     self.vm.updateNotes()
                     self.vm.updateSchedule()
                 }

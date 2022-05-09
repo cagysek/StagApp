@@ -20,6 +20,7 @@ struct SubjectResultView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text(self.subject.name ?? "").bold().font(.system(size: 18, design: .rounded))
                     .truncationMode(.tail)
+                    .lineLimit(1)
                 Text((self.subject.department ?? "") + "/" + (self.subject.short ?? "")).font(.system(size: 18, design: .rounded))
                     .truncationMode(.tail)
                 
@@ -43,8 +44,7 @@ struct SubjectResultView: View {
                                             )).font(.system(size: 15, design: .rounded)))
             }
             .padding(.leading, 30)
-            
-            
+            .padding(.trailing, 30)
         }
         .frame(height: 190)
         .shadow(color: Color.shadow, radius: 4)
