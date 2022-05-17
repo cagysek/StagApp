@@ -96,6 +96,7 @@
 /// MARK: SCHEDULE
 "schedule.no-class-today" = "You don't have any classes today! ☀️";
 "schedule.headline" = "Schedule";
+"schedule.today" = "Today";
 
 
 /// MARK: EXAM

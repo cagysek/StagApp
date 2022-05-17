@@ -11,12 +11,14 @@ import Foundation
 extension DateFormatter {
     static var monthAndYear: DateFormatter {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: LanguageService.shared.language)
         formatter.dateFormat = "LLLL yyyy"
         return formatter
     }
     
     static var day: DateFormatter {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: LanguageService.shared.language)
         formatter.dateFormat = "EE"
         
         return formatter

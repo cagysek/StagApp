@@ -92,6 +92,7 @@
 /// MARK: SCHEDULE
 "schedule.no-class-today" = "Dnes nemáš žádnou výuku! ☀️";
 "schedule.headline" = "Rozvrh";
+"schedule.today" = "Dnes";
 
 
 /// MARK: EXAM

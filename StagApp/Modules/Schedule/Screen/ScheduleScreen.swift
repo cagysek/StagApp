@@ -24,7 +24,7 @@ struct ScheduleScreen: View {
 
             VStack {
                 HStack(alignment:.bottom) {
-                    Text("Rozvrh")
+                    Text("schedule.headline")
                         .font(.system(size: 32, weight: .bold, design: .rounded))
 
                     Spacer()

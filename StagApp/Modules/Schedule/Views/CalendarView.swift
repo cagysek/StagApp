@@ -1,9 +1,3 @@
-//
-//  CalendarView.swift
-//  StagApp
-//
-
-
 import Foundation
 import SwiftUI
 
@@ -23,8 +17,7 @@ struct CalendarView: View {
     private var myInterval: [Date] {
         let pastdate = Date.now.addingTimeInterval(86400 * -60)
         let futureDate = Date.now.addingTimeInterval(86400 * 60)
-        
-        
+    
         return calendar.generateDates(
             inside: DateInterval(start: pastdate, end: futureDate),
             matching: DateComponents(hour: 1, minute: 0, second: 0)
@@ -39,7 +32,7 @@ struct CalendarView: View {
                 
                 Spacer()
                 
-                Button("Dnes") {
+                Button("schedule.today") {
                     withAnimation {
                         let date = Date()
                         
@@ -128,6 +121,8 @@ struct CalendarView: View {
                 self.selectedIndex = getDateIndex(self.selectedDate!)    
                 
                 proxy.scrollTo(self.selectedIndex, anchor: .center)
+                
+                
             })
             .frame(height: 60)
             .background(.white)
