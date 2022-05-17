@@ -100,6 +100,22 @@ struct Exam: Decodable {
     
     /// Exam's note from teacher
     let note: String?
+    
+    public func getTimeInterval() -> String {
+        
+        let timeFrom = self.timeFrom.prefix(5)
+        let timeTo = self.timeTo.prefix(5)
+        
+        return "\(timeFrom) - \(timeTo)"
+    }
+    
+    public func getLimit() -> String {
+        if (self.limit == "null") {
+            return "-"
+        }
+        
+        return self.limit
+    }
         
 }
 

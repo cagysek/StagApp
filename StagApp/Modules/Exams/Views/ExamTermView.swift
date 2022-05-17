@@ -30,7 +30,7 @@ struct ExamTermView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text(self.exam.type)
                     .font(.system(size: 15, weight: .light, design: .rounded))
-                Text("\(self.exam.date?.value ?? "") ∙ \(self.exam.timeFrom) - \(self.exam.timeTo)")
+                Text("\(self.exam.date?.value ?? "") ∙ \(self.exam.getTimeInterval())")
                     .font(.system(size: 15, weight: .bold, design: .rounded))
                 
                 Label(self.exam.teacher?.getFormattedName() ?? "-", systemImage: "person")
@@ -55,7 +55,7 @@ struct ExamTermView: View {
                 
                 
 
-                Label("exam.capacity \(self.currentStudentCount) \(self.exam.limit)", systemImage: "person.2.circle")
+                Label("exam.capacity \(self.currentStudentCount) \(self.exam.getLimit())", systemImage: "person.2.circle")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                 
                 

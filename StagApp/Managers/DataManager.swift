@@ -98,11 +98,14 @@ struct DataManager: IDataManager {
                             guard let subjectDb = self.subjectRepository.getSubject(department: subject.department, short: subject.short, year: year, semester: semester) else {
                                 continue
                             }
-
-                            _ = self.subjectRepository.insert(self.mapNewPropertiesToSubject(subjectDb: subjectDb, subjectApi: subject))
                             
+                            let mappedObject = self.mapNewPropertiesToSubject(subjectDb: subjectDb, subjectApi: subject)
+                            
+                            _ = self.subjectRepository.insert(mappedObject)
+                                
                             // save context out of the loop causes memory error sometimes..
                             _ = self.subjectRepository.saveContext()
+                            
                         }
                     
                     case .failure(let error):
