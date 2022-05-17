@@ -1,12 +1,6 @@
-//
-//  OverviewNoteCell.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 07.11.2021.
-//
-
 import SwiftUI
 
+/// Component of ``OverviewScreen``. Presents single note
 struct OverviewNoteCell: View {
     
     @ObservedObject var note: Note

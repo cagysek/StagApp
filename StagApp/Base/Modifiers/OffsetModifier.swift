@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// Modifier for get current Y position on screen
 struct OffsetModifier: ViewModifier {
     
     @Binding var offset: CGFloat
@@ -17,7 +19,6 @@ struct OffsetModifier: ViewModifier {
                 GeometryReader { proxy -> Color in
                     let minY = proxy.frame(in: .named("SCROLL")).minY
                     
-//                    print(minY)
                     DispatchQueue.main.async {
                         self.offset = -minY
                     }

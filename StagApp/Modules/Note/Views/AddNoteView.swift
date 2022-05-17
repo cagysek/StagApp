@@ -1,17 +1,14 @@
-//
-//  AddNoteView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 02.03.2022.
-//
-
 import SwiftUI
 
+
+/// App screen for add or update note
 struct AddNoteView: View {
     
     
+    /// option for dismiss view
     @Environment(\.dismiss) var dismiss
     
+    /// View model
     @StateObject private var vm = NoteViewModel(noteRepository: NoteRepository(context: CoreDataManager.getContext()), keycheinManager: KeychainManager())
     
     @State private var title: String = ""
@@ -20,6 +17,7 @@ struct AddNoteView: View {
     @State private var showDate: Bool = false
     @State private var calendarId = UUID()
     
+    /// Binding of parent Note
     @Binding var note: Note?
     
     

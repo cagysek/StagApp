@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Component of ``ExamsScreen``. Presents single exam cell
 struct ExamTermView: View {
         
      var exam: Exam

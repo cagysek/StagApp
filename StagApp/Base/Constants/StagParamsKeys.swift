@@ -1,13 +1,7 @@
-//
-//  StagKeys.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 16.03.2022.
-//
-
 import Foundation
 
 
+/// Definition of IS/STAG parameters in requests
 enum StagParamsKeys {
     public static let username = "stagUser"
     public static let studentId = "osCislo"

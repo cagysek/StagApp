@@ -1,16 +1,18 @@
-//
-//  CanteenService.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 30.03.2022.
-//
-
 import Foundation
 
+/// Protocol which defines funtions for service
 protocol ICanteenService {
+    
+    /// Fetch canteen menu
+    /// - Parameters:
+    ///   - canteenId: canteen to load menu
+    ///   - daysShift: menu days shift
+    ///   - language: language of menu
+    /// - Returns: canteen menu
     func fetchMenu(canteenId: String, daysShift: Int, language: String) async throws -> Menu
 }
 
+/// Implementation of canteen service. Provides communication for zcu WS
 final class CanteenService: ICanteenService {
     
     public func fetchMenu(canteenId: String, daysShift: Int, language: String = "cs") async throws -> Menu {

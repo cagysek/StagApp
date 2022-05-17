@@ -1,12 +1,6 @@
-//
-//  StatisticLabelView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 23.10.2021.
-//
-
 import SwiftUI
 
+/// Component of ``StudentScreen``.  Presents single statistics field
 struct StatisticLabelView: View {
     let label: String
     let value: String

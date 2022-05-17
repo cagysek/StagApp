@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// Presents loading action in app
 struct LoadingView: View {
     
     let text: String

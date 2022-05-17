@@ -8,6 +8,7 @@
 import Foundation
 
 
+/// Enum which defines semesters in app
 enum ESemester: String {
     case WINTER = "ZS"
     case SUMMER = "LS"

@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+/// Enum which defines errors in StagService
 enum StagServiceError: Error {
     case failed
     case failedToDecode

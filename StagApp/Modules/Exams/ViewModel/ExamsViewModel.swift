@@ -1,22 +1,31 @@
-//
-//  ExamsViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 17.02.2022.
-//
-
 import Foundation
 
 
+/// Protocol to define functions for view model
 protocol IExamsViewModel: ObservableObject {
     
+    /// Loads exams
     func loadExams() async -> Void
+    
+    /// Log out from exam by id
+    /// - Parameter examId: ID of exam to log out
+    /// - Returns: result of operation
+    func logOutFromExam(examId: Int) async -> Bool
+    
+    /// Log in user to exam by id
+    /// - Parameter examId: ID of exam to log in
+    /// - Returns: result of operation
+    func logInToExam(examId: Int) async -> Bool
 }
 
 @MainActor
+/// View model for ``ExamsScreen``
 class ExamsViewModel: IExamsViewModel {
     
+    /// Array of loaded exams
     @Published var exams: [String: [Exam]] = [:]
+    
+    /// Loading state
     @Published var state: AsyncState = .idle
     
     let stagService: IStagService
@@ -54,6 +63,9 @@ class ExamsViewModel: IExamsViewModel {
         
     }
     
+    /// Prepares data for view. Group exams by subject
+    /// - Parameter data: array of all exams
+    /// - Returns: grouped data
     private func prepareDataForView(data: [Exam]) -> [String: [Exam]] {
         return Dictionary(grouping: data, by: { $0.subject })
     }

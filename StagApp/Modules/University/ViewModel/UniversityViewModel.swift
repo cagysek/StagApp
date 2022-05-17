@@ -1,15 +1,11 @@
-//
-//  UniversityViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 21.02.2022.
-//
-
 import Foundation
 
+/// Protocol to defines functions for view model
 protocol IUniversityViewModel: ObservableObject {
     
-    /// Returns al supported universities
+    
+    /// Returns all supported universities
+    /// - Returns: all supported universities
     func getUniversities() -> [University]
     
     /// Saves id of university to UserDefaults
@@ -17,6 +13,7 @@ protocol IUniversityViewModel: ObservableObject {
     func selectUniversity(id: Int) -> Void
 }
 
+/// View Model for ``UniversityScreen``
 class UniversityViewModel: IUniversityViewModel {
     
     

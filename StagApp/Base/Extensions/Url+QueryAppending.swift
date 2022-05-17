@@ -9,7 +9,12 @@ import Foundation
 
 extension URL {
     
-    /// Adds parameter to url
+    
+    /// Adds parameters to URL
+    /// - Parameters:
+    ///   - queryItem: parameter name
+    ///   - value: parameter value
+    /// - Returns: updated URL
     func appending(_ queryItem: String, value: String?) -> URL {
 
             guard var urlComponents = URLComponents(string: absoluteString) else { return absoluteURL }

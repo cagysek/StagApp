@@ -1,12 +1,6 @@
-//
-//  StudentInfoView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 23.10.2021.
-//
-
 import SwiftUI
 
+/// Component of ``StudentScreen``. Presents user's info
 struct StudentInfoView: View {
 //    @Environment(\.managedObjectContext) var managedObjectContext
 //    

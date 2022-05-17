@@ -1,16 +1,14 @@
-//
-//  AlertContext.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 02.04.2022.
-//
-
 import Foundation
 import SwiftUI
 
 
+/// Entity for holding alers data
 struct AlertData {
+    
+    /// Alert title
     let title: Text
+    
+    /// Alert message
     let msg: Text
     
     static let empty = AlertData(title: "", msg: "")

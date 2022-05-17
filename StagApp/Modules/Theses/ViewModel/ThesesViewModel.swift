@@ -1,10 +1,3 @@
-//
-//  ThesesViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 21.03.2022.
-//
-
 import Foundation
 
 protocol IThesesViewModel: ObservableObject {
@@ -13,8 +6,11 @@ protocol IThesesViewModel: ObservableObject {
 
 @MainActor
 class ThesesViewModel: IThesesViewModel {
- 
+    
+    /// Array of theses
     @Published var theses: [Thesis] = []
+    
+    /// Loading state
     @Published var state: AsyncState = .idle
     
     let stagService: IStagService
@@ -28,6 +24,7 @@ class ThesesViewModel: IThesesViewModel {
     }
     
     
+    /// Loads theses for user
     public func loadTheses() -> Void {
         
         self.state = .fetchingData
@@ -46,7 +43,5 @@ class ThesesViewModel: IThesesViewModel {
             
             self.state = .idle
         }
-        
     }
-    
 }

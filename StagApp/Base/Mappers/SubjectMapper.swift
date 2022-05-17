@@ -8,9 +8,16 @@
 import Foundation
 import CoreData
 
+
+/// Mapper for ``Subject``
 struct SubjectMapper {
     
     
+    /// Maps api response to database object
+    /// - Parameters:
+    ///   - subjectResult: Api response
+    ///   - subject: Database object
+    /// - Returns: updated database object
     public func mapNewSubjectFromSubjectResult(subjectResult: SubjectResult, subject: Subject) -> Subject {
         
         subject.department = subjectResult.department

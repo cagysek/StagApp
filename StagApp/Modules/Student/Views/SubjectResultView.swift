@@ -1,12 +1,6 @@
-//
-//  SubjectResultView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 23.10.2021.
-//
-
 import SwiftUI
 
+/// Component of ``StudentScreen``. Presents result cell
 struct SubjectResultView: View {
     
     @Binding var subject: Subject

@@ -7,9 +7,12 @@
 
 import Foundation
 
+
+/// Definition of universities in application
 enum Universities {
     
     
+    /// Array of available universities
     static let universities: [University] = [
         University(id: 1, title: "Akademie výtvarných umění v Praze", url: "https://stag-avu.zcu.cz/ws", smallLogoImagePath: "01-avu-simple", bigLogoImagePath: "01-avu"),
         University(id: 2,title: "Jihočeská univerzita v Českých Budějovicích", url: "https://stag-ws.jcu.cz/ws", smallLogoImagePath: "02-jiho-simple", bigLogoImagePath: "02-jiho"),
@@ -26,6 +29,10 @@ enum Universities {
         University(id: 13,title: "DEMO - Západočeská univerzita v Plzni", url: "https://stag-demo.zcu.cz/ws", smallLogoImagePath: "12-zcu-simple", bigLogoImagePath: "12-zcu"),
     ];
     
+    
+    /// Returns university by given ID
+    /// - Parameter id: ID of university to get
+    /// - Returns: instance of ``University`` if exists, else `nil`
     static func getUniversityById(id: Int) -> University? {
         let index = id - 1
         

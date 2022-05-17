@@ -1,12 +1,6 @@
-//
-//  ThesesScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 21.03.2022.
-//
-
 import SwiftUI
 
+/// App screen `Theses`
 struct ThesesScreen: View {
     
     @ObservedObject var vm: ThesesViewModel

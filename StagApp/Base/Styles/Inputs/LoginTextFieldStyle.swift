@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+
+/// Custom style for login button
 struct LoginTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<_Label>) -> some View {
         configuration

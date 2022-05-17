@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// Presents basic white component with text
 struct WhiteComponent: View {
     
     let text: String

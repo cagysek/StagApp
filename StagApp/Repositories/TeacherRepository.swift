@@ -1,19 +1,29 @@
-//
-//  TeacherRepository.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 20.03.2022.
-//
-
 import Foundation
 import CoreData
 
 
+/// Protocol which defines methods which communication with table Teacher
 protocol ITeacherRepository {
+    
+    /// Save context to datbase
+    /// - Returns: result consisting of either a Bool set to true or an Error.
     func saveContext() -> Result<Bool, Error>
+    
+    /// Inserts instance of ``Teacher`` to database
+    /// - Parameter teacher: instance of ``Teacher`` to insert
+    /// - Returns: result consisting of either a Bool set to true or an Error.
     func insert(_ teacher: Teacher) -> Result<Bool, Error>
+    
+    /// Creates new instance of ``Teacher``
+    /// - Returns: instance of ``Teacher``, if error occurs `nil`
     func create() -> Teacher?
+    
+    /// Returns instance of ``Teacher``
+    /// - Returns: instance of ``Teacher``, or `nil` if not exists
     func getTeacher() -> Teacher?
+    
+    
+    /// Removes all data from table
     func delete() -> Void 
 }
 

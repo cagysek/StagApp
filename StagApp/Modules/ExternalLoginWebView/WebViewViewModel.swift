@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// View Model for ``ExternalLoginWebView``
 class WebViewViewModel: ObservableObject {
     var webViewNavigationPublisher = PassthroughSubject<WebViewNavigation, Never>()
     var showWebTitle = PassthroughSubject<String, Never>()
@@ -15,10 +16,14 @@ class WebViewViewModel: ObservableObject {
     var valuePublisher = PassthroughSubject<String, Never>()
 }
 
+
+/// WebView navigation
 enum WebViewNavigation {
     case backward, forward, reload
 }
 
+
+/// URL type
 enum WebUrlType {
     case localUrl, publicUrl
 }

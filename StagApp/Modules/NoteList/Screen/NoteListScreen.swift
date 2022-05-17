@@ -1,12 +1,6 @@
-//
-//  NoteList.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 04.04.2022.
-//
-
 import SwiftUI
 
+/// App screen with list of notes
 struct NoteListScreen: View {
     
     @StateObject var vm = NoteListViewModel(noteRepository: NoteRepository(context: CoreDataManager.getContext()), keychainManager: KeychainManager())

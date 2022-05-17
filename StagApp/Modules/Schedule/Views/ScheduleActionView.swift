@@ -1,12 +1,6 @@
-//
-//  ScheduleSubjectView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 21.11.2021.
-//
-
 import SwiftUI
 
+/// Component of ``ScheduleScreen``. Presentes single schedule action
 struct ScheduleActionView: View {
     
     var scheduleAction: ScheduleAction

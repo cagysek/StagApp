@@ -1,13 +1,7 @@
-//
-//  CheckNetworkService.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 09.05.2022.
-//
-
 import Foundation
 import Network
 
+/// Service for checking internet connectivity.
 final class CheckNetworkService: ObservableObject {
     let monitor = NWPathMonitor()
     

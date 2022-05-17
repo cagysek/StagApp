@@ -1,13 +1,6 @@
-//
-//  YearSubjectView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 23.10.2021.
-//
-
 import SwiftUI
 
-
+/// Component of ``StudentScreen``. Present year results
 struct YearSubjectsView: View {
     
     @Binding var winterSubjects: [Subject]

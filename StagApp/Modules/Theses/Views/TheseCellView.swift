@@ -1,12 +1,7 @@
-//
-//  TheseCellView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 21.03.2022.
-//
-
 import SwiftUI
 
+
+/// Component of screen ``ThesesScreen``. Presents thesis cell
 struct TheseCellView: View {
     
     let thesis: Thesis

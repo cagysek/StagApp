@@ -1,17 +1,12 @@
-//
-//  Teacher.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 20.03.2022.
-//
-
 import Foundation
 import CoreData
 
 
 @objc(Teacher)
+/// Extension of Core Data class ``Student``
 class Teacher: NSManagedObject, Decodable {
     
+    /// fields mapping
     enum CodingKeys: String, CodingKey {
         case teacherId = "ucitIdno"
         case firstname = "jmeno"
@@ -21,7 +16,8 @@ class Teacher: NSManagedObject, Decodable {
         case email = "email"
     }
     
-    
+    /// Constructor for creation object from custom decoder
+    /// - Parameter decoder: custom decoder
     required convenience init(from decoder: Decoder) throws {
         guard let context = decoder.userInfo[CodingUserInfoKey.context] as? NSManagedObjectContext else {
               throw DecoderConfigurationError.missingManagedObjectContext

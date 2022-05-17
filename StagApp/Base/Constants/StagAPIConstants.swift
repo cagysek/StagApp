@@ -7,10 +7,9 @@
 
 import Foundation
 
-enum StagAPIConstants {
-    static let baseUrl = "https://stag-demo.zcu.cz/ws/services/rest2/"
-//    static let baseUrl = "https://stag-ws.zcu.cz/ws/services/rest2/"
 
+/// Definition of IS/STAG API endpoints
+enum StagAPIConstants {
     
     static let schedule = "rozvrhy/getRozvrhByStudent"
     

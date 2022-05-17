@@ -1,24 +1,25 @@
-//
-//  SubjectModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 13.03.2022.
-//
-
 import Foundation
 
+/// Protocol defines Subject statistics calculator methods
 protocol ISubjectStatisticsCaltulator {
     
-    /// Returns statistics for given array
+    
+    /// Returns statistics for given subejcts
+    /// - Parameter subjects: array of ``Subject`` for calculation statistics
+    /// - Returns: returns ``SubjectStatistics``
     func getStatistics(subjects: [Subject]) -> SubjectStatistics
 }
 
 
+/// Implementation of subject statistics calculator, implements ``ISubjectStatisticsCaltulator``
 struct SubjectStatisticsCalculator: ISubjectStatisticsCaltulator {
     
     /// Array with accepted marks
     let ACCEPTED_MARKS: [String] = ["1", "2", "3", "4", "S"]
     
+    /// Returns statistics for given subejcts
+    /// - Parameter subjects: array of ``Subject`` for calculation statistics
+    /// - Returns: returns ``SubjectStatistics``
     public func getStatistics(subjects: [Subject]) -> SubjectStatistics {
         
         var totalCredits = 0

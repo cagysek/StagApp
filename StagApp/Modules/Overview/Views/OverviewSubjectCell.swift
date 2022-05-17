@@ -1,12 +1,6 @@
-//
-//  OverviewSibjectCell.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 07.11.2021.
-//
-
 import SwiftUI
 
+/// Component of ``OverviewScreen``. Presents single schedule action
 struct OverviewSubjectCell: View {
     
     var scheduleAction: ScheduleAction

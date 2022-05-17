@@ -1,17 +1,19 @@
-//
-//  SubjectFacade.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 20.03.2022.
-//
-
 import Foundation
 
 
+
+/// Protocol for loads schedule actions
 protocol IScheduleFacade {
+    
+    /// Loads user schedule actions for specific date
+    /// - Parameter date: Date to load schedule actions
+    /// - Returns: array of schedule actions
     func loadScheduleActions(for date: Date) async -> [ScheduleAction]
 }
 
+
+
+/// Schedule action facade implementation, implements ``IScheduleFacade``
 struct ScheduleFacade: IScheduleFacade {
     
     let stagService: IStagService
@@ -24,7 +26,10 @@ struct ScheduleFacade: IScheduleFacade {
         self.teacherRepository = teacherRepository
     }
     
-    /// TODO sorting..
+    
+    /// Loads user schedule actions for specific date
+    /// - Parameter date: date to load schedule actions
+    /// - Returns: array of schedule actions
     public func loadScheduleActions(for date: Date) async -> [ScheduleAction] {
         
         let studentSchedule = await self.loadStudentActions(for: date)
@@ -33,6 +38,10 @@ struct ScheduleFacade: IScheduleFacade {
         return studentSchedule + teacherSchedule
     }
     
+    
+    /// Loads student schedule actions for specific date
+    /// - Parameter date: date to load schedule actions
+    /// - Returns: array of schedule actions
     private func loadStudentActions(for date: Date) async -> [ScheduleAction] {
         
         guard let student = self.studentRepository.getStudent() else {
@@ -52,6 +61,10 @@ struct ScheduleFacade: IScheduleFacade {
         return []
     }
     
+    
+    /// Loads teacher schedule actions for specific date
+    /// - Parameter date: dato to load schedule actions
+    /// - Returns: array of schedule actuons
     private func loadTeacherActions(for date: Date) async -> [ScheduleAction] {
         
         guard let teacher = self.teacherRepository.getTeacher() else {
@@ -70,6 +83,7 @@ struct ScheduleFacade: IScheduleFacade {
     }
     
     
+    /// Log out user from app, sets UserDefaults value "is_logged" to false
     private func logOutExpiredToken() -> Void {
         UserDefaults.standard.set(false, forKey: UserDefaultKeys.IS_LOGED)
         

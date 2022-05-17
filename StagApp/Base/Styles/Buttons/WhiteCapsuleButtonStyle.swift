@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 
+/// Definition of style for white capsule buttons
 struct WhiteCapsuleButtonStyle: ButtonStyle {
     
     let fontSize: CGFloat

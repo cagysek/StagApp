@@ -1,24 +1,33 @@
-//
-//  LoginViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 13.10.2021.
-//
-
 import Foundation
 import Security
 
 @MainActor
+/// Protocol to define functions in view model
 protocol LoginViewModel: ObservableObject {
+    
+    /// Function for login user
+    /// - Parameters:
+    ///   - username: user's username
+    ///   - password: user's password
     func getLogin(username: String, password: String)
     
     /// Returns selected university
     func getSelectedUniversity() -> University?
+    
+    /// Process external login result
+    /// - Parameter externalLoginResult: object given from external login service
+    func processExternalLogin(externalLoginResult: ExternalLoginResult)
+    
+    /// Returns login url for external login service based on selected university
+    /// - Returns: login url for external login service
+    func getLoginUrl() -> String?
 }
 
 
+/// View model for ``LoginScreen
 final class LoginViewModelImpl: LoginViewModel {
-
+    
+    /// Loading states
     enum State {
             case idle
             case loading
@@ -26,6 +35,7 @@ final class LoginViewModelImpl: LoginViewModel {
             case fetchingData
         }
     
+    /// Proerty to holding state
     @Published private(set) var state = State.idle
     
     private let stagService: IStagService
@@ -41,6 +51,7 @@ final class LoginViewModelImpl: LoginViewModel {
         self.clearAllCachedData()
     }
     
+    /// Removes all cached data for user
     private func clearAllCachedData() -> Void {
         // should be false.. check if any data is stored in keychain
         _ = self.keychainManager.removeCookie()
@@ -53,7 +64,7 @@ final class LoginViewModelImpl: LoginViewModel {
         UserDefaults.standard.set(false, forKey: UserDefaultKeys.HAS_TEACHER_ID)
     }
     
-    func getLogin(username: String, password: String) {
+    public func getLogin(username: String, password: String) {
         
         self.state = .loading
         
@@ -144,6 +155,9 @@ final class LoginViewModelImpl: LoginViewModel {
         }
     }
     
+    
+    /// Checks role and if role is not supported, shows alert
+    /// - Parameter role: user's role
     private func checkRole(role: String) -> Void {
         if (role == "ST" || role == "VY") {
             return;
@@ -172,30 +186,49 @@ final class LoginViewModelImpl: LoginViewModel {
         return "\(university.url)/login?originalURL=https://www.stag-client.cz&longTicket=true"
     }
     
+    
+    /// Sets value to UserDefaults, that user is logged
     private func markUserLogged() -> Void {
         UserDefaults.standard.set(true, forKey: UserDefaultKeys.IS_LOGED)
     }
     
+    /// Sets value to UserDefaults, if user is student
     private func markIsStudent(studentId: String?) -> Void {
         UserDefaults.standard.set(studentId != nil, forKey: UserDefaultKeys.IS_STUDENT)
     }
     
+    /// Sets value to UserDefaults, if user is teacher
     private func markHasTeacherId(teacherId: Int?) -> Void {
         UserDefaults.standard.set(teacherId != nil, forKey: UserDefaultKeys.HAS_TEACHER_ID)
     }
     
+    /// Sync student data into database
+    /// - Parameters:
+    ///   - username: user's username
+    ///   - studentId: user's student id
     private func syncStudentData(username: String, studentId: String) -> Void {
         self.dataManager.syncStudentData(username: username, studentId: studentId)
     }
     
+    /// Sync teacher data into database
+    /// - Parameters:
+    ///   - username: user's username
+    ///   - teacherId: user's teacher id
     private func syncTeacherData(username: String, teacherId: Int) -> Void {
         self.dataManager.syncTeacherInfo(teacherId: teacherId)
     }
     
+    
+    /// Saves user's authorization cookie into database
+    /// - Parameter cookie: cookie value
+    /// - Returns: result of operation
     private func setAuthorizationCookie(cookie: String) -> Bool {
         return self.keychainManager.saveCookie(cookieValue: cookie)
     }
     
+    /// Saves user's username into database
+    /// - Parameter username: user's username
+    /// - Returns: result of operation
     private func saveUsername(username: String) -> Bool {
         return self.keychainManager.saveUsername(username: username)
     }

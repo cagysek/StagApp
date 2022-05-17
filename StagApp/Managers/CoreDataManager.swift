@@ -1,21 +1,19 @@
-//
-//  CoreDataService.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 17.01.2022.
-//
-
 import Foundation
 import CoreData
 
+/// Singleton, defines Core Data context
 class CoreDataManager: ObservableObject {
 
     private init(){}
     
+    
+    /// Returns Core Data context
+    /// - Returns: Core Data context
     public static func getContext () -> NSManagedObjectContext {
         return CoreDataManager.persistentContainer.viewContext
     }
     
+    /// Container creation
     static var persistentContainer: NSPersistentContainer = {
         
         //The container that holds both data model entities
@@ -55,6 +53,7 @@ class CoreDataManager: ObservableObject {
     
     
     // MARK: CRUD functions
+    /// Saves Core Data context
     public static func saveContext() {
         let context =  self.getContext()
         
@@ -68,6 +67,8 @@ class CoreDataManager: ObservableObject {
         }
     }
     
+    /// Returns studens data
+    /// - Returns: students data from database
     public static func getStudentInfo() -> Student? {
         let request = NSFetchRequest<Student>(entityName: "Student")
         
@@ -78,7 +79,7 @@ class CoreDataManager: ObservableObject {
         } catch {
 //            let nserror = error as NSError
 //            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//            
+//
             print(error)
         }
         
@@ -86,6 +87,7 @@ class CoreDataManager: ObservableObject {
     }
     
     
+    /// Removes student's data from database
     public static func deleteStudentInfo() {
         do {
             let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Student")

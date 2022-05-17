@@ -1,12 +1,6 @@
-//
-//  UniversityScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 21.02.2022.
-//
-
 import SwiftUI
 
+/// App screen with university select
 struct UniversityScreen: View {
     
     @Binding var showUniversity: Bool

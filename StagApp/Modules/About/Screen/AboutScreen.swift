@@ -1,12 +1,6 @@
-//
-//  AboutScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 06.04.2022.
-//
-
 import SwiftUI
 
+/// App screen `About`
 struct AboutScreen: View {
     var body: some View {
         ZStack(alignment: .topLeading) {

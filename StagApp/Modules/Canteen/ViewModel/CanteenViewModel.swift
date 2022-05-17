@@ -1,17 +1,17 @@
-//
-//  CanteenViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 30.03.2022.
-//
-
 import Foundation
 
+/// Protocol for define view model functions
 protocol ICanteenViewModel: ObservableObject {
+    
+    /// Loads canteen menu for specific canteen and date
+    /// - Parameters:
+    ///   - canteenId: canteen to load menu
+    ///   - selectedDate: date for load menu
     func loadCanteenMenu(canteenId: String, selectedDate: Date) -> Void
 }
 
 
+/// View model implementation for ``CanteenScreen``
 class CanteenViewModel: ICanteenViewModel {
     
     @Published var menu: Menu? = nil
@@ -40,6 +40,11 @@ class CanteenViewModel: ICanteenViewModel {
         }
     }
     
+    /// Counts difference between two dates
+    /// - Parameters:
+    ///   - from: from date
+    ///   - to: to date
+    /// - Returns: difference between two dates
     private func getDateDifference(from: Date, to: Date) -> Int {
         
         let diffComponents = Calendar.current.dateComponents([.day], from: from.resetTime(), to: to.resetTime())

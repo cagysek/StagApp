@@ -1,21 +1,11 @@
-//
-//  SettingsScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 02.04.2022.
-//
-
 import SwiftUI
 
+/// App screen `Settings`
 struct SettingsScreen: View {
     
     @AppStorage(UserDefaultKeys.LANGUAGE) private var language = LanguageService.shared.language
     
-    
-    @State var notificationsEnabled: Bool = false
-    
     @State private var languageIndex: ELanguage = .system
-    
     
     init () {
         self._languageIndex = State(initialValue: ELanguage.init(rawValue: language) ?? ELanguage.czech)

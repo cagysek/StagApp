@@ -1,14 +1,10 @@
-//
-//  LoginResult.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 13.03.2022.
-//
-
 import Foundation
 
+
+/// Entity for API response `fetchUserLogin()`
 struct LoginResult: Decodable {
     
+    /// API reponse fields mapping
     enum CodingKeys: String, CodingKey {
         case role = "role"
         case studentId = "osCislo"
@@ -18,10 +14,19 @@ struct LoginResult: Decodable {
     }
     
     
+    /// User's role
     let role: String
+    
+    /// User's student ID
     let studentId: String?
+    
+    /// User's teacher ID
     let teacherId: Int?
+    
+    /// User's username
     let username: String
+    
+    /// User's cookie
     var cookie: String?
     
 }

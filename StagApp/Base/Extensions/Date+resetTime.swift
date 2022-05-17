@@ -10,6 +10,9 @@ import Foundation
 
 extension Date {
 
+    
+    /// Support function for reset time on date
+    /// - Returns: date with reset time
     func resetTime() -> Date
     {
         let calendar = Calendar.current

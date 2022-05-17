@@ -1,24 +1,40 @@
-//
-//  KeychainManager.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 14.03.2022.
-//
-
 import Foundation
 import Security
 
 
+/// Protocol to define functions for Keychain operations
 protocol IKeychainManager {
+    
+    /// Saves auth cookie to keychain
+    /// - Parameter cookieValue: cookie value
+    /// - Returns: result of operation
     func saveCookie(cookieValue: String) -> Bool
+    
+    /// Removes aut cookie from keychain
+    /// - Returns: result of operation
     func removeCookie() -> Bool
+    
+    /// Returns auth cookie from keychain
+    /// - Returns: auth cookie if exists, else `nil`
     func getCookie() -> String?
+    
+    
+    /// Saves username to keychain
+    /// - Parameter username: usename
+    /// - Returns: result of operation
     func saveUsername(username: String) -> Bool
+    
+    /// Removes username from keychain
+    /// - Returns: result of operation
     func removeUsername() -> Bool
+    
+    /// Return username of logged user
+    /// - Returns: username of logged user
     func getUsername() -> String?
     
 }
 
+/// Implementation of ``IKeychainManager``
 struct KeychainManager: IKeychainManager {
     
     private let COOKIE_KEY: String = "cookie"
@@ -50,6 +66,10 @@ struct KeychainManager: IKeychainManager {
         return self.getValue(for: self.COOKIE_KEY)
     }
     
+    
+    /// Returns value from keychain
+    /// - Parameter key: value key
+    /// - Returns: stored value for key, if not exists `nil`
     private func getValue(for key: String) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -75,6 +95,10 @@ struct KeychainManager: IKeychainManager {
         return nil
     }
     
+    
+    /// Remove value for specific key
+    /// - Parameter key: key to delete
+    /// - Returns: result of operation
     private func remove(for key: String) -> Bool {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -88,6 +112,11 @@ struct KeychainManager: IKeychainManager {
         }
     }
     
+    /// Save value for key
+    /// - Parameters:
+    ///   - key: key to save
+    ///   - data: value to save
+    /// - Returns: result of operation
     private func save(for key: String, data: String) -> Bool {
         let attributes: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,

@@ -1,10 +1,3 @@
-//
-//  Student.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 25.01.2022.
-//
-
 import Foundation
 import CoreData
 
@@ -13,8 +6,12 @@ enum DecoderConfigurationError: Error {
     case invalidMapper
 }
 
+
 @objc(Student)
+/// Extension of Core Data class ``Student``
 class Student: NSManagedObject, Decodable {
+    
+    /// fields mapping
     enum CodingKeys: String, CodingKey {
         case studentId = "osCislo"
         case firstname = "jmeno"
@@ -29,6 +26,9 @@ class Student: NSManagedObject, Decodable {
         case studyType = "typSp"
     }
     
+    
+    /// Constructor for creation object from custom decoder
+    /// - Parameter decoder: custom decoder
     required convenience init(from decoder: Decoder) throws {
         guard let context = decoder.userInfo[CodingUserInfoKey.context] as? NSManagedObjectContext else {
               throw DecoderConfigurationError.missingManagedObjectContext
@@ -52,9 +52,9 @@ class Student: NSManagedObject, Decodable {
     }
     
     
-    /**
-        Returns student full name with titles
-     */
+    
+    /// Returns student full name with titles
+    /// - Returns: student full name with titles
     public func getStudentFullNameWithTitles() -> String {
         var fullname = ""
         
@@ -74,6 +74,9 @@ class Student: NSManagedObject, Decodable {
         return fullname;
     }
     
+    
+    /// Returns required credits count for study
+    /// - Returns: required credits count for study
     public func getTotalCreditCount() -> Int {
         if (self.studyType == "B") {
             return 180

@@ -1,9 +1,3 @@
-//
-//  WebView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 23.03.2022.
-//
 
 import Foundation
 import UIKit
@@ -13,13 +7,14 @@ import WebKit
 import UIKit
 
 // MARK: - WebViewHandlerDelegate
-// For printing values received from web app
+/// For printinf values received from web app
 protocol WebViewHandlerDelegate {
     func receivedJsonValueFromWebView(value: [String: Any?])
     func receivedStringValueFromWebView(value: String)
 }
 
-// MARK: - WebView
+
+/// Definition of  custom `WebView` View for external login
 struct ExternalLoginWebView: UIViewRepresentable {
     
     @Environment(\.dismiss) var dismiss

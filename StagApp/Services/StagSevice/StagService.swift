@@ -8,70 +8,105 @@
 import Foundation
 import UIKit
 
+/// Protocol which defines functions with communication with STAG API
 protocol IStagService {
-    ///
-    func fetch() async throws -> [Credentials]
-//    func fetchStudentInfo() async throws -> StudentInfo
-    
+
     /// Fetchs student's exam results async
+    /// - Returns: fetched subject results
     func fetchExamResults() async throws -> [SubjectResult]
     
     /// Fetchs student's basic info
+    /// - Parameters:
+    ///   - studentId: student ID for fetching data
+    ///   - completion: completion handler
     func fetchStudentInfo(studentId: String, completion: @escaping (Result<Student, Error>) -> Void)
     
     /// Fetchs student's subjects
+    /// - Parameters:
+    ///   - year: study year
+    ///   - semester: study semester
+    ///   - studentId: student ID
+    ///   - completion: completion handler
     func fetchSubjects(year: String, semester: String, studentId: String, completion: @escaping (Result<[SubjectApi], Error>) -> Void)
     
     /// Fetchs student's exam results
+    /// - Parameters:
+    ///   - username: student's username
+    ///   - studentId: student's ID
+    ///   - completion: completion handler
     func fetchSubjectResults(username: String, studentId: String, completion: @escaping (Result<[SubjectResult], Error>) -> Void)
     
     /// Fetchs student's schedule actions for specific date
+    /// - Parameters:
+    ///   - studentId: student's ID for fetch data
+    ///   - date: date to load
+    /// - Returns: fetched schedule actions
     func fetchStudentScheduleActions(studentId: String, for date: Date) async throws -> [ScheduleAction]
     
     /// Fetchs student's exam dates
+    /// - Parameter studentId: students's id
+    /// - Returns: fetched exam dates
     func fetchExamDates(studentId: String) async throws -> [Exam]
     
     /// Log in student to exam
+    /// - Parameters:
+    ///   - studentId: student's ID
+    ///   - username: student's username
+    ///   - examId: exam's ID to log in
+    /// - Returns: result of operation in string response
     func fetchExamLogIn(studentId: String, username: String, examId: Int) async throws -> String?
     
     /// Logout student from exam
+    /// - Parameters:
+    ///   - studentId: student's ID
+    ///   - username: student's username
+    ///   - examId: exam's ID to log out
+    /// - Returns: result of operation in string response
     func fetchExamLogOut(studentId: String, username: String, examId: Int) async throws -> String?
     
     /// Fetchs subject detail
+    /// - Parameters:
+    ///   - department: subject's department
+    ///   - short: subject's title shortcut
+    /// - Returns: fetched user detail
     func fetchSubjectDetailInfo(department: String, short: String) async throws -> SubjectDetail
     
     /// Fetchs subject students
+    /// - Parameter subjectId: subject's ID
+    /// - Returns: fetched students on subject
     func fetchSubjectStudents(subjectId: Int) async throws -> [SubjectStudent]
     
     /// Confirm user credentials and return user's informations
+    /// - Parameters:
+    ///   - username: user's username
+    ///   - password: user's password
+    /// - Returns: login result
     func fetchUserLogin(username: String, password: String) async throws -> LoginResult
     
     /// Fetchs teacher's informations
+    /// - Parameter teacherId: teacher's ID
+    /// - Returns: teachers data
     func fetchTeacherInfo(teacherId: Int) async throws -> Teacher?
     
-    /// Fetchs student's subjects
+    /// Fetchs teachers's schedule actions
+    /// - Parameters:
+    ///   - teacherId: teacher's data
+    ///   - date: date to get schedule actions
+    /// - Returns: fetched schedule actions
     func fetchTeacherScheduleActions(teacherId: String, for date: Date) async throws -> [ScheduleAction]
     
     /// Fetchs teache's assigned theses
+    /// - Parameters:
+    ///   - teacherId: teacher's ID
+    ///   - assignmentYear: study year to get theses
+    /// - Returns: fetched theses for teacher
     func fetchTheses(teacherId: String, assignmentYear: String) async throws -> [Thesis]
 }
 
+/// Implementation of ``IStagService``
 final class StagService: IStagService {
     
     private let LOGIN_COOKIE_NAME = "WSCOOKIE"
-    
-    func fetch() async throws -> [Credentials] {
-        let urlSession = URLSession.shared
-        let url = URL(string: StagAPIConstants.baseUrl.appending("/api/..."))
-        let (data, response) = try await urlSession.data(from: url!)
-        
-        guard let response = response as? HTTPURLResponse,
-              response.statusCode == 200 else {
-                  throw StagServiceError.invalidStatusCode
-              }
-        
-        return try JSONDecoder().decode([Credentials].self, from: data)
-    }
     
     
     public func fetchStudentInfo(studentId: String, completion: @escaping (Result<Student, Error>) -> Void) {
@@ -364,9 +399,9 @@ final class StagService: IStagService {
     }
     
     
-    /**
-        Perform request. Adds general modifications to request
-     */
+    /// Perform request. Adds general modifications to request
+    /// - Parameter request: request to perform
+    /// - Returns: `URLSession` data
     private func performRequest(request: inout URLRequest) async throws -> (Data, URLResponse)
     {
         let configuration = URLSessionConfiguration.ephemeral
@@ -377,9 +412,9 @@ final class StagService: IStagService {
         return try await urlSession.data(for: request)
     }
     
-    /**
-        Validate status code of response. If code is not 200, throws error according to status code
-     */
+    
+    /// Validate status code of response. If code is not 200, throws error according to status code
+    /// - Parameter response: given response
     private func errorHandling(response: URLResponse) throws {
         guard let response = response as? HTTPURLResponse else {
             throw StagServiceError.unknowError
@@ -397,6 +432,8 @@ final class StagService: IStagService {
     }
     
     /// Return login cookie, returns nil if not set
+    /// - Parameter response: given response
+    /// - Returns: login cookie if exists, else `nil`
     private func getLoginCookie(response: URLResponse) -> String? {
         
         guard let response = response as? HTTPURLResponse else {
@@ -421,7 +458,7 @@ final class StagService: IStagService {
     
     /// Returns url for request
     /// - Parameter endpoint: API endpoint to call
-    
+    /// - Parameter configuration: STAG service configuration
     private func createUrl(endpoint: String, configuration: StagServiceConfiguration) -> URL {
         let url = "\(configuration.baseUri)/services/rest2/\(endpoint)?lang=\(configuration.language)&outputFormat=json"
         
@@ -450,7 +487,9 @@ final class StagService: IStagService {
         return request
     }
     
+    
     /// Returns API configuration by user preferences
+    /// - Returns: STAG API configuration
     private func getConfiguration() -> StagServiceConfiguration {
         
         // load default url by selected university from user storage

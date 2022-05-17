@@ -1,14 +1,8 @@
-//
-//  OverviewViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 02.03.2022.
-//
-
 import Foundation
 import SwiftUI
 
 
+/// Protocol defines functions for view model
 protocol IOverviewViewModel: ObservableObject {
     /// Loads notes from database to property
     func updateNotes() -> Void
@@ -18,6 +12,7 @@ protocol IOverviewViewModel: ObservableObject {
 }
 
 
+/// View model for ``OverviewScreen``
 class OverviewViewModel: IOverviewViewModel {
     @Published var notes: [Note] = []
     @Published var scheduleActions: [ScheduleAction] = []
@@ -65,6 +60,12 @@ class OverviewViewModel: IOverviewViewModel {
     }
     
     
+    /// Prepare data for view. Return subset from given data by current time
+    /// - Parameters:
+    ///   - scheduleActions: input array with all schedule actions
+    ///   - currentDate: current datetime
+    ///   - itemsToReturn: how many items return
+    /// - Returns: Return subset from given data
     private func splitScheduleActionByTimeForView(scheduleActions: [ScheduleAction], currentDate: Date, itemsToReturn: Int) -> [ScheduleAction] {
         let currentTime = DateFormatter.time.string(from: currentDate)
         

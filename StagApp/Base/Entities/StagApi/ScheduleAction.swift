@@ -2,8 +2,11 @@ import Foundation
 import UIKit
 import SwiftUI
 
+
+/// Entity for API response of `fetchStudentScheduleActions()` and `fetchTeacherScheduleActions()`
 public struct ScheduleAction: Decodable, Identifiable {
     
+    /// API response fiealds mapping
     enum CodingKeys: String, CodingKey {
         case scheduleId = "roakIdno"
         case title = "nazev"
@@ -27,29 +30,73 @@ public struct ScheduleAction: Decodable, Identifiable {
         case type = "druhAkce"
     }
     
+    
+    /// Unique identifier
     public let id = UUID()
+    
+    /// Shedule action's ID
     let scheduleId: Int?
+    
+    /// Shedule action's title
     let title: String
+    
+    /// Shedule action's department
     let department: String
+    
+    /// Shedule action's title shortcut
     let titleShort: String
+    
+    /// Shedule action's teacher
     let teacher: TeacherApi?
+    
+    /// Shedule action's year
     let year: String
+    
+    /// Shedule action's building
     let building: String?
+    
+    /// Shedule action's room
     let room: String?
+    
+    /// Shedule action's label (Lectute, exam, exercise)
     let label: String
+    
+    /// Shedule action's label short (Le, exam, se)
     let labelShort: String
+    
+    /// Shedule action's semester
     let semester: String
+    
+    /// Shedule action's title of day
     let day: String?
+    
+    /// Shedule action's title of day shortcut
     let dayShort: String?
+    
+    /// Shedule action's starting week
     let weekFrom: Int
+    
+    /// Shedule action's ending week
     let weekTo: Int
+    
+    /// Shedule action's type
     let type: String
+    
+    /// Shedule action's indication how eften is repeated (every week, odd, ...)
     let howOften: String
+    
+    /// Shedule action's shortcut of indication how often is repeated
     let howOftenShort: String
+    
+    /// Shedule action's start time
     let timeFrom: ValueProperty?
+    
+    /// Shedule action's end time
     let timeTo: ValueProperty?
     
     
+    /// Return time interval for shecule action
+    /// - Returns: Formatted time interval
     public func getTimeOfAction() -> String {
         if (self.timeFrom == nil || self.timeTo == nil) {
             return ""
@@ -63,6 +110,8 @@ public struct ScheduleAction: Decodable, Identifiable {
         return "\(self.timeFrom!.value) - \(self.timeTo!.value)"
     }
     
+    /// Returns duration of schedule action
+    /// - Returns: duration of schedule action
     public func getDuration() -> String {
         if (self.timeFrom == nil || self.timeTo == nil) {
             return ""
@@ -92,6 +141,8 @@ public struct ScheduleAction: Decodable, Identifiable {
         return "\(Int(hour)) h \(Int(minute)) min"
     }
     
+    /// Depends on schedule action's type returns color
+    /// - Returns: schedule action's background color
     public func getBackgroundColor() -> Color {
         if (self.labelShort == "Se") {
             
@@ -111,6 +162,9 @@ public struct ScheduleAction: Decodable, Identifiable {
         }
     }
     
+    
+    /// Returns translation for type shortcut
+    /// - Returns: translation key for schedule type shortcut
     public func getLabelShortTranslation() -> String {
         let language = LanguageService.shared.language
         
@@ -128,6 +182,8 @@ public struct ScheduleAction: Decodable, Identifiable {
         }
     }
     
+    /// Returns translation for type shortcut
+    /// - Returns: translation key for schedule type shortcut
     public func getLabelTranslation() -> String {
         let language = LanguageService.shared.language
         
@@ -148,12 +204,14 @@ public struct ScheduleAction: Decodable, Identifiable {
     }
 }
 
-
+/// Entity for API response root of `fetchStudentScheduleActions()` and `fetchTeacherScheduleActions()`
 public struct ScheduleActionsRoot: Decodable {
     
+    /// API response mapping
     enum CodingKeys: String, CodingKey {
         case scheduleActions = "rozvrhovaAkce"
     }
     
+    /// Response root
     let scheduleActions: [ScheduleAction]
 }

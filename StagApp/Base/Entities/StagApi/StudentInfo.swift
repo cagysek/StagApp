@@ -1,14 +1,11 @@
-//
-//  StudentInfo.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 15.12.2021.
-//
-
 import Foundation
 
+
+/// Entity for map response  getStudentInfo from ``StagService``
 struct StudentInfo: Codable {
     
+    
+    /// API response mapping
     enum CodingKeys: String, CodingKey {
         case studentId = "osCislo"
         case firstname = "jmeno"
@@ -24,21 +21,42 @@ struct StudentInfo: Codable {
     }
     
     
+    /// Student's ID
     let studentId: String
+    
+    /// Student's firstname
     let firstname: String
+    
+    /// Student's lastname
     let lastname: String
+    
+    /// Student's title before name
     let titleBefore: String?
+    
+    /// Student's title after name
     let titleAfter: String?
+    
+    /// Student's username
     let username: String
+    
+    /// Student's study program
     let studyProgram: String
+    
+    /// Student's faculty
     let faculty: String
+    
+    /// Student's study year
     let studyYear: String
+    
+    /// Student's email
     let email: String
+    
+    /// Student's study type
     let studyType: String
     
-    /**
-        Returns student full name with titles
-     */
+
+    /// Returns student full name with titles
+    /// - Returns: student full name with titles
     public func getStudentFullNameWithTitles() -> String {
         var fullname = ""
         

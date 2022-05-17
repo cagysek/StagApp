@@ -1,12 +1,7 @@
-//
-//  UniversityCell.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 23.02.2022.
-//
 
 import SwiftUI
 
+/// Component of ``UniversityScreen``. Presents university cell
 struct UniversityCellView: View {
     
     var university: University

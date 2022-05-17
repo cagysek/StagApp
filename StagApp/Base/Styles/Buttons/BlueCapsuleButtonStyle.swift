@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+
+/// Definition of style for blue capsules
 struct BlueCapsuleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

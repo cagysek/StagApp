@@ -1,19 +1,44 @@
 import Foundation
 
 
+/// Protocol to define functions in data manager
 protocol IDataManager {
+    
+    /// Sync student data to database
+    /// - Parameters:
+    ///   - username: user's username
+    ///   - studentId: user's student ID
     func syncStudentData(username: String, studentId: String)
+    
+    /// Sync student info to database
+    /// - Parameter studentId: user's student ID
     func syncStudentInfo(studentId: String)
+    
+    /// Sync student subject to database
+    /// - Parameters:
+    ///   - username: user's username
+    ///   - studentId: user's student ID
     func syncSubjects(username: String, studentId: String)
+    
+    /// Sync student's additional subject informations
+    /// - Parameter studentId: user's student ID
     func syncAdditionalSubjectInfo(studentId: String)
+    
+    
+    /// Removes all cached data about student
     func deleteStudentCachedData() -> Void
+    
+    /// Removes all cahced data about teacher
     func deleteTeacherCachedData() -> Void
+    
+    /// Sync teacher's data to database
+    /// - Parameter teacherId: user's teacher ID
     func syncTeacherInfo(teacherId: Int) -> Void
 }
 
 
-/// This class pro
-///
+
+/// Implementation of ``IDataManager``
 struct DataManager: IDataManager {
         
     let stagApiService: IStagService
@@ -125,6 +150,10 @@ struct DataManager: IDataManager {
     }
     
     /// Maps properties from api request to database object
+    /// - Parameters:
+    ///   - subjectDb: database subject
+    ///   - subjectApi: STAG API subject
+    /// - Returns: updated database subject
     private func mapNewPropertiesToSubject(subjectDb: Subject, subjectApi: SubjectApi) -> Subject {
         subjectDb.credits = Int16(subjectApi.credits)
         subjectDb.acknowledged = subjectApi.acknowledged
@@ -144,11 +173,11 @@ struct DataManager: IDataManager {
     }
     
     
-    func deleteTeacherCachedData() {
+    public func deleteTeacherCachedData() {
         self.teacherRepository.delete()
     }
     
-    func syncTeacherInfo(teacherId: Int) {
+    public func syncTeacherInfo(teacherId: Int) {
         self.deleteTeacherCachedData()
         
         Task {

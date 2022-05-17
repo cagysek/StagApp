@@ -1,17 +1,25 @@
-//
-//  NoteViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 02.03.2022.
-//
-
 import Foundation
 
+/// Definition of protocol for view model
 protocol INoteViewModel: ObservableObject {
+    
+    /// Inserts new note to database
+    /// - Parameters:
+    ///   - title: title of note
+    ///   - description: description of node
+    ///   - includeDate: has note date
+    ///   - date: date of note
+    /// - Returns: result status
     func insertNewNote(title: String, description: String, includeDate: Bool, date: Date) -> Bool
+    
+    /// Updated existing note
+    /// - Parameter note: updated note
+    /// - Returns: result status
     func saveNote(note: Note) -> Bool
 }
 
+
+/// View Model for ``AddNoteView``
 class NoteViewModel: INoteViewModel {
     
     @Published var notes: [Note] = []

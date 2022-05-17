@@ -1,14 +1,10 @@
-//
-//  SettingsViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 02.04.2022.
-//
-
 import Foundation
 
+
+/// View Model for screen ``SettingsScreen``
 class SettingsViewModel: ObservableObject {
     
+    /// Switch for reload
     @Published var refresh: Bool = false
     
 }

@@ -1,21 +1,33 @@
-//
-//  StudentRepository.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 20.03.2022.
-//
-
 import Foundation
 import CoreData
 
+
+/// Protocol which defines functions which communication with table Student
 protocol IStudentRepository {
+    
+    /// Saves context to database
+    /// - Returns: result consisting of either a Bool set to true or an Error.
     func saveContext() -> Result<Bool, Error>
+    
+    
+    /// Inserts instanfe of ``Student`` into database
+    /// - Parameter student: instance of ``Student`` to insert
+    /// - Returns: result consisting of either a Bool set to true or an Error.
     func insert(_ student: Student) -> Result<Bool, Error>
+    
+    
+    /// Creates new instance of ``Student``
+    /// - Returns: instance of ``Student``, if error occurs `nil`
     func create() -> Student?
+    
+    
+    /// Returns instance of ``Student`` from database
+    /// - Returns: instance of ``Student`` if exists, else `nil`
     func getStudent() -> Student?
 }
 
 
+/// Implementation of ``IStudentRepository``
 class StudentRepository: IStudentRepository {
     
     private let repository: CoreDataRepository<Student>

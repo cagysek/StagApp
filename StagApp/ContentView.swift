@@ -8,11 +8,8 @@
 import SwiftUI
 import UIKit
 
-//enum Tabs {
-//     case Calendar, Exams, Student
-//}
 
-
+/// Defines menu and screens which are visible
 struct ContentView: View {
     
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = false

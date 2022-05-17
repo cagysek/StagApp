@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+
+/// Definition of style for login button
 struct LoginButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {

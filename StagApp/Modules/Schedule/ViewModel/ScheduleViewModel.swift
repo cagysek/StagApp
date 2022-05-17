@@ -1,13 +1,10 @@
-//
-//  ScheduleViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 13.02.2022.
-//
-
 import Foundation
 
+/// Protocol to define view model functions
 protocol IScheduleViewModel: ObservableObject {
+    
+    /// Loads schedule actions for given date
+    /// - Parameter date: date to load actions
     func loadScheduleActions(for date: Date) async -> Void
 }
 
@@ -15,9 +12,13 @@ protocol IScheduleViewModel: ObservableObject {
 
 
 @MainActor
+/// View Model implementation for ``ScheduleSreen``
 class ScheduleViewModel: IScheduleViewModel {
     
+    /// Array of loaded actions
     @Published var scheduleActions: [ScheduleAction] = []
+    
+    /// Loading state switcher
     @Published var state: AsyncState = .idle
     
     let scheduleFacade: IScheduleFacade

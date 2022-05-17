@@ -1,12 +1,6 @@
-//
-//  OverviewScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 13.10.2021.
-//
-
 import SwiftUI
 
+/// App screen `Overview`
 struct OverviewScreen: View {
     
     @Environment(\.calendar) var calendar

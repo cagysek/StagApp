@@ -1,12 +1,7 @@
-//
-//  LoginScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 13.10.2021.
-//
-
 import SwiftUI
 
+
+/// App screen `Login`
 struct LoginScreen: View {
     
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = false

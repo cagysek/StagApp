@@ -1,16 +1,12 @@
-//
-//  DietScreen.swift.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 24.11.2021.
-//
-
 import SwiftUI
 
 
 
+/// App screen `Canteen`
 struct CanteenScreen: View {
     
+    
+    /// Picker definition
     enum PickerSection {
         case BORY, KOLLAROVA
     }

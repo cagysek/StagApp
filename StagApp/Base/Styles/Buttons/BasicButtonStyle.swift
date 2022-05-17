@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// Definition of style for basic buttons
 struct BasicButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

@@ -1,25 +1,26 @@
-//
-//  SubjectDetailScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 06.03.2022.
-//
-
 import SwiftUI
 
 
+/// Definition of pickers
 fileprivate enum PickerSection {
     case INFO, STUDENTS
 }
 
+
+/// App screen of subject's detail
 struct SubjectDetailScreen: View {
     
+    /// Binging with parent ``ScheduleAction``
     @Binding var scheduleAction: ScheduleAction?
     
+    /// Picker state
     @State private var selectedSection: PickerSection = .INFO
     
+    /// View model
     @StateObject var vm = SubjectDetailViewModel(stagService: StagService())
     
+    
+    /// Dismiss option for close view
     @Environment(\.dismiss) var dismiss
     
     var body: some View {

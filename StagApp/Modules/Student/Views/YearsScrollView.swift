@@ -1,12 +1,6 @@
-//
-//  YearsScrollView.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 23.10.2021.
-//
-
 import SwiftUI
 
+/// Component of ``StudentScreen``. Allow select study year
 struct YearsScrollView: View {
     
     @Binding var selectedYear: Int

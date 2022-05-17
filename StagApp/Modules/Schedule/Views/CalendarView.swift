@@ -7,6 +7,7 @@
 import Foundation
 import SwiftUI
 
+/// Component of ``ScheduleScreen``. Presents datepicker
 struct CalendarView: View {
     
     @Environment(\.calendar) var calendar

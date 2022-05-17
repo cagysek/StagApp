@@ -27,14 +27,20 @@ protocol Repository {
     /// Creates an entity.
     func create() -> Result<Entity, Error>
 
-    /// Deletes an entity.
-    /// - Parameter entity: The entity to be deleted.
+    /// Deletes a NSManagedObject entity.
+    /// - Parameter entity: The NSManagedObject to be deleted.
+    /// - Returns: A result consisting of either a Bool set to true or an Error.
     func delete(entity: Entity) -> Result<Bool, Error>
     
-    /// Saves context
+    
+    /// Saves context to database
+    /// - Returns: result consisting of either a Bool set to true or an Error.
     func saveContext() -> Result<Bool, Error>
     
-    /// Inserts new entity
+    
+    /// Inserts new entity to database
+    /// - Parameter object: the NSManagedObject to be inserted
+    /// - Returns: result consisting of either a Bool set to true or an Error.
     func insert(_ object: NSManagedObject) -> Result<Bool, Error>
 }
 

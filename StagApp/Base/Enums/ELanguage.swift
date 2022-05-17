@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+
+/// Enum which defines languages in app
 enum ELanguage: String, CaseIterable {
     
     public static let DEFAULT = "en"

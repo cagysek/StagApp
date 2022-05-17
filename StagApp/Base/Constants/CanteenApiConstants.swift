@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+/// Defines constants for Canteen service
 enum CanteenApiConstants {
     public static let baseUri = "https://www.zcu.cz/rest/canteen/"
 }

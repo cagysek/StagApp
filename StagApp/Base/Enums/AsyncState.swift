@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+/// Enum which defines async states in app
 enum AsyncState {
     case idle
     case fetchingData

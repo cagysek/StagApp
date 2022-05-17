@@ -1,13 +1,11 @@
-//
-//  MoreScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 17.10.2021.
-//
-
 import SwiftUI
 
+/// App screen `More`
 struct MoreScreen: View {
+    
+    @AppStorage(UserDefaultKeys.LANGUAGE) private var language = LanguageService.shared.language
+    
+    @State private var languageIndex: ELanguage = .system
     
     @AppStorage(UserDefaultKeys.IS_LOGED) private var isLogged = true
     @AppStorage(UserDefaultKeys.HAS_TEACHER_ID) private var hasTeacherId = false
@@ -106,6 +104,7 @@ struct MoreScreen: View {
             }
             .navigationBarHidden(true)
             .listStyle(InsetGroupedListStyle())
+            .navigationTitle("more.headline".localized(language))
         }
         
     }

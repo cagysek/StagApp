@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Component of ``ExamsScreen``. Presents collapse component
 struct ExamSubjectCollapse<Content: View>: View {
     @State var label: () -> Text
     @State var content: () -> Content

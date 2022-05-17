@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// Definition of style for collapse buttons
 struct CollapseButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

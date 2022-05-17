@@ -1,24 +1,68 @@
-//
-//  SubjectRepository.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 09.02.2022.
-//
-
 import Foundation
 import CoreData
 
 
+/// Protocol to defines subject repository methods
 protocol ISubjectRepository {
+    
+    /// Returns subject by parameters
+    /// - Parameters:
+    ///   - department: subject's department
+    ///   - short: short title of subject
+    ///   - year: subject's study year
+    ///   - semester: subject's study semester
+    /// - Returns: If subject exists, returns instance of ``Subject`` else `nil`
     func getSubject(department: String?, short: String, year: String, semester: String) -> Subject?
+    
+    
+    /// Saves changes to database
+    /// - Returns: result of operation
     func saveContext() -> Result<Bool, Error>
+    
+    
+    /// Inserts new instance of ``Subject`` into database
+    /// - Parameter subject: instance to insert
+    /// - Returns: result of operation
     func insert(_ subject: Subject) -> Result<Bool, Error>
+    
+    
+    /// Returns array of students years grouped by year and semester
+    /// - Returns: dictionary year:semester
     func getStudentYearsAndSemesters() -> [[String : String]]?
+    
+    
+    /// Creates new instance of ``Subject``
+    /// - Returns: new instance of ``Subject``
     func createNew() -> Subject?
+    
+    
+    /// Returns study years
+    /// - Returns: array of study years
     func getStudyYears() -> [[String : String]]?
+    
+    
+    /// Returns all subject for given year and semester
+    /// - Parameters:
+    ///   - year: subject's year
+    ///   - semester: subject's semester
+    /// - Returns: array of ``Subject`` by given parameters
     func getSubjects(year: Int, semester: String) -> [Subject]
+    
+    
+    /// Removes all records of ``Subject`` from database
     func deleteAll() -> Void
+    
+    
+    /// Returns total credit count of fulfilled subjects
+    /// - Returns: total credit count
     func getTotalCreditsCount() -> Int
+    
+    
+    /// General method for get records
+    /// - Parameters:
+    ///   - predicate: predicate for filter
+    ///   - sortDescriptors: sort description
+    /// - Returns: array of ``Subject`` if exists, else `nil`
     func get(predicate: NSPredicate?, sortDescriptors: [NSSortDescriptor]?) -> [Subject]
 }
 

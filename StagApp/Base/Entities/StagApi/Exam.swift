@@ -1,15 +1,11 @@
-//
-//  Exam.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 17.02.2022.
-//
-
 import Foundation
 import SwiftUI
 
 
+/// Entity for API response `fetchExamDates()`
 struct Exam: Decodable {
+    
+    /// API response field mapping
     enum CodingKeys: String, CodingKey {
         case id = "termIdno"
         case teacher = "ucitel"
@@ -36,37 +32,87 @@ struct Exam: Decodable {
         case note = "poznamka"
     }
     
+    /// Exam's id
     let id: Int
+    
+    /// Exam's teacher
     let teacher: TeacherApi?
+    
+    /// Exam's suject
     let subject: String
+    
+    /// Exam's department
     let department: String
+    
+    /// Exam's year
     let year: String
+    
+    /// Exam's semester
     let semester: String
+    
+    /// Exam's date
     let date: ValueProperty?
+    
+    /// Exam's students limit
     let limit: String
+    
+    /// Exam's start
     let timeFrom: String
+    
+    /// Exam's end
     let timeTo: String
+    
+    /// Enrolled number of students
     let currentStudentsCount: String
+    
+    /// Exam's building
     let building: String
+    
+    /// Exam's room
     let room: String
+    
+    /// Is correction term
     let correctionTerm: String
+    
+    /// Exam's deadline for log out
     let deadlineLogOutDate: ValueProperty?
+    
+    /// Exam's deadline for log in
     let deadlineLogInDate: ValueProperty?
+    
+    /// Exam's type
     let type: String
+    
+    /// Is current student enrolled
     let enrolled: Bool
+    
+    /// Can be exam enrolled
     let isEnrollable: Bool
+    
+    /// Why can't be exam enrolled code
     let limitEnrollableCode: String?
+    
+    /// Why can't be exam enrolled message
     let limitEnrollableMsg: String?
+    
+    /// Why can't be exam enrolled detailed info
     let limitEnrollableDescription: String?
+    
+    /// Exam's note from teacher
     let note: String?
         
 }
 
 
+/// Entity for API root response `fetchExamDates()`
 struct ExamRoot: Decodable {
+    
+    /// API response field mapping
     enum CodingKeys: String, CodingKey {
         case exams = "termin"
     }
     
+    
+    /// Root field
     let exams: [Exam]
 }

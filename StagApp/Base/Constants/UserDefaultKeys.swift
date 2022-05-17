@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+/// Definition of keys using in UserDefaults
 public enum UserDefaultKeys {
     static let IS_LOGED = "isLogged"
     static let SELECTED_UNIVERSITY = "selectedUniversity"

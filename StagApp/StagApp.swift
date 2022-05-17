@@ -1,14 +1,8 @@
-//
-//  StagAppApp.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 15.08.2021.
-//
-
 import SwiftUI
 
 
 @main
+/// Project root file, cointains global settings logic
 struct StagApp: App {
 
     @AppStorage(UserDefaultKeys.LANGUAGE) private var language = LanguageService.shared.language

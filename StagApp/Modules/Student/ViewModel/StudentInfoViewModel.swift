@@ -1,17 +1,26 @@
-//
-//  StudentViewModel.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 15.12.2021.
-//
-
 import Foundation
 
+/// Protocol for define view model functions
 protocol IStudentInfoViewModel: ObservableObject {
+    
+    /// Loads students data
     func getUserData()
+    
+    /// Loads student's subject by year
+    /// - Parameter year: year to load
+    func updateSubjectData(year: Int)
+    
+    /// Gets years when student studied
+    /// - Returns: array of years
+    func getStudyYears() -> Array<Int>
+    
+    /// Returns student statistics
+    /// - Returns: student statistics
+    func getTotalStatistics() -> SubjectStatistics
 }
 
 
+/// View model for ``StudentScreen``
 final class StudentInfoViewModel: IStudentInfoViewModel {
     @Published var studentInfoData: StudentInfo? = nil
     

@@ -1,12 +1,6 @@
-//
-//  ExamsScreen.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 17.10.2021.
-//
-
 import SwiftUI
 
+/// App screen `Exam`
 struct ExamsScreen: View {
     
     @StateObject var vm: ExamsViewModel

@@ -1,18 +1,19 @@
-//
-//  ExternalLoginResult.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 28.03.2022.
-//
-
 import Foundation
 
 
+/// Entity holds external login values
 struct ExternalLoginResult {
-
+    
+    /// User's ticket
     private let stagUserTicket: String?
+    
+    /// User's username
     private let stagUserName: String?
+    
+    /// User's role
     private let stagUserRole: String?
+    
+    /// User's info
     private var stagUserInfo: StagInfo? = nil
     
     
@@ -39,7 +40,10 @@ struct ExternalLoginResult {
         return self.stagUserInfo
     }
     
+    
     /// Converts Base64 atribut to string
+    /// - Parameter stagUserInfo: user's info coded in `Base64`
+    /// - Returns: string which holds json, if error occurs `nil`
     private func getDecodedStagInfo(stagUserInfo: String?) -> String? {
         
         if (stagUserInfo == nil)
@@ -55,6 +59,9 @@ struct ExternalLoginResult {
     }
     
     
+    /// Converts user's data from json to ``StagInfo``
+    /// - Parameter stagUserInfo: user's info coded in `Base64`
+    /// - Returns: instance of ``StagInfo``, if error occurs `nil`
     private func convertStagUserInfo(stagUserInfo: String?)-> StagInfo? {
         
         guard let decodedStagInfo = self.getDecodedStagInfo(stagUserInfo: stagUserInfo) else {
@@ -72,8 +79,10 @@ struct ExternalLoginResult {
         return nil
     }
     
+    
     /// Validate external login result
     /// External login is success only if all properties are set
+    /// - Returns: true if all properties are set, or false
     public func isValid() -> Bool {
         return self.getStagUserTicket() != nil && self.getStagUserInfo() != nil && self.stagUserRole != nil && self.stagUserName != nil
     }

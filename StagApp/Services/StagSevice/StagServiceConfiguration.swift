@@ -1,15 +1,16 @@
-//
-//  StagServiceConfiguration.swift
-//  StagApp
-//
-//  Created by Jan Čarnogurský on 14.03.2022.
-//
-
 import Foundation
 
+
+/// Stag API configuration
 struct StagServiceConfiguration {
+    
+    /// Base WS domain
     var baseUri: String
+    
+    /// Response language
     var language: String
+    
+    /// Authorization cookie
     var cookie: String
     
     init(baseUri: String, language: String = "cs", cookie: String = "") {
