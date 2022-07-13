@@ -26,6 +26,11 @@ class SubjectDetailViewModel: ISubjectDetailViewModel {
     /// Published property wihch holds array of ``SubjectStudent``
     @Published var subjectstudents: [SubjectStudent] = []
     
+    
+    @Published var stateSubjectDetail: AsyncState = .idle
+    
+    @Published var stateSubjectStudents: AsyncState = .idle
+    
     let stagService: IStagService
     
     init(stagService: IStagService) {
@@ -35,6 +40,8 @@ class SubjectDetailViewModel: ISubjectDetailViewModel {
     
     public func loadSubjectDetail(department: String, short: String) async -> Void {
         
+        self.stateSubjectDetail = .fetchingData
+        
         do {
             self.subjectDetail = try await self.stagService.fetchSubjectDetailInfo(department: department, short: short)
             
@@ -43,14 +50,21 @@ class SubjectDetailViewModel: ISubjectDetailViewModel {
             print(error)
         }
         
+        self.stateSubjectDetail = .idle
+        
     }
     
     public func loadSubjectStudents(subjectId: Int) async -> Void {
+        
+        self.stateSubjectStudents = .fetchingData
+        
         do {
             self.subjectstudents = try await self.stagService.fetchSubjectStudents(subjectId: subjectId)
         } catch {
             print(error)
         }
+        
+        self.stateSubjectStudents = .idle
     }
     
 }

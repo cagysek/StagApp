@@ -44,6 +44,7 @@
 "scheduleDetail.content" = "Obsah";
 "scheduleDetail.literature" = "Literatura";
 "scheduleDetail.year %@" = "%@. ročník";
+"scheduleDetail.no-students" = "No students here";
 
 
 /// MARK: NOTE

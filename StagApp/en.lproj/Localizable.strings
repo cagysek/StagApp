@@ -44,6 +44,7 @@
 "scheduleDetail.content" = "Content";
 "scheduleDetail.literature" = "Literature";
 "scheduleDetail.year %@" = "%@ Year of study";
+"scheduleDetail.no-students" = "No students here";
 
 
 

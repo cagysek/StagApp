@@ -32,7 +32,7 @@ enum Universities {
     
     /// Returns university by given ID
     /// - Parameter id: ID of university to get
-    /// - Returns: instance of ``University`` if exists, else `nil`
+    /// - Returns: instance of ``University`` if exists, else `nil` 
     static func getUniversityById(id: Int) -> University? {
         let index = id - 1
         

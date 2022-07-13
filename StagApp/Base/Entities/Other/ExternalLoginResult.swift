@@ -68,6 +68,8 @@ struct ExternalLoginResult {
             return nil
         }
         
+        print(decodedStagInfo);
+        
         let data = Data(decodedStagInfo.utf8)
         
         do {

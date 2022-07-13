@@ -53,8 +53,17 @@ struct SubjectDetailScreen: View {
                             Text("scheduleDetail.info")
                                 .tag(PickerSection.INFO)
                             
-                            Text("scheduleDetail.students \(self.vm.subjectstudents.count)")
-                                .tag(PickerSection.STUDENTS)
+                            if (self.vm.stateSubjectStudents == AsyncState.fetchingData)
+                            {
+                                ProgressView()
+                                    .tag(PickerSection.STUDENTS)
+                            }
+                            else
+                            {
+                                Text("scheduleDetail.students \(self.vm.subjectstudents.count)")
+                                    .tag(PickerSection.STUDENTS)
+                            }
+                            
                         }
                     }
                     .pickerStyle(.segmented)
@@ -351,28 +360,43 @@ struct SubjectStudentsView: View {
     
     var body: some View {
         VStack {
-            List {
-                ForEach(self.subjectStudents, id: \.id) { student in
-                    VStack(alignment: .leading) {
-                        Text(student.getFormattedName())
-                            .font(.system(size: 18, weight: .medium, design: .rounded))
-                        
-                        (
-                            Text(String(format: NSLocalizedString("scheduleDetail.year %@", comment: "year"), student.studyYear)) + Text(StringHelper.concatStringsToOne(
-                            strings: student.id,
-                            separatorOnFirstPosition: true
-                        ))
-                        )
-                            .font(.system(size: 14, weight: .light, design: .rounded))
-                        
-                        Text(StringHelper.concatStringsToOne(
-                            strings: student.faculty, student.fieldOfStudy
-                        ))
-                            .truncationMode(.tail)
-                            .font(.system(size: 14, weight: .light, design: .rounded))
+//            if (self.vm.stateSubjectStudents == AsyncState.fetchingData) {
+            if (false) {
+                LoadingView(text: "common.loading", withBackground: true)
+            }
+            else
+            {
+                List {
+                    if (self.subjectStudents.isEmpty)
+                    {
+                        Text("scheduleDetail.no-students")
+                    }
+                    else
+                    {
+                        ForEach(self.subjectStudents, id: \.id) { student in
+                            VStack(alignment: .leading) {
+                                Text(student.getFormattedName())
+                                    .font(.system(size: 18, weight: .medium, design: .rounded))
+                                
+                                (
+                                    Text(String(format: NSLocalizedString("scheduleDetail.year %@", comment: "year"), student.studyYear)) + Text(StringHelper.concatStringsToOne(
+                                    strings: student.id,
+                                    separatorOnFirstPosition: true
+                                ))
+                                )
+                                    .font(.system(size: 14, weight: .light, design: .rounded))
+                                
+                                Text(StringHelper.concatStringsToOne(
+                                    strings: student.faculty, student.fieldOfStudy
+                                ))
+                                    .truncationMode(.tail)
+                                    .font(.system(size: 14, weight: .light, design: .rounded))
+                            }
+                        }
                     }
                 }
             }
+            
         }
         
     }

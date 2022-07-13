@@ -13,14 +13,14 @@ struct StagInfo: Decodable {
     
     
     /// User's firstname
-    let firstnam: String
+    let firstnam: String?
     
     
     /// User's lastname
-    let lastname: String
+    let lastname: String?
     
     /// User's email
-    let email: String
+    let email: String?
     
     /// User's additional info
     let stagUserInfo: [StagUserInfo]
