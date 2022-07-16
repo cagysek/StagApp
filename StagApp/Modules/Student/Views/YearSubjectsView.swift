@@ -39,20 +39,22 @@ struct YearSubjectsView: View {
                     Text("student.winter-semester")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .padding(.leading, 20)
-                        .padding(.bottom, -18)
+                        .padding(.bottom, -15)
                     
                     ForEach(self.$winterSubjects, id: \.self) { subject in
                         SubjectResultView(subject: subject)
+                            .padding(.bottom, -20)
                     }
                     
                     Text("student.summer-semester")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .padding(.leading, 20)
                         .padding(.bottom, -18)
-                        .padding(.top, 25)
+                        .padding(.top, 20)
                     
                     ForEach(self.$summerSubjects, id: \.self) { subject in
                         SubjectResultView(subject: subject)
+                            .padding(.bottom, -20)
                     }
 
                 }

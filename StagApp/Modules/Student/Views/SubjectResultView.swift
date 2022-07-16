@@ -9,14 +9,11 @@ struct SubjectResultView: View {
         ZStack(alignment: .leading){
             RoundedRectangle(cornerRadius: 12)
                 .fill(.white)
-                .padding()
             
             VStack(alignment: .leading, spacing: 5) {
                 Text(self.subject.name ?? "").bold().font(.system(size: 18, design: .rounded))
-                    .truncationMode(.tail)
-                    .lineLimit(1)
+
                 Text((self.subject.department ?? "") + "/" + (self.subject.short ?? "")).font(.system(size: 18, design: .rounded))
-                    .truncationMode(.tail)
                 
                 Text("student.credits \(subject.credits)").font(.system(size: 15, design: .rounded))
                 
@@ -37,12 +34,13 @@ struct SubjectResultView: View {
                                                         separatorOnFirstPosition: true
                                             )).font(.system(size: 15, design: .rounded)))
             }
-            .padding(.leading, 30)
-            .padding(.trailing, 30)
+            .padding()
+            
         }
-        .frame(height: 190)
+        .padding()
+        .fixedSize(horizontal: false, vertical: true)
         .shadow(color: Color.shadow, radius: 4)
-        .padding(.bottom, -26)
+        
     }
 }
 
