@@ -1,4 +1,5 @@
 import SwiftUI
+import Sentry
 
 
 @main
@@ -11,6 +12,20 @@ struct StagApp: App {
     
     @State private var showAlert = false
     @State private var alertData = AlertData.empty
+    
+    
+    init() {
+        SentrySDK.start { options in
+            options.dsn = "https://" + ConfigurationManager.stringValue(forKey: "SENTRY_DSN")
+            options.debug = false // Enabled debug when first installing is always helpful
+
+            // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+            // We recommend adjusting this value in production.
+            options.tracesSampleRate = 1.0
+            
+        }
+    }
+    
     
     var body: some Scene {
         WindowGroup {

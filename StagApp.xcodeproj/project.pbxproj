@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -45,6 +45,8 @@
 		16543A5326C95BA900C0BDE4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16543A5226C95BA900C0BDE4 /* Preview Assets.xcassets */; };
 		16543A5E26C95BAA00C0BDE4 /* StagAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16543A5D26C95BAA00C0BDE4 /* StagAppTests.swift */; };
 		16543A6926C95BAA00C0BDE4 /* StagAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16543A6826C95BAA00C0BDE4 /* StagAppUITests.swift */; };
+		1660C3172882DBD400100585 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 1660C3162882DBD400100585 /* Sentry */; };
+		1660C31A2882E4FA00100585 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660C3192882E4FA00100585 /* ConfigurationManager.swift */; };
 		1662FA7527FDB4700017AB84 /* AboutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1662FA7427FDB4700017AB84 /* AboutScreen.swift */; };
 		1664C14427F45A26002ABAD3 /* StagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1664C14327F45A26002ABAD3 /* StagInfo.swift */; };
 		1664C14627F476CD002ABAD3 /* CanteenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1664C14527F476CD002ABAD3 /* CanteenService.swift */; };
@@ -186,6 +188,8 @@
 		16543A6426C95BAA00C0BDE4 /* StagAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StagAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16543A6826C95BAA00C0BDE4 /* StagAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagAppUITests.swift; sourceTree = "<group>"; };
 		16543A6A26C95BAA00C0BDE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1660C3182882E40600100585 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		1660C3192882E4FA00100585 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		1662FA7427FDB4700017AB84 /* AboutScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScreen.swift; sourceTree = "<group>"; };
 		1664C14327F45A26002ABAD3 /* StagInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagInfo.swift; sourceTree = "<group>"; };
 		1664C14527F476CD002ABAD3 /* CanteenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanteenService.swift; sourceTree = "<group>"; };
@@ -273,6 +277,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1660C3172882DBD400100585 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +536,7 @@
 		16543A3F26C95BA800C0BDE4 = {
 			isa = PBXGroup;
 			children = (
+				1660C31B2882E9CE00100585 /* ConfigFiles */,
 				16543A4A26C95BA800C0BDE4 /* StagApp */,
 				16543A5C26C95BAA00C0BDE4 /* StagAppTests */,
 				16543A6726C95BAA00C0BDE4 /* StagAppUITests */,
@@ -623,6 +629,7 @@
 				16E80C03279607C40060BAEB /* CoreDataManager.swift */,
 				16E80C0627960EFB0060BAEB /* DataManager.swift */,
 				160F832B27DFDFA000B9B1C1 /* KeychainManager.swift */,
+				1660C3192882E4FA00100585 /* ConfigurationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -690,6 +697,14 @@
 				1621C1AC2716D1B70077F300 /* Loading */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1660C31B2882E9CE00100585 /* ConfigFiles */ = {
+			isa = PBXGroup;
+			children = (
+				1660C3182882E40600100585 /* Config.xcconfig */,
+			);
+			path = ConfigFiles;
 			sourceTree = "<group>";
 		};
 		1662FA7227FDB4510017AB84 /* About */ = {
@@ -1108,6 +1123,9 @@
 			dependencies = (
 			);
 			name = StagApp;
+			packageProductDependencies = (
+				1660C3162882DBD400100585 /* Sentry */,
+			);
 			productName = StagApp;
 			productReference = 16543A4826C95BA800C0BDE4 /* StagApp.app */;
 			productType = "com.apple.product-type.application";
@@ -1180,6 +1198,9 @@
 				cs,
 			);
 			mainGroup = 16543A3F26C95BA800C0BDE4;
+			packageReferences = (
+				1660C3152882DBD400100585 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
 			productRefGroup = 16543A4926C95BA800C0BDE4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1225,6 +1246,7 @@
 			files = (
 				16F9CEF627DE606D000C96E1 /* LoginResult.swift in Sources */,
 				164C8DF927EB2C210096706C /* ExternalLoginWebView.swift in Sources */,
+				1660C31A2882E4FA00100585 /* ConfigurationManager.swift in Sources */,
 				16E1DFAA27F8D6A4004E8C9B /* StagServiceError.swift in Sources */,
 				160F833027DFF74000B9B1C1 /* StagServiceConfiguration.swift in Sources */,
 				1622E5BE27B90DA4006CD575 /* ScheduleAction.swift in Sources */,
@@ -1502,6 +1524,7 @@
 		};
 		16543A6E26C95BAA00C0BDE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1660C3182882E40600100585 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1529,6 +1552,7 @@
 		};
 		16543A6F26C95BAA00C0BDE4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1660C3182882E40600100585 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1556,6 +1580,7 @@
 		};
 		16543A7126C95BAA00C0BDE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1660C3182882E40600100585 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1578,6 +1603,7 @@
 		};
 		16543A7226C95BAA00C0BDE4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1660C3182882E40600100585 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1600,6 +1626,7 @@
 		};
 		16543A7426C95BAA00C0BDE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1660C3182882E40600100585 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1620,6 +1647,7 @@
 		};
 		16543A7526C95BAA00C0BDE4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1660C3182882E40600100585 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1678,6 +1706,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1660C3152882DBD400100585 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1660C3162882DBD400100585 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1660C3152882DBD400100585 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		160241752795DCEE00CF4781 /* CoreDataModel.xcdatamodeld */ = {

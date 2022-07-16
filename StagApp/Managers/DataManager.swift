@@ -1,4 +1,5 @@
 import Foundation
+import Sentry
 
 
 /// Protocol to define functions in data manager
@@ -102,11 +103,13 @@ struct DataManager: IDataManager {
                             let mappedObject = self.mapNewPropertiesToSubject(subjectDb: subjectDb, subjectApi: subject)
                             
                             _ = self.subjectRepository.insert(mappedObject)
-                                
-                            // save context out of the loop causes memory error sometimes..
-                            _ = self.subjectRepository.saveContext()
+                            
+                            
+                            
                             
                         }
+                    // save context out of the loop causes memory error sometimes..
+                    _ = self.subjectRepository.saveContext()
                     
                     case .failure(let error):
                         print(error.localizedDescription)
@@ -137,17 +140,16 @@ struct DataManager: IDataManager {
                     let dbSubjectUpdated = subjectMapper.mapNewSubjectFromSubjectResult(subjectResult: subjectResult, subject: dbSubject)
                     
                     _ = self.subjectRepository.insert(dbSubjectUpdated)
+                    
+                    _ = self.subjectRepository.saveContext()
                 }
-                
-                _ = self.subjectRepository.saveContext()
-            
                 
                 // loads subject's full names + credits
                 self.syncAdditionalSubjectInfo(studentId: studentId)
             
             case .failure(let error):
+                SentrySDK.capture(message: error.localizedDescription)
                 print(error.localizedDescription)
-                
             }
         }
     }

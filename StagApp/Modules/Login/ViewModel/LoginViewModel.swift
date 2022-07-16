@@ -1,5 +1,6 @@
 import Foundation
 import Security
+import Sentry
 
 @MainActor
 /// Protocol to define functions in view model
