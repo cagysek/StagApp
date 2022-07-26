@@ -47,6 +47,7 @@
 		16543A6926C95BAA00C0BDE4 /* StagAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16543A6826C95BAA00C0BDE4 /* StagAppUITests.swift */; };
 		1660C3172882DBD400100585 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 1660C3162882DBD400100585 /* Sentry */; };
 		1660C31A2882E4FA00100585 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660C3192882E4FA00100585 /* ConfigurationManager.swift */; };
+		1660C31E2884670900100585 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660C31D2884670900100585 /* NotificationService.swift */; };
 		1662FA7527FDB4700017AB84 /* AboutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1662FA7427FDB4700017AB84 /* AboutScreen.swift */; };
 		1664C14427F45A26002ABAD3 /* StagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1664C14327F45A26002ABAD3 /* StagInfo.swift */; };
 		1664C14627F476CD002ABAD3 /* CanteenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1664C14527F476CD002ABAD3 /* CanteenService.swift */; };
@@ -190,6 +191,7 @@
 		16543A6A26C95BAA00C0BDE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1660C3182882E40600100585 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		1660C3192882E4FA00100585 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		1660C31D2884670900100585 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		1662FA7427FDB4700017AB84 /* AboutScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScreen.swift; sourceTree = "<group>"; };
 		1664C14327F45A26002ABAD3 /* StagInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagInfo.swift; sourceTree = "<group>"; };
 		1664C14527F476CD002ABAD3 /* CanteenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanteenService.swift; sourceTree = "<group>"; };
@@ -707,6 +709,14 @@
 			path = ConfigFiles;
 			sourceTree = "<group>";
 		};
+		1660C31C2884658F00100585 /* NotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				1660C31D2884670900100585 /* NotificationService.swift */,
+			);
+			path = NotificationService;
+			sourceTree = "<group>";
+		};
 		1662FA7227FDB4510017AB84 /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -939,6 +949,7 @@
 		16C3029827A6B2E300B6D2B4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1660C31C2884658F00100585 /* NotificationService */,
 				16004E9F2829452A00B28C60 /* CheckNetworkService */,
 				16E1DFB127F9D5DA004E8C9B /* LanguageService */,
 				1664C14727F476CF002ABAD3 /* CanteenService */,
@@ -1288,6 +1299,7 @@
 				16543A4C26C95BA800C0BDE4 /* StagApp.swift in Sources */,
 				16004EA12829454000B28C60 /* CheckNetworkService.swift in Sources */,
 				16D24ACD271C937500C98159 /* ExamsScreen.swift in Sources */,
+				1660C31E2884670900100585 /* NotificationService.swift in Sources */,
 				1631F4A227FB356A001FF24B /* NoteListViewModel.swift in Sources */,
 				16AE019827CD5288007474A6 /* Universities.swift in Sources */,
 				16D24AD3271C93C200C98159 /* ScheduleScreen.swift in Sources */,

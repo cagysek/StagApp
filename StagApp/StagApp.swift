@@ -1,14 +1,17 @@
 import SwiftUI
 import Sentry
+import BackgroundTasks
 
 
 @main
 /// Project root file, cointains global settings logic
 struct StagApp: App {
 
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage(UserDefaultKeys.LANGUAGE) private var language = LanguageService.shared.language
     
     @ObservedObject var monitor = CheckNetworkService()
+    @ObservedObject var notificationService = NotificationService()
     
     @State private var showAlert = false
     @State private var alertData = AlertData.empty
@@ -24,6 +27,9 @@ struct StagApp: App {
             options.tracesSampleRate = 1.0
             
         }
+        
+        notificationService.register()
+        notificationService.scheduleAppRefresh()
     }
     
     
@@ -59,6 +65,24 @@ struct StagApp: App {
             }
             
         }
+       
         
+    }
+    
+    
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // Show local notification in foreground
+        UNUserNotificationCenter.current().delegate = self
+        
+        return true
+    }
+}
+// Conform to UNUserNotificationCenterDelegate to show local notification in foreground
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
     }
 }
